@@ -1,0 +1,17 @@
+---
+permalink: /index.html
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>ممرّ — Mamarr</title>
+<meta http-equiv="refresh" content="0; url=ar/{% if env.PREVIEW %}index.html{% endif %}">
+<link rel="canonical" href="https://mamarr.com/ar/">
+<script>
+(function(){var l=(navigator.language||'').toLowerCase();var to=l.indexOf('ar')===0?'ar/':'en/';{% if env.PREVIEW %}to+='index.html';{% endif %}location.replace(to);})();
+</script>
+</head>
+<body><p><a href="ar/{% if env.PREVIEW %}index.html{% endif %}">ممرّ بالعربية</a> · <a href="en/{% if env.PREVIEW %}index.html{% endif %}">Mamarr in English</a></p></body>
+</html>

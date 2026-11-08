@@ -1,0 +1,24 @@
+---
+layout: base.njk
+---
+{%- set t = i18n[lang] -%}
+<article class="article wrap-narrow">
+  <header class="article-head">
+    {% if section %}<p class="article-section"><a href="{{ ('/' + lang + '/' + section + '/') | rel(page.url) }}">{{ t.nav.analysis if section == 'articles' else t.ports.title }}</a></p>{% endif %}
+    <h1>{{ title }}</h1>
+    {% if dek %}<p class="dek">{{ dek }}</p>{% endif %}
+    <p class="article-meta">
+      {% if author %}<span>{{ author }}</span>{% endif %}
+      <time datetime="{{ date | dateISO }}">{{ date | dateHuman(lang) }}</time>
+      <span>{{ content | readingTime(lang) }}</span>
+      <button type="button" class="linkish" data-copy data-copied="{{ t.article.copied }}">{{ t.article.share }}</button>
+    </p>
+  </header>
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+  {% if layout != 'port' and section == 'articles' %}
+  <aside class="article-note"><p>{{ t.article.disclaimer }}</p></aside>
+  {% endif %}
+  <p class="article-back"><a href="{{ ('/' + lang + '/' + (section or 'articles') + '/') | rel(page.url) }}">{{ t.ports.all if section == 'ports' else t.article.back }}</a></p>
+</article>

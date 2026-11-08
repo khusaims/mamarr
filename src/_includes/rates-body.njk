@@ -1,0 +1,12 @@
+{%- set t = i18n[lang] -%}
+<div class="wrap">
+  <header class="page-head">
+    <h1>{{ t.rates.title }}</h1>
+    <p>{{ t.rates.lead }}</p>
+  </header>
+  {% include "rates-table.njk" %}
+  <section class="wrap-narrow" style="padding-inline:0; margin-inline-start:0; margin-top:2.5rem">
+    <h2>{{ t.rates.method }}</h2>
+    <p>{{ t.rates.methodText }}</p>
+  </section>
+</div>

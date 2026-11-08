@@ -1,0 +1,14 @@
+{
+  "name": "mamarr",
+  "version": "0.1.0",
+  "description": "Mamarr — Gulf logistics & supply chain portal (Arabic/English). Static site built with Eleventy.",
+  "private": true,
+  "scripts": {
+    "build": "npx @11ty/eleventy",
+    "serve": "npx @11ty/eleventy --serve",
+    "build:preview": "PREVIEW=1 npx @11ty/eleventy --output=_preview"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

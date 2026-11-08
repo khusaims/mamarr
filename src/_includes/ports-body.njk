@@ -1,0 +1,17 @@
+{%- set t = i18n[lang] -%}
+{%- set ports = collections["ports_" + lang] -%}
+<div class="wrap">
+  <header class="page-head">
+    <h1>{{ title }}</h1>
+    <p>{{ description }}</p>
+  </header>
+  <ul class="port-list">
+    {% for p in ports %}
+    <li>
+      <h3><a href="{{ p.url | rel(page.url) }}">{{ p.data.title }}</a></h3>
+      <p>{{ p.data.dek }}</p>
+      <p class="port-facts">{{ t.ports.operator }}: {{ p.data.operator }} · {{ t.ports.type }}: {{ p.data.type }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,0 +1,83 @@
+{%- set t = i18n[lang] -%}
+{%- set articles = collections["articles_" + lang] -%}
+{%- set ports = collections["ports_" + lang] -%}
+{%- set stops = t.corridor.stops -%}
+<section class="hero">
+  <div class="wrap">
+    <h1>{{ t.home.heroTitle }}</h1>
+    <p class="lead">{{ t.home.heroLead }}</p>
+    <a class="hero-cta" href="#newsletter">{{ t.newsletter.title }}</a>
+
+    <figure class="corridor" aria-labelledby="corridor-caption">
+      <div class="corridor-scroll"><svg viewBox="0 0 1000 190" role="img" aria-hidden="true">
+        <!-- dashed sea lines for texture -->
+        <path class="sea" d="M0 160 Q 250 150, 500 160 T 1000 160"/>
+        <path class="sea" d="M0 178 Q 250 168, 500 178 T 1000 178"/>
+        <!-- route: Shanghai (right) → Colombo → Salalah → Hormuz → Sohar → Jebel Ali (left) -->
+        <path class="route" d="M 940 118 C 860 130, 780 150, 700 140 S 560 110, 480 108 S 380 90, 330 68 S 275 80, 250 92 S 150 112, 80 112"/>
+        <!-- transit-day labels between stops -->
+        <text class="days" x="820" y="162" text-anchor="middle">~12</text>
+        <text class="days" x="590" y="150" text-anchor="middle">~5</text>
+        <text class="days" x="405" y="118" text-anchor="middle">~2</text>
+        <text class="days" x="290" y="112" text-anchor="middle">&lt;1</text>
+        <text class="days" x="165" y="137" text-anchor="middle">~1</text>
+        <!-- stops -->
+        <circle class="stop" cx="940" cy="118" r="7"/><text class="stop-label" x="940" y="98" text-anchor="middle">{{ stops[0] }}</text>
+        <circle class="stop" cx="700" cy="140" r="7"/><text class="stop-label" x="700" y="120" text-anchor="middle">{{ stops[1] }}</text>
+        <circle class="stop" cx="480" cy="108" r="7"/><text class="stop-label" x="480" y="88" text-anchor="middle">{{ stops[2] }}</text>
+        <circle class="stop" cx="330" cy="68" r="7"/><text class="stop-label" x="330" y="48" text-anchor="middle">{{ stops[3] }}</text>
+        <circle class="stop" cx="250" cy="92" r="7"/><text class="stop-label" x="250" y="72" text-anchor="middle">{{ stops[4] }}</text>
+        <circle class="stop" cx="80" cy="112" r="7"/><text class="stop-label" x="80" y="92" text-anchor="middle">{{ stops[5] }}</text>
+      </svg></div>
+      <figcaption class="corridor-caption" id="corridor-caption">{{ t.corridor.caption }}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>{{ t.home.latest }}</h2>
+      <a href="{{ ('/' + lang + '/articles/') | rel(page.url) }}">{{ t.home.allArticles }}</a>
+    </div>
+    <ul class="article-list">
+      {% for a in articles | head(5) %}
+      <li>
+        <p class="meta meta-col"><time datetime="{{ a.date | dateISO }}">{{ a.date | dateHuman(lang) }}</time></p>
+        <h3><a href="{{ a.url | rel(page.url) }}">{{ a.data.title }}</a></h3>
+        {% if a.data.dek %}<p class="dek">{{ a.data.dek }}</p>{% endif %}
+        <p class="meta"><span>{{ a.templateContent | readingTime(lang) }}</span></p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>{{ t.home.ratesTitle }}</h2>
+      <a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}">{{ t.home.ratesAll }}</a>
+    </div>
+    <p class="section-lead">{{ t.home.ratesLead }}</p>
+    {% include "rates-table.njk" %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>{{ t.home.portsTitle }}</h2>
+      <a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}">{{ t.ports.all }}</a>
+    </div>
+    <p class="section-lead">{{ t.home.portsLead }}</p>
+    <ul class="port-list">
+      {% for p in ports %}
+      <li>
+        <h3><a href="{{ p.url | rel(page.url) }}">{{ p.data.title }}</a></h3>
+        <p>{{ p.data.dek }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

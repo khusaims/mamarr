@@ -1,0 +1,97 @@
+{%- set t = i18n[lang] -%}
+{%- set alt = page.url | altLang -%}
+{%- set pageTitle = (title + " — " + site.name[lang]) if title else (site.name[lang] + " — " + site.tagline[lang]) -%}
+<!DOCTYPE html>
+<html lang="{{ lang }}" dir="{{ t.dir }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ pageTitle }}</title>
+  <meta name="description" content="{{ description or site.tagline[lang] }}">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="alternate" hreflang="{{ 'en' if lang == 'ar' else 'ar' }}" href="{{ site.url }}{{ alt }}">
+  <link rel="alternate" hreflang="{{ lang }}" href="{{ site.url }}{{ page.url }}">
+  <meta property="og:site_name" content="{{ site.name[lang] }}">
+  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:description" content="{{ description or site.tagline[lang] }}">
+  <meta property="og:type" content="{{ 'article' if layout == 'article.njk' else 'website' }}">
+  <meta property="og:locale" content="{{ t.locale }}">
+  <link rel="icon" href="{{ '/img/favicon.svg' | rel(page.url) }}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/css/style.css' | rel(page.url) }}">
+</head>
+<body class="{{ bodyClass or '' }}">
+<a class="skip" href="#main">{{ "تجاوز إلى المحتوى" if lang == "ar" else "Skip to content" }}</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="{{ ('/' + lang + '/') | rel(page.url) }}" aria-label="{{ site.name[lang] }}">
+      <svg class="brand-mark" viewBox="0 0 40 24" width="40" height="24" aria-hidden="true">
+        <path d="M2 18 C 10 18, 12 6, 20 6 S 30 18, 38 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="2" cy="18" r="2.4" fill="currentColor"/><circle cx="20" cy="6" r="2.4" fill="currentColor"/><circle cx="38" cy="18" r="2.4" fill="currentColor"/>
+      </svg>
+      <span class="brand-ar">ممرّ</span><span class="brand-en">Mamarr</span>
+    </a>
+    <nav class="nav" aria-label="{{ 'التنقل' if lang == 'ar' else 'Main' }}">
+      <a href="{{ ('/' + lang + '/articles/') | rel(page.url) }}" {% if '/articles/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.analysis }}</a>
+      <a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}" {% if '/rates/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.rates }}</a>
+      <a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}" {% if '/ports/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.ports }}</a>
+      <a href="{{ ('/' + lang + '/about/') | rel(page.url) }}" {% if '/about/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.about }}</a>
+      <a class="lang-switch" href="{{ alt | rel(page.url) }}" lang="{{ 'en' if lang == 'ar' else 'ar' }}" hreflang="{{ 'en' if lang == 'ar' else 'ar' }}">{{ t.switch }}</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{{ content | safe }}
+</main>
+
+<section class="newsletter" id="newsletter">
+  <div class="wrap newsletter-row">
+    <div>
+      <h2>{{ t.newsletter.title }}</h2>
+      <p>{{ t.newsletter.lead | replace("{day}", site.newsletterDay[lang]) }}</p>
+    </div>
+    <form class="nl-form" method="post" action="{{ site.newsletterAction or '#' }}" data-live="{{ 'yes' if site.newsletterAction else 'no' }}">
+      <label class="visually-hidden" for="nl-email">{{ t.newsletter.placeholder }}</label>
+      <input id="nl-email" name="email" type="email" required placeholder="{{ t.newsletter.placeholder }}" autocomplete="email">
+      <button type="submit">{{ t.newsletter.button }}</button>
+      <p class="nl-msg" role="status" data-pending="{{ t.newsletter.pending }}" data-done="{{ t.newsletter.done }}"></p>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <p class="footer-about">{{ t.footer.about }}</p>
+    <ul class="footer-links">
+      <li><a href="{{ ('/' + lang + '/about/') | rel(page.url) }}">{{ t.nav.about }}</a></li>
+      <li><a href="{{ site.linkedin }}" rel="noopener">LinkedIn</a></li>
+      <li><span>{{ t.footer.contact }}: {{ site.contactEmail }}</span></li>
+      <li><a href="{{ alt | rel(page.url) }}" lang="{{ 'en' if lang == 'ar' else 'ar' }}">{{ t.switch }}</a></li>
+    </ul>
+    <p class="footer-copy">© {{ site.founded }} {{ site.name[lang] }}. {{ t.footer.rights }}.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var f = document.querySelector('.nl-form');
+  if (!f) return;
+  var msg = f.querySelector('.nl-msg');
+  f.addEventListener('submit', function (e) {
+    if (f.dataset.live !== 'yes') { e.preventDefault(); msg.textContent = msg.dataset.pending; return; }
+    msg.textContent = msg.dataset.done;
+  });
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var done = b.dataset.copied, orig = b.textContent;
+      try { navigator.clipboard.writeText(location.href).then(function () { b.textContent = done; setTimeout(function(){ b.textContent = orig; }, 1800); }); } catch (err) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>

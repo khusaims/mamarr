@@ -1,0 +1,13 @@
+{
+  "name": { "ar": "ممرّ", "en": "Mamarr" },
+  "tagline": {
+    "ar": "لوجستيات الخليج والبحر الأحمر — لمن يشحن من هنا وإلى هنا",
+    "en": "Gulf and Red Sea logistics, for the people who ship through it"
+  },
+  "url": "https://mamarr.com",
+  "newsletterAction": "",
+  "newsletterDay": { "ar": "كل خميس", "en": "every Thursday" },
+  "linkedin": "https://www.linkedin.com/",
+  "contactEmail": "hello@mamarr.com",
+  "founded": 2026
+}

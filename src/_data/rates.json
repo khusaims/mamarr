@@ -1,0 +1,18 @@
+{
+  "_readme": "حدّث هذا الملف كل أسبوع: غيّر updated، وأضف القيمة الجديدة إلى نهاية series (احتفظ بآخر ٨)، واجعل usd = آخر عنصر في series. change_pct = النسبة بين آخر عنصرين. اجعل sample = false عند أول بيانات حقيقية.",
+  "updated": "2026-11-05",
+  "sample": true,
+  "unit": "USD / 40' HC, spot, port-to-port",
+  "lanes": [
+    { "id": "sha-soh", "from": { "ar": "شنغهاي", "en": "Shanghai" }, "to": { "ar": "صحار", "en": "Sohar" },
+      "usd": 1850, "change_pct": -3.1, "series": [2120, 2080, 2010, 1990, 1960, 1930, 1910, 1850] },
+    { "id": "sha-jea", "from": { "ar": "شنغهاي", "en": "Shanghai" }, "to": { "ar": "جبل علي", "en": "Jebel Ali" },
+      "usd": 1720, "change_pct": -2.3, "series": [1950, 1920, 1890, 1860, 1830, 1790, 1760, 1720] },
+    { "id": "nsa-soh", "from": { "ar": "نهافا شيفا", "en": "Nhava Sheva" }, "to": { "ar": "صحار", "en": "Sohar" },
+      "usd": 640, "change_pct": 1.6, "series": [610, 605, 615, 620, 625, 630, 630, 640] },
+    { "id": "jea-jed", "from": { "ar": "جبل علي", "en": "Jebel Ali" }, "to": { "ar": "جدة", "en": "Jeddah" },
+      "usd": 980, "change_pct": 4.3, "series": [880, 890, 900, 910, 930, 940, 940, 980] },
+    { "id": "rtm-sll", "from": { "ar": "روتردام", "en": "Rotterdam" }, "to": { "ar": "صلالة", "en": "Salalah" },
+      "usd": 2340, "change_pct": 0.0, "series": [2400, 2380, 2360, 2350, 2340, 2340, 2340, 2340] }
+  ]
+}
