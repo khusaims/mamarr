@@ -7,7 +7,8 @@
       "analysis": "تحليل",
       "rates": "أسعار الشحن",
       "ports": "موانئ",
-      "about": "من نحن"
+      "about": "من نحن",
+      "tools": "حاسبة التكلفة"
     },
     "home": {
       "heroTitle": "ما يعنيه كل تغيير في الممرات البحرية لمن يشحن من الخليج وإليه",
@@ -80,6 +81,41 @@
       "about": "ممرّ منصة مستقلة تغطي اللوجستيات وسلاسل الإمداد في الخليج والبحر الأحمر، يكتبها من يعمل داخل القطاع.",
       "contact": "تواصل",
       "rights": "جميع الحقوق محفوظة"
+    },
+    "calc": {
+      "title": "حاسبة التكلفة الواصلة",
+      "lead": "احسب ما ستدفعه فعليًا على شحنتك حتى بابك في أي دولة خليجية: القيمة والشحن والتأمين، ثم الرسم الجمركي والضريبة الانتقائية وضريبة القيمة المضافة والمصاريف المحلية — وتكلفة الوحدة الواحدة.",
+      "country": "دولة الوصول",
+      "goods": "قيمة البضاعة",
+      "freight": "أجرة الشحن",
+      "insurance": "التأمين",
+      "usd": "بالدولار الأمريكي",
+      "duty": "نسبة الرسم الجمركي %",
+      "dutyHint": "٥٪ على أغلب السلع — تحقق من رمز HS",
+      "excise": "الضريبة الانتقائية %",
+      "exciseHint": "صفر لأغلب السلع؛ للتبغ والمشروبات المحلّاة فقط",
+      "local": "المصاريف المحلية",
+      "localHint": "تخليص، مناولة، نقل داخلي، أرضيات",
+      "units": "عدد الوحدات",
+      "unitsHint": "لحساب تكلفة الوحدة",
+      "cif": "القيمة CIF",
+      "dutyRow": "الرسم الجمركي",
+      "exciseRow": "الضريبة الانتقائية",
+      "vatRow": "ضريبة القيمة المضافة",
+      "customsTotal": "إجمالي المدفوع للجمارك",
+      "localRow": "المصاريف المحلية",
+      "landed": "التكلفة الواصلة الإجمالية",
+      "perUnit": "تكلفة الوحدة",
+      "localCur": "بالعملة المحلية",
+      "vatRecoverable": "إن كنت مسجّلًا في ضريبة القيمة المضافة فالمبلغ {amount} قابل للاسترداد عبر إقرارك، وتنخفض تكلفتك الفعلية بمقداره.",
+      "noVat": "لا توجد ضريبة قيمة مضافة على الاستيراد في هذه الدولة حاليًا.",
+      "errInvalid": "أدخل أرقامًا صحيحة موجبة في كل الحقول.",
+      "howTitle": "كيف يُحسب",
+      "how1": "القيمة CIF = قيمة البضاعة + أجرة الشحن + التأمين حتى ميناء الوصول.",
+      "how2": "الرسم الجمركي = نسبة الرسم × القيمة CIF.",
+      "how3": "ضريبة القيمة المضافة = نسبتها × (CIF + الرسم الجمركي + الضريبة الانتقائية).",
+      "how4": "التكلفة الواصلة = CIF + ما دُفع للجمارك + المصاريف المحلية.",
+      "disclaimer": "النتيجة تقديرية للتخطيط، وليست تقييمًا جمركيًا. النسبة الفعلية تعتمد على رمز HS وبلد المنشأ والاتفاقيات التفضيلية وقرارات الإعفاء. المرجع النهائي هو الإدارة الجمركية في بلد الوصول."
     }
   },
   "en": {
@@ -90,7 +126,8 @@
       "analysis": "Analysis",
       "rates": "Freight rates",
       "ports": "Ports",
-      "about": "About"
+      "about": "About",
+      "tools": "Landed cost"
     },
     "home": {
       "heroTitle": "What every shift in the sea lanes means for the people shipping to and from the Gulf",
@@ -163,6 +200,41 @@
       "about": "Mamarr is an independent publication covering logistics and supply chains in the Gulf and Red Sea, written by people who work inside the industry.",
       "contact": "Contact",
       "rights": "All rights reserved"
+    },
+    "calc": {
+      "title": "Landed cost calculator",
+      "lead": "Work out what a shipment really costs at your door in any GCC country: goods, freight and insurance, then duty, excise, VAT and local charges — and the cost per unit.",
+      "country": "Destination country",
+      "goods": "Goods value",
+      "freight": "Freight",
+      "insurance": "Insurance",
+      "usd": "in US dollars",
+      "duty": "Customs duty %",
+      "dutyHint": "5% on most goods — check your HS code",
+      "excise": "Excise tax %",
+      "exciseHint": "Zero for most goods; tobacco and sweetened drinks only",
+      "local": "Local charges",
+      "localHint": "Clearance, handling, inland transport, storage",
+      "units": "Number of units",
+      "unitsHint": "To get the per-unit cost",
+      "cif": "CIF value",
+      "dutyRow": "Customs duty",
+      "exciseRow": "Excise tax",
+      "vatRow": "VAT",
+      "customsTotal": "Total paid to customs",
+      "localRow": "Local charges",
+      "landed": "Total landed cost",
+      "perUnit": "Cost per unit",
+      "localCur": "In local currency",
+      "vatRecoverable": "If you are VAT-registered, the {amount} is recoverable through your return, so your real cost is lower by that amount.",
+      "noVat": "This country currently charges no VAT on imports.",
+      "errInvalid": "Enter valid positive numbers in every field.",
+      "howTitle": "How it is calculated",
+      "how1": "CIF value = goods + freight + insurance to the port of arrival.",
+      "how2": "Customs duty = duty rate × CIF value.",
+      "how3": "VAT = VAT rate × (CIF + customs duty + excise).",
+      "how4": "Landed cost = CIF + what customs took + local charges.",
+      "disclaimer": "This is a planning estimate, not a customs assessment. The actual rate depends on your HS code, country of origin, preferential agreements and exemption decisions. The customs administration in the destination country is the final reference."
     }
   }
 }

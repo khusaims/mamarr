@@ -1,0 +1,11 @@
+{
+  "_readme": "معاملات حساب التكلفة الواصلة لكل دولة خليجية. duty = التعرفة الجمركية الموحدة (٥٪ على أغلب السلع). vat = نسبة ضريبة القيمة المضافة. الرسوم تُحسب على CIF، والضريبة على (CIF + الرسم + الانتقائية). راجعها سنويًا — النسب تتغير بقرارات.",
+  "countries": [
+    { "code": "OM", "name": { "ar": "عُمان", "en": "Oman" }, "currency": { "ar": "ر.ع", "en": "OMR" }, "perUsd": 0.3845, "duty": 5, "vat": 5 },
+    { "code": "AE", "name": { "ar": "الإمارات", "en": "UAE" }, "currency": { "ar": "د.إ", "en": "AED" }, "perUsd": 3.6725, "duty": 5, "vat": 5 },
+    { "code": "SA", "name": { "ar": "السعودية", "en": "Saudi Arabia" }, "currency": { "ar": "ر.س", "en": "SAR" }, "perUsd": 3.75, "duty": 5, "vat": 15 },
+    { "code": "QA", "name": { "ar": "قطر", "en": "Qatar" }, "currency": { "ar": "ر.ق", "en": "QAR" }, "perUsd": 3.64, "duty": 5, "vat": 0 },
+    { "code": "KW", "name": { "ar": "الكويت", "en": "Kuwait" }, "currency": { "ar": "د.ك", "en": "KWD" }, "perUsd": 0.3065, "duty": 5, "vat": 0 },
+    { "code": "BH", "name": { "ar": "البحرين", "en": "Bahrain" }, "currency": { "ar": "د.ب", "en": "BHD" }, "perUsd": 0.376, "duty": 5, "vat": 10 }
+  ]
+}

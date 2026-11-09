@@ -1,0 +1,28 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{%- set extra = ["/ar/", "/en/", "/ar/articles/", "/en/articles/", "/ar/ports/", "/en/ports/", "/ar/calculator/", "/en/calculator/"] -%}
+{%- for u in extra %}
+  <url>
+    <loc>{{ site.url }}{{ u }}</loc>
+    <xhtml:link rel="alternate" hreflang="{{ 'ar' if '/ar/' in u else 'en' }}" href="{{ site.url }}{{ u }}"/>
+    <xhtml:link rel="alternate" hreflang="{{ 'en' if '/ar/' in u else 'ar' }}" href="{{ site.url }}{{ u | altLang }}"/>
+  </url>
+{%- endfor -%}
+{%- set pages = collections.all | selectattr("url") -%}
+{%- for p in pages -%}
+{%- if p.url and not p.url.endsWith(".xml") and not p.url.endsWith(".txt") and p.url != "/index.html" and p.url not in extra %}
+  <url>
+    <loc>{{ site.url }}{{ p.url }}</loc>
+    {%- if p.date %}
+    <lastmod>{{ p.date | dateISO }}</lastmod>
+    {%- endif %}
+    <xhtml:link rel="alternate" hreflang="{{ 'ar' if '/ar/' in p.url else 'en' }}" href="{{ site.url }}{{ p.url }}"/>
+    <xhtml:link rel="alternate" hreflang="{{ 'en' if '/ar/' in p.url else 'ar' }}" href="{{ site.url }}{{ p.url | altLang }}"/>
+  </url>
+{%- endif -%}
+{%- endfor %}
+</urlset>

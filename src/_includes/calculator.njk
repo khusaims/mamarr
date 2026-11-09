@@ -1,0 +1,146 @@
+{%- set t = i18n[lang] -%}
+{%- set c = t.calc -%}
+<div class="wrap-narrow calc-page">
+  <header class="page-head">
+    <h1>{{ c.title }}</h1>
+    <p>{{ c.lead }}</p>
+  </header>
+
+  <form class="calc" id="calc" novalidate>
+    <div class="calc-grid">
+      <p class="field">
+        <label for="country">{{ c.country }}</label>
+        <select id="country">
+          {% for x in gcc.countries %}<option value="{{ x.code }}" {% if x.code == "OM" %}selected{% endif %}>{{ x.name[lang] }}</option>{% endfor %}
+        </select>
+      </p>
+      <p class="field">
+        <label for="goods">{{ c.goods }}</label>
+        <input id="goods" type="number" min="0" step="any" inputmode="decimal" value="10000">
+        <small>{{ c.usd }}</small>
+      </p>
+      <p class="field">
+        <label for="freight">{{ c.freight }}</label>
+        <input id="freight" type="number" min="0" step="any" inputmode="decimal" value="1800">
+        <small>{{ c.usd }}</small>
+      </p>
+      <p class="field">
+        <label for="insurance">{{ c.insurance }}</label>
+        <input id="insurance" type="number" min="0" step="any" inputmode="decimal" value="120">
+        <small>{{ c.usd }}</small>
+      </p>
+      <p class="field">
+        <label for="duty">{{ c.duty }}</label>
+        <input id="duty" type="number" min="0" max="100" step="any" inputmode="decimal" value="5">
+        <small>{{ c.dutyHint }}</small>
+      </p>
+      <p class="field">
+        <label for="excise">{{ c.excise }}</label>
+        <input id="excise" type="number" min="0" max="200" step="any" inputmode="decimal" value="0">
+        <small>{{ c.exciseHint }}</small>
+      </p>
+      <p class="field">
+        <label for="local">{{ c.local }}</label>
+        <input id="local" type="number" min="0" step="any" inputmode="decimal" value="350">
+        <small>{{ c.localHint }}</small>
+      </p>
+      <p class="field">
+        <label for="units">{{ c.units }}</label>
+        <input id="units" type="number" min="1" step="1" inputmode="numeric" value="500">
+        <small>{{ c.unitsHint }}</small>
+      </p>
+    </div>
+    <p class="calc-error" id="calc-error" role="status"></p>
+  </form>
+
+  <section class="calc-out" aria-live="polite">
+    <table class="calc-table">
+      <tbody>
+        <tr><th scope="row">{{ c.cif }}</th><td id="r-cif">—</td></tr>
+        <tr><th scope="row">{{ c.dutyRow }}</th><td id="r-duty">—</td></tr>
+        <tr><th scope="row">{{ c.exciseRow }}</th><td id="r-excise">—</td></tr>
+        <tr><th scope="row">{{ c.vatRow }}</th><td id="r-vat">—</td></tr>
+        <tr><th scope="row">{{ c.customsTotal }}</th><td id="r-customs">—</td></tr>
+        <tr><th scope="row">{{ c.localRow }}</th><td id="r-local">—</td></tr>
+        <tr class="calc-total"><th scope="row">{{ c.landed }}</th><td id="r-total">—</td></tr>
+        <tr><th scope="row">{{ c.perUnit }}</th><td id="r-unit">—</td></tr>
+        <tr><th scope="row">{{ c.localCur }}</th><td id="r-localcur">—</td></tr>
+      </tbody>
+    </table>
+    <p class="calc-vatnote" id="r-vatnote"></p>
+  </section>
+
+  <section class="calc-notes">
+    <h2>{{ c.howTitle }}</h2>
+    <ol>
+      <li>{{ c.how1 }}</li>
+      <li>{{ c.how2 }}</li>
+      <li>{{ c.how3 }}</li>
+      <li>{{ c.how4 }}</li>
+    </ol>
+    <p class="calc-disclaimer">{{ c.disclaimer }}</p>
+  </section>
+</div>
+
+<script id="gcc-data" type="application/json">{{ gcc.countries | dump | safe }}</script>
+<script>
+(function () {
+  var box = document.getElementById("calc");
+  if (!box) return;
+  var LANG = {{ lang | dump | safe }};
+  var DATA = JSON.parse(document.getElementById("gcc-data").textContent);
+  var T = {{ c | dump | safe }};
+  var loc = LANG === "ar" ? "ar-EG" : "en-US";
+  var err = document.getElementById("calc-error");
+
+  function money(n, cur) {
+    var s = (Math.round(n * 100) / 100).toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return s + " " + cur;
+  }
+  function val(id) {
+    var el = document.getElementById(id);
+    var n = parseFloat(el.value);
+    return { n: isFinite(n) ? n : NaN, raw: el.value.trim(), el: el };
+  }
+  function set(id, text) { document.getElementById(id).textContent = text; }
+
+  function calc() {
+    var country = DATA.filter(function (x) { return x.code === document.getElementById("country").value; })[0] || DATA[0];
+    var fields = ["goods", "freight", "insurance", "duty", "excise", "local", "units"].map(val);
+    var bad = fields.filter(function (f) { return f.raw === "" || isNaN(f.n) || f.n < 0; });
+    if (bad.length) {
+      err.textContent = T.errInvalid;
+      ["r-cif","r-duty","r-excise","r-vat","r-customs","r-local","r-total","r-unit","r-localcur"].forEach(function (id) { set(id, "—"); });
+      document.getElementById("r-vatnote").textContent = "";
+      return;
+    }
+    var units = Math.max(1, Math.floor(fields[6].n));
+    err.textContent = "";
+
+    var cif = fields[0].n + fields[1].n + fields[2].n;
+    var duty = cif * (fields[3].n / 100);
+    var excise = cif * (fields[4].n / 100);
+    var vat = (cif + duty + excise) * (country.vat / 100);
+    var customs = duty + excise + vat;
+    var total = cif + customs + fields[5].n;
+
+    set("r-cif", money(cif, "USD"));
+    set("r-duty", money(duty, "USD") + "  (" + fields[3].n.toLocaleString(loc) + "%)");
+    set("r-excise", money(excise, "USD") + "  (" + fields[4].n.toLocaleString(loc) + "%)");
+    set("r-vat", money(vat, "USD") + "  (" + country.vat.toLocaleString(loc) + "%)");
+    set("r-customs", money(customs, "USD"));
+    set("r-local", money(fields[5].n, "USD"));
+    set("r-total", money(total, "USD"));
+    set("r-unit", money(total / units, "USD"));
+    set("r-localcur", money(total * country.perUsd, country.currency[LANG]));
+    document.getElementById("r-vatnote").textContent =
+      country.vat === 0 ? T.noVat : T.vatRecoverable.replace("{amount}", money(vat, "USD"));
+  }
+
+  box.addEventListener("input", calc);
+  box.addEventListener("change", calc);
+  box.addEventListener("submit", function (e) { e.preventDefault(); calc(); });
+  document.getElementById("country").addEventListener("change", calc);
+  calc();
+})();
+</script>
