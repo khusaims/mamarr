@@ -16,7 +16,21 @@ import { readFile, writeFile } from "node:fs/promises";
 const FILE = new URL("../src/_data/rates.json", import.meta.url);
 // يمكن تجاوز العنوان بمتغير بيئة عند الاختبار المحلي
 const API = process.env.OILPRICEAPI_URL || "https://api.oilpriceapi.com/v1/prices/latest";
-const KEY = process.env.OILPRICEAPI_KEY;
+/**
+ * ينظّف المفتاح من الأخطاء الشائعة عند اللصق:
+ * مسافات، أسطر جديدة، علامات اقتباس، وبادئة "Token " أو "Bearer ".
+ */
+function cleanKey(raw) {
+  if (!raw) return "";
+  return String(raw)
+    .trim()
+    .replace(/^["']|["']$/g, "")
+    .replace(/^(Token|Bearer)\s+/i, "")
+    .trim();
+}
+
+const RAW_KEY = process.env.OILPRICEAPI_KEY;
+const KEY = cleanKey(RAW_KEY);
 const HISTORY = 8; // عدد القيم المحفوظة في السلسلة
 
 // لكل مؤشر عدة رموز محتملة — نجرّبها بالترتيب ونأخذ أول ما ينجح.
@@ -116,6 +130,19 @@ async function main() {
   if (!KEY) {
     console.log("OILPRICEAPI_KEY غير مضبوط — لم يُغيَّر شيء.");
     return;
+  }
+
+  // تشخيص شكل المفتاح دون كشفه: الطول والنمط فقط.
+  console.log(`طول المفتاح بعد التنظيف: ${KEY.length} حرفًا`);
+  if (KEY !== String(RAW_KEY)) {
+    console.log("ملاحظة: نُظّف المفتاح من مسافات أو اقتباس أو بادئة Token قبل الاستخدام.");
+  }
+  if (!/^[0-9a-f]{32,}$/i.test(KEY)) {
+    console.warn(
+      "⚠ المفتاح لا يبدو مفتاحًا سداسيًا عشريًا (المتوقع ٦٤ حرفًا من 0-9 و a-f)." +
+      "\n  تأكد أن خانة Name فيها OILPRICEAPI_KEY وخانة Secret فيها المفتاح وحده —" +
+      "\n  لا اسم المتغير، ولا كلمة Token، ولا أمر curl كاملًا."
+    );
   }
 
   const raw = await readFile(FILE, "utf8");
