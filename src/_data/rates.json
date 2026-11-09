@@ -3,7 +3,7 @@
   "updated": "2026-11-05",
   "sample": true,
   "unit": "USD / 40' HC, spot, port-to-port",
-  "indices_updated": "2026-11-06",
+  "indices_updated": "2026-11-09",
   "indices_sample": true,
   "indices": [
     {
@@ -36,7 +36,8 @@
         4450,
         4451,
         4389
-      ]
+      ],
+      "source_code": "CONTAINER_FREIGHT_COMPOSITE_USD"
     },
     {
       "id": "scfi",
@@ -56,7 +57,7 @@
         "ar": "أسبوعي — الجمعة",
         "en": "Weekly — Friday"
       },
-      "value": 3633,
+      "value": 3633.45,
       "change_pct": 0.8,
       "published": "2026-11-06",
       "series": [
@@ -67,8 +68,9 @@
         3580,
         3595,
         3604,
-        3633
-      ]
+        3633.45
+      ],
+      "source_code": "SCFI_INDEX"
     },
     {
       "id": "bdi",
@@ -100,7 +102,8 @@
         2730,
         2747,
         2805
-      ]
+      ],
+      "source_code": "BALTIC_DRY_INDEX"
     }
   ],
   "lanes": [
@@ -207,7 +210,7 @@
         "en": "Salalah"
       },
       "usd": 2340,
-      "change_pct": 0.0,
+      "change_pct": 0,
       "series": [
         2400,
         2380,
