@@ -1,0 +1,116 @@
+{
+  "_readme": "الأيام المجانية ورسوم التأخير لكل ميناء. ساعتان منفصلتان: ساعة الناقل (demurrage + detention) وساعة المحطة (port storage). لكل رقم مصدر منشور وتاريخ تحقق. لإضافة ميناء: انسخ عنصرًا واملأ port (slug من ports.json) و carrier و terminal. اترك terminal: null إذا لم يُعثر على تعريفة محطة منشورة — الصفحة تعرض دعوة للمساهمة مكانها. حدّث verified عند كل مراجعة.",
+  "asOf": "2026-11-09",
+  "entries": [
+    {
+      "port": "jebel-ali",
+      "verified": "2026-11-09",
+      "carrier": {
+        "name": "Maersk",
+        "scope": { "ar": "الإمارات (تعريفة قُطرية لا تخص ميناءً بعينه)", "en": "UAE (country tariff, not port-specific)" },
+        "days": 3,
+        "types": { "ar": "جاف ومسطّح ومبرّد وخطر: ٣ أيام لكل نوع", "en": "Dry, flat/open top, reefer and IMO: 3 days each" },
+        "currency": "AED",
+        "firstTier": { "ar": "اليوم ٤–٧: ١٠٠ درهم للحاوية ٢٠ قدمًا، ٢٠٠ درهم لـ٤٠ قدمًا", "en": "Days 4–7: AED 100 per 20ft, AED 200 per 40ft" },
+        "source": "https://www.maersk.com/local-information/imea/uae/import",
+        "sourceName": "Maersk UAE Import"
+      },
+      "terminal": {
+        "freeDays": 10,
+        "note": { "ar": "تخزين الاستيراد في جبل علي: ١٠ أيام مجانية، ثم ٨٢ درهمًا يوميًا للحاوية ٢٠ قدمًا و١٦٤ درهمًا لـ٤٠ قدمًا في الأيام الخمسة التالية.", "en": "Jebel Ali import storage: 10 free days, then AED 82 a day per 20ft and AED 164 per 40ft for the next five days." },
+        "source": "https://me.one-line.com/standard-page/local-rates-tariffs",
+        "sourceName": "ONE Middle East tariff"
+      }
+    },
+    {
+      "port": "sohar",
+      "verified": "2026-11-09",
+      "carrier": {
+        "name": "Maersk",
+        "scope": { "ar": "عُمان (تعريفة قُطرية تشمل صحار وصلالة معًا)", "en": "Oman (country tariff covering both Sohar and Salalah)" },
+        "days": 3,
+        "types": { "ar": "جاف ومسطّح ومبرّد وخطر: ٣ أيام لكل نوع", "en": "Dry, flat/open top, reefer and IMO: 3 days each" },
+        "currency": "USD",
+        "firstTier": { "ar": "اليوم ٤–٧: ١١ دولارًا للحاوية ٢٠ قدمًا، ٢٢ دولارًا لـ٤٠ قدمًا", "en": "Days 4–7: USD 11 per 20ft, USD 22 per 40ft" },
+        "source": "https://www.maersk.com/local-information/imea/oman/import",
+        "sourceName": "Maersk Oman Import"
+      },
+      "terminal": null
+    },
+    {
+      "port": "salalah",
+      "verified": "2026-11-09",
+      "carrier": {
+        "name": "Maersk",
+        "scope": { "ar": "عُمان (تعريفة قُطرية تشمل صحار وصلالة معًا)", "en": "Oman (country tariff covering both Sohar and Salalah)" },
+        "days": 3,
+        "types": { "ar": "جاف ومسطّح ومبرّد وخطر: ٣ أيام لكل نوع", "en": "Dry, flat/open top, reefer and IMO: 3 days each" },
+        "currency": "USD",
+        "firstTier": { "ar": "اليوم ٤–٧: ١١ دولارًا للحاوية ٢٠ قدمًا، ٢٢ دولارًا لـ٤٠ قدمًا", "en": "Days 4–7: USD 11 per 20ft, USD 22 per 40ft" },
+        "source": "https://www.maersk.com/local-information/imea/oman/import",
+        "sourceName": "Maersk Oman Import"
+      },
+      "terminal": {
+        "freeDays": 7,
+        "note": { "ar": "تعريفة ميناء صلالة المنشورة (سارية من ١ فبراير ٢٠٢٥) تمنح فترات مجانية تبدأ من ٧ أيام وتصل إلى ١٤ يومًا حسب فئة الحاوية والبضاعة. راجع الفئة التي تخصّك في التعريفة نفسها.", "en": "The published Port of Salalah tariff (effective 1 February 2025) gives free periods starting at 7 days and reaching 14, depending on container and cargo category. Check your own category in the tariff itself." },
+        "source": "https://salalahport.com.om/uploads/03c488988b708a098b0615c45e8a421b.pdf",
+        "sourceName": "Port of Salalah Tariff 2025"
+      }
+    },
+    {
+      "port": "jeddah",
+      "verified": "2026-11-09",
+      "carrier": {
+        "name": "Maersk",
+        "scope": { "ar": "السعودية (تعريفة قُطرية تشمل جدة والدمام وميناء الملك عبدالله)", "en": "Saudi Arabia (country tariff covering Jeddah, Dammam and King Abdullah Port)" },
+        "days": 7,
+        "types": { "ar": "٧ أيام تقويمية من تفريغ الحاوية", "en": "7 calendar days from container discharge" },
+        "currency": "USD",
+        "firstTier": { "ar": "اليوم ٨–١٥: ٣٠ دولارًا للحاوية ٢٠ قدمًا، ٦٠ دولارًا لـ٤٠ قدمًا", "en": "Days 8–15: USD 30 per 20ft, USD 60 per 40ft" },
+        "source": "https://www.maersk.com/local-information/imea/saudi-arabia/import",
+        "sourceName": "Maersk Saudi Arabia Import"
+      },
+      "terminal": {
+        "freeDays": 3,
+        "note": { "ar": "٣ أيام لإخراج البضاعة من حرم الميناء، بشرط تقديم البيان الجمركي خلال ٣ أيام من وصول الباخرة. إن تأخر البيان، يبدأ احتساب رسوم الميناء من يوم وصول الباخرة لا من يوم التقديم.", "en": "3 days to clear cargo out of the port premises, provided the customs entry is filed within 3 days of vessel arrival. If the entry is late, port demurrage is counted from the vessel arrival date, not the filing date." },
+        "source": "https://www.maersk.com/local-information/imea/saudi-arabia/import",
+        "sourceName": "Maersk Saudi Arabia Import"
+      }
+    },
+    {
+      "port": "dammam",
+      "verified": "2026-11-09",
+      "carrier": {
+        "name": "Maersk",
+        "scope": { "ar": "السعودية (تعريفة قُطرية تشمل جدة والدمام وميناء الملك عبدالله)", "en": "Saudi Arabia (country tariff covering Jeddah, Dammam and King Abdullah Port)" },
+        "days": 7,
+        "types": { "ar": "٧ أيام تقويمية من تفريغ الحاوية", "en": "7 calendar days from container discharge" },
+        "currency": "USD",
+        "firstTier": { "ar": "اليوم ٨–١٥: ٣٠ دولارًا للحاوية ٢٠ قدمًا، ٦٠ دولارًا لـ٤٠ قدمًا", "en": "Days 8–15: USD 30 per 20ft, USD 60 per 40ft" },
+        "source": "https://www.maersk.com/local-information/imea/saudi-arabia/import",
+        "sourceName": "Maersk Saudi Arabia Import"
+      },
+      "terminal": {
+        "freeDays": 3,
+        "note": { "ar": "٣ أيام لإخراج البضاعة من حرم الميناء، بشرط تقديم البيان الجمركي خلال ٣ أيام من وصول الباخرة.", "en": "3 days to clear cargo out of the port premises, provided the customs entry is filed within 3 days of vessel arrival." },
+        "source": "https://www.maersk.com/local-information/imea/saudi-arabia/import",
+        "sourceName": "Maersk Saudi Arabia Import"
+      }
+    },
+    {
+      "port": "king-abdullah-port",
+      "verified": "2026-11-09",
+      "carrier": {
+        "name": "Maersk",
+        "scope": { "ar": "السعودية (تعريفة قُطرية تشمل جدة والدمام وميناء الملك عبدالله)", "en": "Saudi Arabia (country tariff covering Jeddah, Dammam and King Abdullah Port)" },
+        "days": 7,
+        "types": { "ar": "٧ أيام تقويمية من تفريغ الحاوية", "en": "7 calendar days from container discharge" },
+        "currency": "USD",
+        "firstTier": { "ar": "اليوم ٨–١٥: ٣٠ دولارًا للحاوية ٢٠ قدمًا، ٦٠ دولارًا لـ٤٠ قدمًا", "en": "Days 8–15: USD 30 per 20ft, USD 60 per 40ft" },
+        "source": "https://www.maersk.com/local-information/imea/saudi-arabia/import",
+        "sourceName": "Maersk Saudi Arabia Import"
+      },
+      "terminal": null
+    }
+  ]
+}

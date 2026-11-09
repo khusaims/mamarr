@@ -1,0 +1,17 @@
+{%- set t = i18n[lang] -%}
+{%- set ft = freetime.entries | freeTimeFor(ftSlug) -%}
+{% if ft %}
+<section class="related freetime-port">
+  <h2>{{ t.freetime.onPort }}</h2>
+  <dl class="ft-dl">
+    <dt>{{ t.freetime.carrier }}</dt>
+    <dd><strong>{{ ft.carrier.days | num(lang) }}</strong> {{ t.freetime.days }} — {{ ft.carrier.types[lang] }}. {{ t.freetime.afterFree }}: {{ ft.carrier.firstTier[lang] }}.</dd>
+    <dt>{{ t.freetime.terminal }}</dt>
+    <dd>{% if ft.terminal %}{{ ft.terminal.note[lang] }}{% else %}{{ t.freetime.unknownBody }}{% endif %}</dd>
+    <dt>{{ t.freetime.source }}</dt>
+    <dd><a href="{{ ft.carrier.source }}" rel="nofollow noopener">{{ ft.carrier.sourceName }}</a>{% if ft.terminal %} · <a href="{{ ft.terminal.source }}" rel="nofollow noopener">{{ ft.terminal.sourceName }}</a>{% endif %} · {{ t.freetime.verified }} <time datetime="{{ ft.verified }}">{{ ft.verified }}</time></dd>
+  </dl>
+  <p class="muted">{{ t.freetime.caveat }}</p>
+  <p><a href="{{ ('/' + lang + '/freetime/') | rel(page.url) }}">{{ t.freetime.allPorts }}</a> · <a href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ t.freetime.askCta }}</a></p>
+</section>
+{% endif %}

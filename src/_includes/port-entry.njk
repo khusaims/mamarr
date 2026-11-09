@@ -23,6 +23,8 @@
     <p class="port-stub">{{ t.ports.stub }}</p>
   </div>
 
+  {% set ftSlug = port.slug %}{% include "freetime-port.njk" %}
+
   {%- set myLanes = rates.lanes | lanesFor(port.slug, 6) -%}
   {% if myLanes.length %}
   <section class="related">

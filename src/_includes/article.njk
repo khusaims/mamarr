@@ -18,6 +18,8 @@ layout: base.njk
     {% if section == "articles" %}{{ content | linkTerms(lang, page.url) | safe }}{% else %}{{ content | safe }}{% endif %}
   </div>
 
+  {% if section == "ports" and key %}{% set ftSlug = key %}{% include "freetime-port.njk" %}{% endif %}
+
   {%- set relTerms = content | mentionedTerms(lang, 8) -%}
   {%- set relPorts = content | mentionedPorts(lang, 6) -%}
   {% if relTerms.length or relPorts.length %}

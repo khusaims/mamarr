@@ -389,3 +389,30 @@ table { border-collapse: collapse; width: 100%; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 @media print { .site-header, .newsletter, .site-footer, .article-back { display: none; } body { background: #fff; } }
+
+/* Free time and demurrage */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.muted { color: var(--muted); }
+.table-scroll { overflow-x: auto; margin: 1.5rem 0; }
+.freetime-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 42rem; }
+.freetime-table th, .freetime-table td { padding: .85rem .6rem; text-align: start; border-bottom: 1px solid var(--sand); vertical-align: top; }
+.freetime-table thead th { font-weight: 500; color: var(--muted); font-size: .9rem; border-bottom: 2px solid var(--ink); white-space: nowrap; }
+.freetime-table tbody th { font-weight: 500; color: var(--ink); }
+.freetime-table tbody th .kind { display: block; color: var(--muted); font-weight: 400; font-size: .85rem; }
+.freetime-table .num-cell { white-space: nowrap; }
+.freetime-table .num-cell strong { font-size: 1.35rem; color: var(--ink); }
+.freetime-table .num-cell .kind { color: var(--muted); font-size: .85rem; }
+.callout { background: var(--white); border: 1px solid var(--sand); padding: 1.25rem 1.5rem; border-radius: 3px; margin: 1.5rem 0; }
+.callout h2 { margin-top: 0; margin-bottom: .5rem; font-size: 1.25rem; }
+.callout p { margin: 0 0 .6rem; max-width: 70ch; }
+.callout p:last-child { margin-bottom: 0; }
+.two-clocks { border-inline-start: 3px solid var(--buoy); }
+.caveat { font-size: .92rem; max-width: 74ch; margin: 1rem 0 2.5rem; }
+.freetime-detail { border-top: 1px solid var(--sand); padding-top: 1.25rem; margin-top: 1.5rem; }
+.freetime-detail h2 { font-size: 1.2rem; margin-bottom: .5rem; }
+.ft-dl { display: grid; gap: .35rem 1.25rem; margin: 0; }
+@media (min-width: 720px) { .ft-dl { grid-template-columns: 11rem 1fr; } }
+.ft-dl dt { color: var(--muted); font-size: .9rem; }
+.ft-dl dd { margin: 0 0 .5rem; max-width: 72ch; }
+.freetime-port .ft-dl { margin-bottom: .75rem; }
+.ask-box { border-inline-start: 3px solid var(--ink); margin-top: 2.5rem; }

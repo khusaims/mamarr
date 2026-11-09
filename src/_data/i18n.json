@@ -11,7 +11,8 @@
       "tools": "حاسبة التكلفة",
       "glossary": "المعجم اللوجستي",
       "events": "المعارض",
-      "search": "بحث"
+      "search": "بحث",
+      "freetime": "الأيام المجانية"
     },
     "home": {
       "heroTitle": "ما يعنيه كل تغيير في الممرات البحرية لمن يشحن من الخليج وإليه",
@@ -296,6 +297,33 @@
         "tool": "أداة",
         "page": "صفحة"
       }
+    },
+    "freetime": {
+      "title": "الأيام المجانية ورسوم التأخير",
+      "short": "الأيام المجانية",
+      "lead": "كم يومًا مجانيًا تحصل عليه حاويتك في كل ميناء خليجي، ومتى تبدأ الرسوم. الأرقام من تعريفات الناقلين والموانئ المنشورة، ولكل رقم مصدره وتاريخ تحققه.",
+      "twoClocks": "ساعتان لا ساعة واحدة",
+      "twoClocksBody": "الحاوية الواحدة قد تُحاسَب مرتين في الوقت نفسه. ساعة الناقل (demurrage و detention) تحسب استخدامك لحاوية الناقل. وساعة المحطة (port storage) تحسب المساحة التي تشغلها الحاوية داخل الميناء. لكل ساعة فترة مجانية مختلفة وبداية مختلفة، ودفع إحداهما لا يُعفيك من الأخرى.",
+      "carrier": "ساعة الناقل",
+      "terminal": "ساعة المحطة",
+      "days": "أيام مجانية",
+      "day": "يوم مجاني",
+      "afterFree": "بعد انتهاء المجاني",
+      "scope": "نطاق التعريفة",
+      "basis": "متى تبدأ ومتى تنتهي",
+      "basisBody": "الاستيراد: تبدأ من يوم التفريغ (محسوبًا) وتنتهي بيوم إدخال الحاوية فارغة إلى المحطة (محسوبًا).",
+      "source": "المصدر",
+      "verified": "تاريخ التحقق",
+      "unknown": "غير منشور",
+      "unknownBody": "لم نعثر على تعريفة محطة منشورة لهذا الميناء. إن كنت تعرف الرقم، أرسله.",
+      "ask": "رقمك مختلف؟",
+      "askBody": "عقدك قد يمنحك أيامًا أكثر أو أقل مما هو منشور هنا. أرسل ما حصلت عليه فعلًا — الميناء وعدد الأيام والناقل — وسنضيفه مجمّعًا بلا اسمك ولا اسم شركتك.",
+      "askCta": "أرسل رقمك",
+      "caveat": "ما هنا هو التعريفة المنشورة الافتراضية لناقل واحد. العقد المتفاوض عليه يسبقها، وحجوزات السبوت قد تختلف. تأكّد دائمًا من تعريفة ناقلك ومن إشعار الوصول قبل أن تبني عليها قرارًا.",
+      "onPort": "الأيام المجانية في هذا الميناء",
+      "allPorts": "قارن كل الموانئ",
+      "found": "{n} ميناء",
+      "noResults": "لا موانئ مطابقة في هذه المنطقة."
     }
   },
   "en": {
@@ -310,7 +338,8 @@
       "tools": "Landed cost",
       "glossary": "Glossary",
       "events": "Events",
-      "search": "Search"
+      "search": "Search",
+      "freetime": "Free time"
     },
     "home": {
       "heroTitle": "What every shift in the sea lanes means for the people shipping to and from the Gulf",
@@ -595,6 +624,33 @@
         "tool": "Tool",
         "page": "Page"
       }
+    },
+    "freetime": {
+      "title": "Free time and demurrage",
+      "short": "Free time",
+      "lead": "How many free days your container gets at each Gulf port, and when the charges start. Figures come from published carrier and port tariffs; every one carries its source and the date it was checked.",
+      "twoClocks": "Two clocks, not one",
+      "twoClocksBody": "One container can be charged twice at once. The carrier clock (demurrage and detention) counts your use of the carrier's box. The terminal clock (port storage) counts the space the box occupies inside the port. Each has its own free period and its own start, and paying one does not settle the other.",
+      "carrier": "Carrier clock",
+      "terminal": "Terminal clock",
+      "days": "free days",
+      "day": "free day",
+      "afterFree": "After free time",
+      "scope": "Tariff scope",
+      "basis": "When it starts and ends",
+      "basisBody": "Imports: it starts on the discharge day (counted) and ends on the day the empty box is gated in to the terminal (counted).",
+      "source": "Source",
+      "verified": "Checked",
+      "unknown": "Not published",
+      "unknownBody": "We found no published terminal tariff for this port. If you know the figure, send it.",
+      "ask": "Is your figure different?",
+      "askBody": "Your contract may give you more or fewer days than what is published here. Send what you actually got — port, days, carrier — and we will add it in aggregate, without your name or your company's.",
+      "askCta": "Send your figure",
+      "caveat": "What is here is one carrier's published default tariff. A negotiated contract overrides it, and spot bookings can differ. Always check your own carrier's tariff and your arrival notice before acting on these numbers.",
+      "onPort": "Free time at this port",
+      "allPorts": "Compare all ports",
+      "found": "{n} ports",
+      "noResults": "No matching ports in this region."
     }
   }
 }

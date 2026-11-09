@@ -125,6 +125,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("lanesFor", (lanes, slug, max) =>
     (lanes || []).filter((l) => l.from.slug === slug || l.to.slug === slug).slice(0, max || 6));
 
+  // One port record by its slug
+  eleventyConfig.addFilter("portBySlug", (list, slug) =>
+    (list || []).find((p) => p.slug === slug) || null);
+
+  // The free-time record for a port slug, or null when none is published yet
+  eleventyConfig.addFilter("freeTimeFor", (entries, slug) =>
+    (entries || []).find((e) => e.port === slug) || null);
+
   // Unique objects by a nested key path, keeping first occurrence
   eleventyConfig.addFilter("uniqueBy", (arr, path) => {
     const seen = new Set();
