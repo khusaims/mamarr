@@ -4,7 +4,7 @@
   "sample": true,
   "unit": "USD / 40' HC, spot, port-to-port",
   "indices_updated": "2026-11-09",
-  "indices_sample": true,
+  "indices_sample": false,
   "indices": [
     {
       "id": "wci",
