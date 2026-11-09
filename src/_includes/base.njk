@@ -4,6 +4,7 @@
 {%- if ogImage -%}{%- set ogslug = ogImage -%}
 {%- elif "/articles/" in page.url and page.fileSlug and page.fileSlug != "articles" -%}{%- set ogslug = lang + "-articles-" + page.fileSlug -%}
 {%- elif "/ports/" in page.url and page.fileSlug and page.fileSlug != "ports" -%}{%- set ogslug = lang + "-ports-" + page.fileSlug -%}
+{%- elif "/contribute/" in page.url or "/thanks/" in page.url -%}{%- set ogslug = lang + "-contribute" -%}
 {%- elif "/calculator/" in page.url -%}{%- set ogslug = lang + "-calculator" -%}
 {%- elif "/rates/" in page.url -%}{%- set ogslug = lang + "-rates" -%}
 {%- elif "/about/" in page.url -%}{%- set ogslug = lang + "-about" -%}
@@ -89,6 +90,7 @@
     <p class="footer-about">{{ t.footer.about }}</p>
     <ul class="footer-links">
       <li><a href="{{ ('/' + lang + '/about/') | rel(page.url) }}">{{ t.nav.about }}</a></li>
+      <li><a href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ t.contribute.navShort }}</a></li>
       <li><a href="{{ ('/' + lang + '/feed.xml') | rel(page.url) }}">RSS</a></li>
       <li><a href="{{ site.linkedin }}" rel="noopener">LinkedIn</a></li>
       <li><span>{{ t.footer.contact }}: {{ site.contactEmail }}</span></li>

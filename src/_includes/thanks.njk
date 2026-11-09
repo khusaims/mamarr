@@ -1,0 +1,16 @@
+{%- set t = i18n[lang] -%}
+{%- set c = t.contribute -%}
+<div class="wrap-narrow article">
+  <header class="article-head">
+    <h1>{{ c.thanksTitle }}</h1>
+    <p class="dek">{{ c.thanksLead }}</p>
+  </header>
+  <div class="prose">
+    <h2>{{ c.thanksNext }}</h2>
+    <ul>
+      <li><a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}">{{ c.thanksBack }}</a></li>
+      <li><a href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ c.thanksAnother }}</a></li>
+      <li><a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}">{{ t.glossary.title }}</a></li>
+    </ul>
+  </div>
+</div>

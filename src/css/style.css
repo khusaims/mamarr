@@ -125,6 +125,28 @@ table { border-collapse: collapse; width: 100%; }
   .rates-table .trend-col, .rates-table .trend { display: none; }
 }
 
+/* Contribute form */
+.why-list { list-style: none; padding: 0; margin: 0 0 2.5rem; display: grid; gap: 1px; background: var(--sand); border: 1px solid var(--sand); }
+.why-list li { background: var(--white); padding: .9rem 1.15rem; font-size: .95rem; line-height: 1.6; }
+.why-list strong { color: var(--ink); }
+.quote-form fieldset { border: 0; border-top: 1px solid var(--sand); padding: 1.5rem 0 0; margin: 0 0 2rem; }
+.quote-form legend { font-weight: 700; color: var(--ink); font-size: 1.05rem; padding-inline-end: .75rem; }
+.quote-form .field { margin-bottom: 0; }
+.quote-form textarea { font: inherit; font-size: 1rem; padding: .6rem .75rem; border: 1px solid var(--sand); background: var(--white); color: var(--text); border-radius: 3px; width: 100%; resize: vertical; }
+.quote-form textarea:focus, .quote-form input:focus { border-color: var(--teal); }
+.quote-form [aria-invalid="true"] { border-color: #b03000; background: #fff8f5; }
+.field.check label { display: flex; align-items: center; gap: .5rem; font-weight: 400; cursor: pointer; }
+.field.check input { width: auto; }
+.req { color: var(--buoy); }
+.form-error { color: #b03000; font-weight: 500; min-height: 1.4em; margin: 0 0 .75rem; }
+.btn-primary { display: inline-block; font: inherit; font-weight: 700; padding: .75rem 1.6rem; border: 0; border-radius: 3px; background: var(--buoy); color: #fff; cursor: pointer; text-decoration: none; }
+.btn-primary:hover { background: #d9550f; color: #fff; }
+.privacy-note { color: var(--muted); font-size: .88rem; margin-top: 1rem; }
+.contribute-cta { background: var(--white); border: 1px solid var(--sand); border-inline-start: 4px solid var(--buoy); border-radius: 3px; padding: 1.25rem 1.5rem; margin-top: 2.5rem; }
+.contribute-cta h3 { margin: 0 0 .4rem; }
+.contribute-cta p { margin: 0 0 .75rem; max-width: 56ch; }
+.contribute-cta p:last-child { margin-bottom: 0; }
+
 /* Freight lane table: controls, summary, bars */
 .lane-controls { margin-bottom: 1.25rem; }
 .lane-row { display: grid; gap: 1rem; margin-bottom: 1rem; }

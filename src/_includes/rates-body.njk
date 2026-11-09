@@ -13,6 +13,12 @@
   <section class="rates-section">
     <h2>{{ t.nav.rates }}</h2>
     {% include "rates-table.njk" %}
+
+    <aside class="contribute-cta">
+      <h3>{{ t.contribute.ctaTitle }}</h3>
+      <p>{{ t.contribute.ctaText }}</p>
+      <p><a class="btn-primary" href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ t.contribute.ctaBtn }}</a></p>
+    </aside>
   </section>
   <section class="wrap-narrow" style="padding-inline:0; margin-inline-start:0; margin-top:2.5rem">
     <h2>{{ t.rates.method }}</h2>

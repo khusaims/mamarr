@@ -1,0 +1,154 @@
+{%- set t = i18n[lang] -%}
+{%- set c = t.contribute -%}
+<div class="wrap-narrow">
+  <header class="page-head">
+    <h1>{{ c.title }}</h1>
+    <p>{{ c.lead }}</p>
+  </header>
+
+  <ul class="why-list">
+    <li><strong>{{ c.why1t }}</strong> {{ c.why1 }}</li>
+    <li><strong>{{ c.why2t }}</strong> {{ c.why2 }}</li>
+    <li><strong>{{ c.why3t }}</strong> {{ c.why3 }}</li>
+  </ul>
+
+  <form class="quote-form" name="rate-quote" method="POST"
+        data-netlify="true" netlify-honeypot="bot-field"
+        action="/{{ lang }}/thanks/" novalidate>
+    <input type="hidden" name="form-name" value="rate-quote">
+    <input type="hidden" name="lang" value="{{ lang }}">
+    <p class="hp" hidden><label>{{ c.hp }} <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+    <fieldset>
+      <legend>{{ c.secLane }}</legend>
+      <div class="calc-grid">
+        <p class="field">
+          <label for="origin">{{ c.origin }} <span class="req" aria-hidden="true">*</span></label>
+          <input id="origin" name="origin" list="port-list" required autocomplete="off" placeholder="{{ c.originPh }}">
+          <small>{{ c.originHint }}</small>
+        </p>
+        <p class="field">
+          <label for="destination">{{ c.destination }} <span class="req" aria-hidden="true">*</span></label>
+          <input id="destination" name="destination" list="port-list" required autocomplete="off" placeholder="{{ c.destPh }}">
+        </p>
+      </div>
+      <datalist id="port-list">
+        {% for p in ports.ports %}<option value="{{ p.name[lang] }}"></option>{% endfor %}
+      </datalist>
+    </fieldset>
+
+    <fieldset>
+      <legend>{{ c.secRate }}</legend>
+      <div class="calc-grid">
+        <p class="field">
+          <label for="container">{{ c.container }}</label>
+          <select id="container" name="container">
+            <option value="40HC">{{ c.c40hc }}</option>
+            <option value="40">{{ c.c40 }}</option>
+            <option value="20">{{ c.c20 }}</option>
+            <option value="LCL">{{ c.clcl }}</option>
+          </select>
+        </p>
+        <p class="field">
+          <label for="rate">{{ c.rate }} <span class="req" aria-hidden="true">*</span></label>
+          <input id="rate" name="rate" type="number" min="1" step="any" inputmode="decimal" required placeholder="1850">
+          <small>{{ c.rateHint }}</small>
+        </p>
+        <p class="field">
+          <label for="quoted_on">{{ c.quotedOn }} <span class="req" aria-hidden="true">*</span></label>
+          <input id="quoted_on" name="quoted_on" type="date" required>
+          <small>{{ c.quotedHint }}</small>
+        </p>
+        <p class="field">
+          <label for="days">{{ c.days }}</label>
+          <input id="days" name="days" type="number" min="1" step="1" inputmode="numeric" placeholder="18">
+        </p>
+        <p class="field">
+          <label for="service">{{ c.service }}</label>
+          <select id="service" name="service">
+            <option value="direct">{{ c.direct }}</option>
+            <option value="transship">{{ c.transship }}</option>
+            <option value="unknown">{{ c.unknown }}</option>
+          </select>
+        </p>
+        <p class="field">
+          <label for="includes">{{ c.includes }}</label>
+          <select id="includes" name="includes">
+            <option value="port-to-port">{{ c.p2p }}</option>
+            <option value="all-in">{{ c.allin }}</option>
+            <option value="door">{{ c.door }}</option>
+          </select>
+        </p>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>{{ c.secYou }}</legend>
+      <div class="calc-grid">
+        <p class="field">
+          <label for="role">{{ c.role }}</label>
+          <select id="role" name="role">
+            <option value="forwarder">{{ c.rForwarder }}</option>
+            <option value="importer">{{ c.rImporter }}</option>
+            <option value="broker">{{ c.rBroker }}</option>
+            <option value="other">{{ c.rOther }}</option>
+          </select>
+        </p>
+        <p class="field">
+          <label for="email">{{ c.email }}</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com">
+          <small>{{ c.emailHint }}</small>
+        </p>
+      </div>
+      <p class="field">
+        <label for="notes">{{ c.notes }}</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="{{ c.notesPh }}"></textarea>
+      </p>
+      <p class="field check">
+        <label><input type="checkbox" name="subscribe" value="yes"> {{ c.subscribe }}</label>
+      </p>
+    </fieldset>
+
+    <p class="form-error" id="form-error" role="alert"></p>
+    <p><button type="submit" class="btn-primary">{{ c.submit }}</button></p>
+    <p class="privacy-note">{{ c.privacy }}</p>
+  </form>
+</div>
+
+<script>
+(function () {
+  var f = document.querySelector(".quote-form");
+  if (!f) return;
+  var err = document.getElementById("form-error");
+  var msgs = {{ c.errors | dump | safe }};
+
+  function fail(el, text) {
+    err.textContent = text;
+    el.setAttribute("aria-invalid", "true");
+    el.focus();
+    return false;
+  }
+  function clear() {
+    err.textContent = "";
+    [].slice.call(f.querySelectorAll("[aria-invalid]")).forEach(function (e) { e.removeAttribute("aria-invalid"); });
+  }
+  f.addEventListener("input", clear);
+  f.addEventListener("submit", function (e) {
+    clear();
+    var origin = f.origin, dest = f.destination, rate = f.rate, on = f.quoted_on;
+    if (!origin.value.trim()) { e.preventDefault(); return fail(origin, msgs.origin); }
+    if (!dest.value.trim()) { e.preventDefault(); return fail(dest, msgs.destination); }
+    if (origin.value.trim() === dest.value.trim()) { e.preventDefault(); return fail(dest, msgs.same); }
+    var r = parseFloat(rate.value);
+    if (!isFinite(r) || r <= 0) { e.preventDefault(); return fail(rate, msgs.rate); }
+    if (!on.value) { e.preventDefault(); return fail(on, msgs.date); }
+    var d = new Date(on.value), now = new Date();
+    if (d > now) { e.preventDefault(); return fail(on, msgs.future); }
+    var ninety = new Date(); ninety.setDate(ninety.getDate() - 90);
+    if (d < ninety) { e.preventDefault(); return fail(on, msgs.old); }
+  });
+  // اجعل الحد الأقصى للتاريخ هو اليوم
+  var on = document.getElementById("quoted_on");
+  if (on) on.max = new Date().toISOString().slice(0, 10);
+})();
+</script>
