@@ -60,6 +60,7 @@
       <a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}">{{ t.home.ratesAll }}</a>
     </div>
     <p class="section-lead">{{ t.home.ratesLead }}</p>
+    {% include "indices.njk" %}
     {% include "rates-table.njk" %}
   </div>
 </section>

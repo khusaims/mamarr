@@ -1,0 +1,43 @@
+name: تحديث مؤشرات الشحن
+
+# كل جمعة 13:00 بتوقيت عُمان (09:00 UTC) — بعد نشر WCI يوم الخميس وSCFI يوم الجمعة.
+# ويمكن تشغيله يدويًا من تبويب Actions في أي وقت.
+on:
+  schedule:
+    - cron: "0 9 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: جلب المؤشرات وتحديث rates.json
+        env:
+          OILPRICEAPI_KEY: ${{ secrets.OILPRICEAPI_KEY }}
+        run: node scripts/update-rates.mjs
+
+      - name: التأكد أن الموقع ما زال يُبنى
+        run: |
+          npm ci
+          npm run build
+
+      - name: حفظ التغيير ودفعه
+        run: |
+          if [ -z "$(git status --porcelain src/_data/rates.json)" ]; then
+            echo "لا تغيير — لا شيء يُدفع."
+            exit 0
+          fi
+          git config user.name "mamarr-bot"
+          git config user.email "actions@github.com"
+          git add src/_data/rates.json
+          git commit -m "تحديث مؤشرات الشحن — $(date -u +%Y-%m-%d)"
+          git push

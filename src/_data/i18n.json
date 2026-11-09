@@ -18,7 +18,8 @@
       "ratesLead": "حاوية ٤٠ قدمًا، بالدولار، تقريبية للسوق الفوري. التفاصيل والمنهجية في صفحة الأسعار.",
       "ratesAll": "جدول الأسعار الكامل",
       "portsTitle": "الموانئ",
-      "portsLead": "صفحة لكل ميناء: ما يُناوَل فيه، ومن يُشغّله، وما يجب أن يعرفه المستورد قبل أن يوجّه شحنته إليه."
+      "portsLead": "صفحة لكل ميناء: ما يُناوَل فيه، ومن يُشغّله، وما يجب أن يعرفه المستورد قبل أن يوجّه شحنته إليه.",
+      "indicesTitle": "المؤشرات العالمية"
     },
     "corridor": {
       "caption": "الممر: شنغهاي ← كولومبو ← صلالة ← مضيق هرمز ← صحار ← جبل علي. الأرقام على الخط هي الأيام التقريبية بين كل محطتين لخدمة مباشرة.",
@@ -57,7 +58,14 @@
       "updated": "تاريخ التحديث",
       "method": "المنهجية",
       "methodText": "نجمع كل أسبوع عروض أسعار فعلية من ثلاثة مصادر على الأقل لكل خط، نستبعد الأعلى والأدنى، ونعرض الوسيط. الاتجاه العام يُقارَن بمؤشر درووري العالمي ومؤشر Freightos Baltic. إذا كان لديك عرض سعر حديث يختلف جوهريًا عما نعرضه، أرسله لنا — هذا ما يجعل الجدول أدق للجميع.",
-      "sampleNotice": "هذه القيم توضيحية لعرض شكل الصفحة قبل الإطلاق، وستُستبدل ببيانات حقيقية من الأسبوع الأول."
+      "sampleNotice": "هذه القيم توضيحية لعرض شكل الصفحة قبل الإطلاق، وستُستبدل ببيانات حقيقية من الأسبوع الأول.",
+      "indicesTitle": "المؤشرات العالمية",
+      "indicesLead": "تُحدَّث آليًا من مصدرها كل أسبوع، وتُستخدم مرجعًا لاتجاه السوق العام.",
+      "index": "المؤشر",
+      "value": "القيمة",
+      "cadence": "دورية النشر",
+      "published": "آخر نشر",
+      "indicesSampleNotice": "قيم توضيحية — تُستبدل بقيم حقيقية فور ضبط مفتاح الـ API."
     },
     "ports": {
       "title": "الموانئ",
@@ -93,7 +101,8 @@
       "ratesLead": "40-foot container, USD, indicative spot market. Details and method on the rates page.",
       "ratesAll": "Full rates table",
       "portsTitle": "Ports",
-      "portsLead": "One page per port: what it handles, who runs it, and what an importer should know before routing cargo there."
+      "portsLead": "One page per port: what it handles, who runs it, and what an importer should know before routing cargo there.",
+      "indicesTitle": "Global indices"
     },
     "corridor": {
       "caption": "The corridor: Shanghai → Colombo → Salalah → Strait of Hormuz → Sohar → Jebel Ali. Numbers on the line are approximate days between calls on a direct service.",
@@ -132,7 +141,14 @@
       "updated": "Updated",
       "method": "Method",
       "methodText": "Each week we collect real quotes from at least three sources per lane, drop the highest and lowest, and show the median. The overall direction is checked against the Drewry World Container Index and the Freightos Baltic Index. If you hold a recent quote that differs materially from what we show, send it to us — that is what makes the table more accurate for everyone.",
-      "sampleNotice": "These values are illustrative, to show the page before launch. They will be replaced with real data from week one."
+      "sampleNotice": "These values are illustrative, to show the page before launch. They will be replaced with real data from week one.",
+      "indicesTitle": "Global indices",
+      "indicesLead": "Updated automatically from source each week, used as a reference for the market's overall direction.",
+      "index": "Index",
+      "value": "Value",
+      "cadence": "Published",
+      "published": "Last published",
+      "indicesSampleNotice": "Illustrative values — replaced with real ones as soon as the API key is set."
     },
     "ports": {
       "title": "Ports",

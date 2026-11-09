@@ -1,0 +1,184 @@
+#!/usr/bin/env node
+/**
+ * ممرّ — تحديث مؤشرات الشحن العالمية آليًا.
+ *
+ * يجلب المؤشرات من OilPriceAPI ويحدّث قسم "indices" في src/_data/rates.json.
+ * لا يلمس قسم "lanes" إطلاقًا — أسعار الخطوط الخليجية تجمعها أنت يدويًا.
+ *
+ * التشغيل محليًا:   OILPRICEAPI_KEY=xxxx node scripts/update-rates.mjs
+ * في GitHub:        يعمل تلقائيًا كل جمعة عبر .github/workflows/update-rates.yml
+ *
+ * بدون مفتاح: يخرج بنجاح دون تغيير شيء (حتى لا يفشل البناء).
+ */
+
+import { readFile, writeFile } from "node:fs/promises";
+
+const FILE = new URL("../src/_data/rates.json", import.meta.url);
+// يمكن تجاوز العنوان بمتغير بيئة عند الاختبار المحلي
+const API = process.env.OILPRICEAPI_URL || "https://api.oilpriceapi.com/v1/prices/latest";
+const KEY = process.env.OILPRICEAPI_KEY;
+const HISTORY = 8; // عدد القيم المحفوظة في السلسلة
+
+// لكل مؤشر عدة رموز محتملة — نجرّبها بالترتيب ونأخذ أول ما ينجح.
+const INDICES = [
+  {
+    id: "wci",
+    codes: ["CONTAINER_FREIGHT_COMPOSITE_USD", "DREWRY_WCI_USD"],
+    name: { ar: "مؤشر درووري العالمي للحاويات", en: "Drewry World Container Index" },
+    short: { ar: "WCI", en: "WCI" },
+    unit: { ar: "دولار / حاوية ٤٠ قدمًا", en: "USD / 40ft container" },
+    cadence: { ar: "أسبوعي — الخميس", en: "Weekly — Thursday" }
+  },
+  {
+    id: "scfi",
+    codes: ["SCFI_INDEX"],
+    name: { ar: "مؤشر شنغهاي للشحن بالحاويات", en: "Shanghai Containerized Freight Index" },
+    short: { ar: "SCFI", en: "SCFI" },
+    unit: { ar: "نقطة", en: "points" },
+    cadence: { ar: "أسبوعي — الجمعة", en: "Weekly — Friday" }
+  },
+  {
+    id: "bdi",
+    codes: ["BALTIC_DRY_INDEX"],
+    name: { ar: "مؤشر البلطيق للبضائع الجافة", en: "Baltic Dry Index" },
+    short: { ar: "BDI", en: "BDI" },
+    unit: { ar: "نقطة", en: "points" },
+    cadence: { ar: "يومي — أيام عمل لندن", en: "Daily — London business days" }
+  }
+];
+
+function num(v) {
+  if (v === null || v === undefined) return null;
+  const n = typeof v === "number" ? v : parseFloat(String(v).replace(/[^0-9.\-]/g, ""));
+  return Number.isFinite(n) ? n : null;
+}
+
+/** يستخرج القيمة من أشكال الاستجابة المحتملة دون افتراض بنية واحدة. */
+function extractPrice(payload) {
+  const d = payload?.data ?? payload;
+  for (const k of ["price", "value", "last", "close", "latest"]) {
+    const n = num(d?.[k]);
+    if (n !== null) return n;
+  }
+  return null;
+}
+
+function extractDate(payload) {
+  const d = payload?.data ?? payload;
+  for (const k of ["created_at", "date", "published_at", "timestamp", "updated_at"]) {
+    const v = d?.[k];
+    if (typeof v === "string" && v.length >= 10) return v.slice(0, 10);
+  }
+  return new Date().toISOString().slice(0, 10);
+}
+
+async function fetchCode(code) {
+  const res = await fetch(`${API}?by_code=${encodeURIComponent(code)}`, {
+    headers: { Authorization: `Token ${KEY}`, Accept: "application/json" }
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const json = await res.json();
+  const price = extractPrice(json);
+  if (price === null) throw new Error("no price field in response");
+  return { price, date: extractDate(json) };
+}
+
+async function fetchIndex(spec) {
+  const errors = [];
+  for (const code of spec.codes) {
+    try {
+      const r = await fetchCode(code);
+      return { ...r, code };
+    } catch (e) {
+      errors.push(`${code}: ${e.message}`);
+    }
+  }
+  throw new Error(errors.join(" | "));
+}
+
+function pctChange(curr, prev) {
+  if (prev === null || prev === undefined || prev === 0) return 0;
+  return Math.round(((curr - prev) / prev) * 1000) / 10;
+}
+
+async function main() {
+  if (!KEY) {
+    console.log("OILPRICEAPI_KEY غير مضبوط — لم يُغيَّر شيء.");
+    return;
+  }
+
+  const raw = await readFile(FILE, "utf8");
+  const data = JSON.parse(raw);
+  const before = JSON.stringify(data);
+
+  if (!Array.isArray(data.indices)) data.indices = [];
+
+  let updated = 0;
+  const failures = [];
+
+  for (const spec of INDICES) {
+    let result;
+    try {
+      result = await fetchIndex(spec);
+    } catch (e) {
+      failures.push(`${spec.id} (${e.message})`);
+      continue;
+    }
+
+    let entry = data.indices.find((i) => i.id === spec.id);
+    if (!entry) {
+      entry = { id: spec.id, name: spec.name, short: spec.short, unit: spec.unit, cadence: spec.cadence, series: [] };
+      data.indices.push(entry);
+    }
+    // حافظ على النصوص إن عُدّلت يدويًا، وأضف الناقص فقط
+    entry.name ??= spec.name;
+    entry.short ??= spec.short;
+    entry.unit ??= spec.unit;
+    entry.cadence ??= spec.cadence;
+    entry.series ??= [];
+
+    const prev = entry.series.length ? entry.series[entry.series.length - 1] : null;
+    const sameDay = entry.published === result.date;
+
+    if (sameDay) {
+      // نفس يوم النشر: صحّح آخر قيمة بدل إضافة واحدة جديدة
+      if (entry.series.length) entry.series[entry.series.length - 1] = result.price;
+      else entry.series.push(result.price);
+    } else {
+      entry.series.push(result.price);
+      if (entry.series.length > HISTORY) entry.series = entry.series.slice(-HISTORY);
+    }
+
+    entry.value = result.price;
+    entry.published = result.date;
+    entry.source_code = result.code;
+    entry.change_pct = sameDay
+      ? (entry.change_pct ?? 0)
+      : pctChange(result.price, prev);
+    updated++;
+    console.log(`✓ ${spec.id}: ${result.price} (${result.date}, ${result.code})`);
+  }
+
+  if (failures.length) console.warn("تعذّر جلب:", failures.join("، "));
+
+  if (!updated) {
+    console.log("لم يُجلب أي مؤشر — لم يُغيَّر الملف.");
+    process.exitCode = failures.length ? 1 : 0;
+    return;
+  }
+
+  data.indices_updated = new Date().toISOString().slice(0, 10);
+
+  const next = JSON.stringify(data, null, 2) + "\n";
+  if (JSON.stringify(JSON.parse(next)) === before) {
+    console.log("لا تغيير في القيم.");
+    return;
+  }
+  await writeFile(FILE, next, "utf8");
+  console.log(`تم تحديث ${updated} مؤشرًا في rates.json`);
+}
+
+main().catch((e) => {
+  console.error("فشل التحديث:", e.message);
+  process.exit(1);
+});
