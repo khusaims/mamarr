@@ -23,7 +23,7 @@ const HISTORY = 8; // عدد القيم المحفوظة في السلسلة
 const INDICES = [
   {
     id: "wci",
-    codes: ["CONTAINER_FREIGHT_COMPOSITE_USD", "DREWRY_WCI_USD"],
+    codes: ["CONTAINER_FREIGHT_COMPOSITE_USD", "DREWRY_WCI_USD", "WCI_INDEX", "DREWRY_WCI", "WCI_COMPOSITE_USD"],
     name: { ar: "مؤشر درووري العالمي للحاويات", en: "Drewry World Container Index" },
     short: { ar: "WCI", en: "WCI" },
     unit: { ar: "دولار / حاوية ٤٠ قدمًا", en: "USD / 40ft container" },
@@ -31,7 +31,7 @@ const INDICES = [
   },
   {
     id: "scfi",
-    codes: ["SCFI_INDEX"],
+    codes: ["SCFI_INDEX", "SCFI", "SHANGHAI_CONTAINERIZED_FREIGHT_INDEX"],
     name: { ar: "مؤشر شنغهاي للشحن بالحاويات", en: "Shanghai Containerized Freight Index" },
     short: { ar: "SCFI", en: "SCFI" },
     unit: { ar: "نقطة", en: "points" },
@@ -39,7 +39,7 @@ const INDICES = [
   },
   {
     id: "bdi",
-    codes: ["BALTIC_DRY_INDEX"],
+    codes: ["BALTIC_DRY_INDEX", "BDI", "BALTIC_DRY"],
     name: { ar: "مؤشر البلطيق للبضائع الجافة", en: "Baltic Dry Index" },
     short: { ar: "BDI", en: "BDI" },
     unit: { ar: "نقطة", en: "points" },
@@ -72,14 +72,25 @@ function extractDate(payload) {
   return new Date().toISOString().slice(0, 10);
 }
 
+/** يقتطع جسم الرد للتشخيص، مع إخفاء المفتاح إن ظهر فيه. */
+function snippet(text) {
+  return String(text).replace(KEY, "***").replace(/\s+/g, " ").slice(0, 180);
+}
+
 async function fetchCode(code) {
   const res = await fetch(`${API}?by_code=${encodeURIComponent(code)}`, {
     headers: { Authorization: `Token ${KEY}`, Accept: "application/json" }
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const json = await res.json();
+  const body = await res.text();
+  if (!res.ok) throw new Error(`HTTP ${res.status} — ${snippet(body)}`);
+  let json;
+  try {
+    json = JSON.parse(body);
+  } catch {
+    throw new Error(`رد ليس JSON — ${snippet(body)}`);
+  }
   const price = extractPrice(json);
-  if (price === null) throw new Error("no price field in response");
+  if (price === null) throw new Error(`لا يوجد حقل سعر — ${snippet(body)}`);
   return { price, date: extractDate(json) };
 }
 
@@ -159,11 +170,19 @@ async function main() {
     console.log(`✓ ${spec.id}: ${result.price} (${result.date}, ${result.code})`);
   }
 
-  if (failures.length) console.warn("تعذّر جلب:", failures.join("، "));
+  if (failures.length) {
+    console.warn("\n⚠ تعذّر جلب هذه المؤشرات:");
+    for (const f of failures) console.warn("  - " + f);
+    console.warn(
+      "\nإن كان السبب 401 فالمفتاح خاطئ أو غير مضبوط في Secrets." +
+      "\nإن كان 404 أو 'unknown code' فالرمز غير موجود — أرسل لي السطر أعلاه وأصحّحه." +
+      "\nإن كان 403 فالمؤشر غير مشمول في خطة حسابك.\n"
+    );
+  }
 
   if (!updated) {
-    console.log("لم يُجلب أي مؤشر — لم يُغيَّر الملف.");
-    process.exitCode = failures.length ? 1 : 0;
+    // لا نُفشل التشغيل: الموقع يبقى يعمل بالقيم الحالية، والسجل أعلاه يشرح السبب.
+    console.log("لم يُجلب أي مؤشر — لم يُغيَّر الملف، والموقع يعمل بالقيم الموجودة.");
     return;
   }
 
