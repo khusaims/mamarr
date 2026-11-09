@@ -133,6 +133,17 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("freeTimeFor", (entries, slug) =>
     (entries || []).find((e) => e.port === slug) || null);
 
+  // Smallest and largest value at a nested key path across a list
+  const atPath = (item, path) => path.split(".").reduce((o, k) => (o == null ? o : o[k]), item);
+  eleventyConfig.addFilter("minVal", (arr, path) =>
+    Math.min(...(arr || []).map((x) => atPath(x, path)).filter((n) => typeof n === "number")));
+  eleventyConfig.addFilter("maxVal", (arr, path) =>
+    Math.max(...(arr || []).map((x) => atPath(x, path)).filter((n) => typeof n === "number")));
+
+  // Every entry sharing a nested key value with the given one
+  eleventyConfig.addFilter("sharing", (arr, path, value) =>
+    (arr || []).filter((x) => atPath(x, path) === value));
+
   // Unique objects by a nested key path, keeping first occurrence
   eleventyConfig.addFilter("uniqueBy", (arr, path) => {
     const seen = new Set();

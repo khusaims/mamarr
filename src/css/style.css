@@ -408,8 +408,17 @@ table { border-collapse: collapse; width: 100%; }
 .callout p:last-child { margin-bottom: 0; }
 .two-clocks { border-inline-start: 3px solid var(--buoy); }
 .caveat { font-size: .92rem; max-width: 74ch; margin: 1rem 0 2.5rem; }
-.freetime-detail { border-top: 1px solid var(--sand); padding-top: 1.25rem; margin-top: 1.5rem; }
-.freetime-detail h2 { font-size: 1.2rem; margin-bottom: .5rem; }
+.finding { font-size: 1.15rem; max-width: 62ch; margin: 0 0 1.5rem; border-inline-start: 3px solid var(--buoy); padding-inline-start: 1rem; }
+.table-note { font-size: .9rem; max-width: 74ch; margin: -.75rem 0 2.5rem; }
+.tariffs > h2 { margin-bottom: .4rem; }
+.tariffs > p { color: var(--muted); max-width: 72ch; margin-bottom: 1.5rem; }
+.tariff { border-top: 1px solid var(--sand); padding-top: 1.25rem; margin-top: 1.5rem; }
+.tariff h3 { font-size: 1.15rem; margin-bottom: .4rem; }
+.tariff h4 { font-size: .95rem; color: var(--muted); font-weight: 500; margin: 1rem 0 .5rem; }
+.tariff-line { margin: 0 0 .35rem; max-width: 74ch; }
+.tariff-line strong { font-size: 1.1rem; }
+.tariff-src { font-size: .92rem; margin: 0; max-width: 74ch; }
+.ft-checked { display: block; font-size: .85rem; }
 .ft-dl { display: grid; gap: .35rem 1.25rem; margin: 0; }
 @media (min-width: 720px) { .ft-dl { grid-template-columns: 11rem 1fr; } }
 .ft-dl dt { color: var(--muted); font-size: .9rem; }

@@ -323,7 +323,14 @@
       "onPort": "الأيام المجانية في هذا الميناء",
       "allPorts": "قارن كل الموانئ",
       "found": "{n} ميناء",
-      "noResults": "لا موانئ مطابقة في هذه المنطقة."
+      "noResults": "لا موانئ مطابقة في هذه المنطقة.",
+      "finding": "أقصر فترة مجانية في القائمة {min} أيام وأطولها {max} أيام. الفرق بين ميناءين على بُعد يومين بحرًا يتجاوز الضعف، وهو وحده يكفي لتغيير ميناء التفريغ.",
+      "tariffs": "التعريفات وما تغطيه",
+      "tariffsLead": "تعريفات الناقلين في الخليج قُطرية لا تخص ميناءً بعينه، فالموانئ الستة أعلاه تعود إلى ثلاث تعريفات فقط. ساعة المحطة وحدها تختلف من ميناء إلى آخر.",
+      "covers": "الموانئ التي تشملها",
+      "terminalByPort": "ساعة المحطة في كل ميناء",
+      "sourcesHeading": "المصادر",
+      "allVerified": "كل الأرقام أعلاه جرى التحقق منها في {date}، وما خالف هذا التاريخ مذكور بجانبه."
     }
   },
   "en": {
@@ -650,7 +657,14 @@
       "onPort": "Free time at this port",
       "allPorts": "Compare all ports",
       "found": "{n} ports",
-      "noResults": "No matching ports in this region."
+      "noResults": "No matching ports in this region.",
+      "finding": "The shortest free period on this list is {min} days and the longest is {max}. Two ports two days apart by sea differ by more than double, and that alone is reason enough to change where you discharge.",
+      "tariffs": "The tariffs and what they cover",
+      "tariffsLead": "Carrier tariffs in the Gulf are set per country, not per port, so the six ports above come under only three tariffs. Only the terminal clock differs port by port.",
+      "covers": "Ports covered",
+      "terminalByPort": "Terminal clock at each port",
+      "sourcesHeading": "Sources",
+      "allVerified": "Every figure above was checked on {date}; anything checked on another date says so beside it."
     }
   }
 }

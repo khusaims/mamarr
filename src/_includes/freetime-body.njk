@@ -1,14 +1,17 @@
 {%- set t = i18n[lang] -%}
+{%- set minD = freetime.entries | minVal("carrier.days") -%}
+{%- set maxD = freetime.entries | maxVal("carrier.days") -%}
 <div class="wrap">
   <header class="page-head">
     <h1>{{ t.freetime.title }}</h1>
     <p>{{ t.freetime.lead }}</p>
   </header>
 
+  <p class="finding">{{ t.freetime.finding | replace("{min}", minD | num(lang)) | replace("{max}", maxD | num(lang)) }}</p>
+
   <section class="callout two-clocks">
     <h2>{{ t.freetime.twoClocks }}</h2>
     <p>{{ t.freetime.twoClocksBody }}</p>
-    <p class="muted">{{ t.freetime.basis }}: {{ t.freetime.basisBody }}</p>
   </section>
 
   <div class="table-scroll">
@@ -18,9 +21,7 @@
         <tr>
           <th scope="col">{{ t.ports.title }}</th>
           <th scope="col">{{ t.freetime.carrier }}</th>
-          <th scope="col">{{ t.freetime.afterFree }}</th>
           <th scope="col">{{ t.freetime.terminal }}</th>
-          <th scope="col">{{ t.freetime.source }}</th>
         </tr>
       </thead>
       <tbody>
@@ -33,43 +34,59 @@
             <span class="kind">{{ p.country[lang] }}</span>
           </th>
           <td class="num-cell"><strong>{{ e.carrier.days | num(lang) }}</strong> <span class="kind">{{ t.freetime.days }}</span></td>
-          <td>{{ e.carrier.firstTier[lang] }}</td>
           <td class="num-cell">
             {%- if e.terminal %}<strong>{{ e.terminal.freeDays | num(lang) }}</strong> <span class="kind">{{ t.freetime.days }}</span>
             {%- else %}<span class="kind">{{ t.freetime.unknown }}</span>{% endif %}
           </td>
-          <td><a href="{{ e.carrier.source }}" rel="nofollow noopener">{{ e.carrier.sourceName }}</a></td>
         </tr>
         {%- endif -%}
         {%- endfor %}
       </tbody>
     </table>
   </div>
+  <p class="table-note muted">{{ t.freetime.basis }}: {{ t.freetime.basisBody }}</p>
 
-  <p class="muted caveat">{{ t.freetime.caveat }}</p>
+  <section class="tariffs">
+    <h2>{{ t.freetime.tariffs }}</h2>
+    <p>{{ t.freetime.tariffsLead }}</p>
 
-  {%- for e in freetime.entries -%}
-  {%- set p = ports.ports | portBySlug(e.port) -%}
-  {%- if p %}
-  <section class="freetime-detail" id="ft-{{ p.slug }}">
-    <h2><a href="{{ ('/' + lang + '/ports/' + p.slug + '/') | rel(page.url) }}">{{ p.name[lang] }}</a></h2>
-    <dl class="ft-dl">
-      <dt>{{ t.freetime.scope }}</dt>
-      <dd>{{ e.carrier.scope[lang] }} · {{ e.carrier.name }}</dd>
-      <dt>{{ t.freetime.carrier }}</dt>
-      <dd>{{ e.carrier.types[lang] }}. {{ t.freetime.afterFree }}: {{ e.carrier.firstTier[lang] }}.</dd>
-      <dt>{{ t.freetime.terminal }}</dt>
-      <dd>
-        {%- if e.terminal %}{{ e.terminal.note[lang] }}
-        <a href="{{ e.terminal.source }}" rel="nofollow noopener">{{ e.terminal.sourceName }}</a>
-        {%- else %}{{ t.freetime.unknownBody }}{% endif %}
-      </dd>
-      <dt>{{ t.freetime.verified }}</dt>
-      <dd><time datetime="{{ e.verified }}">{{ e.verified }}</time></dd>
-    </dl>
+    {%- for g in freetime.entries | uniqueBy("carrier.source") -%}
+    {%- set group = freetime.entries | sharing("carrier.source", g.carrier.source) %}
+    <section class="tariff">
+      <h3>{{ g.carrier.scope[lang] }}</h3>
+      <p class="tariff-line">
+        <strong>{{ g.carrier.days | num(lang) }} {{ t.freetime.days }}</strong> — {{ g.carrier.types[lang] }}.
+        {{ t.freetime.afterFree }}: {{ g.carrier.firstTier[lang] }}.
+      </p>
+      <p class="muted tariff-src">
+        {{ t.freetime.covers }}:
+        {% for e in group %}{%- set p = ports.ports | portBySlug(e.port) -%}
+        {%- if p %}<a href="{{ ('/' + lang + '/ports/' + p.slug + '/') | rel(page.url) }}">{{ p.name[lang] }}</a>{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}
+        — {{ t.freetime.source }}: <a href="{{ g.carrier.source }}" rel="nofollow noopener">{{ g.carrier.sourceName }}</a>
+      </p>
+
+      <h4>{{ t.freetime.terminalByPort }}</h4>
+      <dl class="ft-dl">
+        {%- for e in group -%}
+        {%- set p = ports.ports | portBySlug(e.port) -%}
+        {%- if p %}
+        <dt>{{ p.name[lang] }}</dt>
+        <dd>
+          {%- if e.terminal %}{{ e.terminal.note[lang] }} <a href="{{ e.terminal.source }}" rel="nofollow noopener">{{ e.terminal.sourceName }}</a>
+          {%- else %}{{ t.freetime.unknownBody }}{% endif %}
+          {%- if e.verified != freetime.asOf %}<span class="muted ft-checked">{{ t.freetime.verified }} <time datetime="{{ e.verified }}">{{ e.verified | dateHuman(lang) }}</time></span>{% endif %}
+        </dd>
+        {%- endif -%}
+        {%- endfor %}
+      </dl>
+    </section>
+    {%- endfor %}
   </section>
-  {%- endif -%}
-  {%- endfor %}
+
+  <p class="muted caveat">
+    {{ t.freetime.allVerified | replace("{date}", freetime.asOf | dateHuman(lang)) }}
+    {{ t.freetime.caveat }}
+  </p>
 
   <section class="callout ask-box">
     <h2>{{ t.freetime.ask }}</h2>
