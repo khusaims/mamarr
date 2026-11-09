@@ -105,6 +105,8 @@ async function collect() {
       : "Gulf and Red Sea logistics, for the people who ship through it" });
     jobs.push({ slug: `${lang}-rates`, lang, kind: lang === "ar" ? "بيانات" : "Data",
       title: lang === "ar" ? "أسعار الشحن للخطوط الخليجية" : "Freight rates on Gulf lanes" });
+    jobs.push({ slug: `${lang}-events`, lang, kind: lang === "ar" ? "أجندة" : "Calendar",
+      title: lang === "ar" ? "المعارض والمؤتمرات اللوجستية" : "Logistics exhibitions and conferences" });
     jobs.push({ slug: `${lang}-contribute`, lang, kind: lang === "ar" ? "شارك" : "Contribute",
       title: lang === "ar" ? "شارك عرض سعر شحن" : "Share a freight quote" });
     jobs.push({ slug: `${lang}-glossary`, lang, kind: lang === "ar" ? "مرجع" : "Reference",

@@ -1,0 +1,205 @@
+{
+  "_readme": "المعارض والمؤتمرات. التصنيف إلى (جارية/قادمة/ما مضى) يحدث في متصفح الزائر حسب تاريخ اليوم، فلا يحتاج الموقع إعادة بناء ليبقى دقيقًا. start وend بصيغة YYYY-MM-DD. tbd:true لحدث سنوي لم تُعلن تواريخه بعد (اترك start وend فارغَين). conflict:true حين تتضارب المصادر — يظهر تنبيه للزائر. verified = تاريخ آخر تحقق، حدّثه كلما راجعت. recap = رابط مقال ملخص إن كتبته.",
+  "verified": "2026-11-09",
+  "regions": [
+    { "id": "gulf", "ar": "الخليج والشرق الأوسط", "en": "Gulf and Middle East" },
+    { "id": "global", "ar": "عالمية", "en": "Global" }
+  ],
+  "types": [
+    { "id": "exhibition", "ar": "معرض", "en": "Exhibition" },
+    { "id": "conference", "ar": "مؤتمر", "en": "Conference" },
+    { "id": "forum", "ar": "ملتقى", "en": "Forum" }
+  ],
+  "events": [
+    {
+      "slug": "intermodal-europe-2026", "region": "global", "type": "exhibition",
+      "name": { "ar": "إنترمودال أوروبا ٢٠٢٦", "en": "Intermodal Europe 2026" },
+      "organizer": { "ar": "إنفورما ماركتس", "en": "Informa Markets" },
+      "city": { "ar": "روتردام", "en": "Rotterdam" }, "country": { "ar": "هولندا", "en": "Netherlands" },
+      "start": "2026-11-10", "end": "2026-11-12",
+      "url": "https://www.intermodal-events.com/",
+      "note": { "ar": "أهم حدث أوروبي لنقل الحاويات برًا وبحرًا وسككيًا. تُعقد هذا العام في روتردام، شريكة ميناء صحار.", "en": "Europe's leading event for container transport by road, rail and sea. Held this year in Rotterdam, Sohar's partner port." }
+    },
+    {
+      "slug": "transport-logistic-turkiye-2026", "region": "global", "type": "exhibition",
+      "name": { "ar": "ترانسبورت لوجستيك تركيا ٢٠٢٦", "en": "transport logistic Türkiye 2026" },
+      "organizer": { "ar": "ميسه ميونخ", "en": "Messe München" },
+      "city": { "ar": "إسطنبول", "en": "Istanbul" }, "country": { "ar": "تركيا", "en": "Türkiye" },
+      "start": "2026-11-11", "end": "2026-11-13",
+      "url": "https://www.transportlogistic.de/",
+      "note": { "ar": "النسخة التركية من المعرض الألماني الأشهر. قريبة جغرافيًا ومفيدة لمن يستورد عبر مرسين وإسطنبول.", "en": "The Turkish edition of the German flagship fair. Close by, and useful for anyone importing through Mersin and Istanbul." }
+    },
+    {
+      "slug": "breakbulk-middle-east-2027", "region": "gulf", "type": "exhibition",
+      "name": { "ar": "بريك بلك الشرق الأوسط ٢٠٢٧", "en": "Breakbulk Middle East 2027" },
+      "organizer": { "ar": "هايلايت/بريك بلك إيفنتس", "en": "Breakbulk Events" },
+      "city": { "ar": "دبي", "en": "Dubai" }, "country": { "ar": "الإمارات", "en": "UAE" },
+      "venue": { "ar": "مركز دبي التجاري العالمي", "en": "Dubai World Trade Centre" },
+      "start": "2027-02-02", "end": "2027-02-03", "conflict": true,
+      "url": "https://middleeast.breakbulk.com/",
+      "note": { "ar": "الحدث الأبرز في المنطقة لبضائع المشاريع والرفع الثقيل: وكلاء شحن، هيئات موانئ، مقاولو مشاريع. الأقرب لمن يعمل في قطاع الطاقة.", "en": "The region's leading event for project cargo and heavy lift: forwarders, port authorities, project contractors. The closest fit for anyone in energy." }
+    },
+    {
+      "slug": "transport-logistic-kenya-2027", "region": "global", "type": "exhibition",
+      "name": { "ar": "ترانسبورت لوجستيك كينيا ٢٠٢٧", "en": "transport logistic Kenya 2027" },
+      "organizer": { "ar": "ميسه ميونخ", "en": "Messe München" },
+      "city": { "ar": "نيروبي", "en": "Nairobi" }, "country": { "ar": "كينيا", "en": "Kenya" },
+      "start": "2027-02-02", "end": "2027-02-04", "conflict": true,
+      "url": "https://www.transportlogistic.de/",
+      "note": { "ar": "بوابة شرق أفريقيا، وسوق تصدير متنامٍ للمنتجات الخليجية عبر مومباسا.", "en": "The East Africa gateway, and a growing export market for Gulf goods through Mombasa." }
+    },
+    {
+      "slug": "transport-logistic-india-2027", "region": "global", "type": "exhibition",
+      "name": { "ar": "ترانسبورت لوجستيك الهند ٢٠٢٧", "en": "transport logistic India 2027" },
+      "organizer": { "ar": "ميسه ميونخ", "en": "Messe München" },
+      "city": { "ar": "مومباي", "en": "Mumbai" }, "country": { "ar": "الهند", "en": "India" },
+      "start": "2027-02-25", "end": "2027-02-26",
+      "url": "https://www.transportlogistic.de/",
+      "note": { "ar": "الهند أقرب مصادر التوريد للخليج زمنًا وتكلفة — ومعرض مومباي أقصر طريق لبناء علاقات مباشرة مع الموردين هناك.", "en": "India is the Gulf's closest sourcing market in time and cost, and Mumbai is the shortest route to direct supplier relationships there." }
+    },
+    {
+      "slug": "tpm27", "region": "global", "type": "conference",
+      "name": { "ar": "مؤتمر TPM27", "en": "TPM27" },
+      "organizer": { "ar": "جورنال أوف كوميرس", "en": "Journal of Commerce" },
+      "city": { "ar": "لونغ بيتش", "en": "Long Beach" }, "country": { "ar": "الولايات المتحدة", "en": "United States" },
+      "start": "2027-02-28", "end": "2027-03-03",
+      "url": "https://events.joc.com/tpm",
+      "note": { "ar": "المؤتمر الأهم عالميًا لشحن الحاويات، وفيه تُبنى عقود الشحن السنوية. لا تحتاج حضوره، لكن ما يُقال فيه يحدد أسعار سنتك.", "en": "The world's most important container shipping conference, where annual contracts are built. You need not attend, but what is said there sets your year's rates." }
+    },
+    {
+      "slug": "transport-logistic-munich-2027", "region": "global", "type": "exhibition",
+      "name": { "ar": "ترانسبورت لوجستيك ميونخ ٢٠٢٧", "en": "transport logistic Munich 2027" },
+      "organizer": { "ar": "ميسه ميونخ", "en": "Messe München" },
+      "city": { "ar": "ميونخ", "en": "Munich" }, "country": { "ar": "ألمانيا", "en": "Germany" },
+      "venue": { "ar": "مركز ميسه ميونخ", "en": "Messe München" },
+      "start": "2027-04-26", "end": "2027-04-29",
+      "url": "https://www.transportlogistic.de/",
+      "note": { "ar": "أكبر معرض لوجستي في العالم، يُقام كل سنتين، ومعه معرض الشحن الجوي الأوروبي. انتبه: انتقل من يونيو إلى أبريل في نسخة ٢٠٢٧.", "en": "The world's largest logistics fair, held every two years alongside air cargo Europe. Note it moved from June to April for the 2027 edition." }
+    },
+    {
+      "slug": "seatrade-maritime-me-2027", "region": "gulf", "type": "exhibition",
+      "name": { "ar": "سي تريد البحرية واللوجستية الشرق الأوسط ٢٠٢٧", "en": "Seatrade Maritime Logistics Middle East 2027" },
+      "organizer": { "ar": "إنفورما ماركتس", "en": "Informa Markets" },
+      "city": { "ar": "دبي", "en": "Dubai" }, "country": { "ar": "الإمارات", "en": "UAE" },
+      "venue": { "ar": "مركز دبي التجاري العالمي", "en": "Dubai World Trade Centre" },
+      "start": "2027-05-04", "end": "2027-05-07", "conflict": true,
+      "url": "https://www.seatrademaritimeevents.com/",
+      "note": { "ar": "الملتقى البحري الأكبر في المنطقة: خطوط ملاحة، موانئ، خدمات بحرية. المكان الأنسب للقاء وكلاء الخطوط وجهًا لوجه.", "en": "The region's largest maritime gathering: shipping lines, ports and marine services. The best place to meet line agents face to face." }
+    },
+    {
+      "slug": "seamless-middle-east-2027", "region": "gulf", "type": "exhibition",
+      "name": { "ar": "سيملس الشرق الأوسط ٢٠٢٧", "en": "Seamless Middle East 2027" },
+      "organizer": { "ar": "تيرابين", "en": "Terrapinn" },
+      "city": { "ar": "دبي", "en": "Dubai" }, "country": { "ar": "الإمارات", "en": "UAE" },
+      "start": "2027-05-11", "end": "2027-05-12",
+      "url": "https://www.terrapinn.com/exhibition/seamless-middle-east/",
+      "note": { "ar": "مداره التجارة الإلكترونية والمدفوعات، لكن فيه مسار مخصص للتوصيل الأخير واللوجستيات العابرة للحدود — مفيد لمن يبيع أونلاين.", "en": "Centred on e-commerce and payments, but with a dedicated track on last-mile and cross-border logistics — useful if you sell online." }
+    },
+    {
+      "slug": "transport-logistic-middle-east-2027", "region": "gulf", "type": "exhibition",
+      "name": { "ar": "ترانسبورت لوجستيك الشرق الأوسط ٢٠٢٧", "en": "transport logistic Middle East 2027" },
+      "organizer": { "ar": "dmg events بترخيص من ميسه ميونخ", "en": "dmg events, licensed by Messe München" },
+      "city": { "ar": "الرياض", "en": "Riyadh" }, "country": { "ar": "السعودية", "en": "Saudi Arabia" },
+      "venue": { "ar": "مركز واجهة الرياض للمعارض والمؤتمرات", "en": "Riyadh Front Exhibition & Conference Center" },
+      "start": "2027-06-08", "end": "2027-06-10",
+      "url": "https://www.transportlogistic-middleeast.com/",
+      "note": { "ar": "النسخة الأولى من العلامة الألمانية في المنطقة، وتضم معرضَي بضائع المشاريع والشحن الجوي. الحدث الأهم في أجندة ٢٠٢٧ لمن يعمل في الخليج.", "en": "The first regional edition of the German brand, bringing project cargo and air cargo under one roof. The most important date on a Gulf 2027 calendar." }
+    },
+    {
+      "slug": "saudi-warehousing-logistics-expo-2027", "region": "gulf", "type": "exhibition",
+      "name": { "ar": "معرض السعودية للتخزين واللوجستيات ٢٠٢٧", "en": "Saudi Warehousing & Logistics Expo 2027" },
+      "organizer": { "ar": "dmg events", "en": "dmg events" },
+      "city": { "ar": "الرياض", "en": "Riyadh" }, "country": { "ar": "السعودية", "en": "Saudi Arabia" },
+      "venue": { "ar": "مركز واجهة الرياض للمعارض والمؤتمرات", "en": "Riyadh Front Exhibition & Conference Center" },
+      "start": "2027-06-08", "end": "2027-06-10",
+      "url": "https://www.saudilogisticsexpo.com/",
+      "note": { "ar": "يُقام في نفس المكان والتاريخ مع ترانسبورت لوجستيك الشرق الأوسط — تذكرة واحدة لحدثين. النسخة الثالثة استقبلت أكثر من ١٨ ألف زائر.", "en": "Co-located with transport logistic Middle East, same venue and dates — one trip for two shows. The third edition drew over 18,000 visitors." }
+    },
+    {
+      "slug": "iana-intermodal-expo-2027", "region": "global", "type": "exhibition",
+      "name": { "ar": "معرض إنترمودال الأمريكي ٢٠٢٧", "en": "IANA Intermodal Expo 2027" },
+      "organizer": { "ar": "رابطة النقل المتعدد الوسائط", "en": "Intermodal Association of North America" },
+      "city": { "ar": "لوس أنجلوس", "en": "Los Angeles" }, "country": { "ar": "الولايات المتحدة", "en": "United States" },
+      "start": "2027-09-13", "end": "2027-09-15",
+      "url": "https://www.intermodalexpo.com/",
+      "note": { "ar": "للنقل المتعدد الوسائط في أمريكا الشمالية. يهمّ من يصدّر إلى الساحل الغربي الأمريكي.", "en": "North American intermodal transport. Relevant if you export to the US West Coast." }
+    },
+    {
+      "slug": "antwerpxl-2027", "region": "global", "type": "exhibition",
+      "name": { "ar": "أنتويرب إكس إل ٢٠٢٧", "en": "AntwerpXL 2027" },
+      "organizer": { "ar": "إنفورما ماركتس", "en": "Informa Markets" },
+      "city": { "ar": "أنتويرب", "en": "Antwerp" }, "country": { "ar": "بلجيكا", "en": "Belgium" },
+      "start": "2027-10-19", "end": "2027-10-21",
+      "url": "https://www.antwerpxl.com/",
+      "note": { "ar": "متخصص في البضائع الثقيلة والمشاريع، في ميناء شريك تطوير الدقم.", "en": "Specialised in breakbulk and project cargo, at the port that partnered on Duqm's development." }
+    },
+    {
+      "slug": "muscat-maritime-resilience-forum-2026", "region": "gulf", "type": "forum",
+      "name": { "ar": "ملتقى مسقط للمرونة البحرية ٢٠٢٦", "en": "Muscat Maritime Resilience Forum 2026" },
+      "organizer": { "ar": "مجموعة أسياد", "en": "Asyad Group" },
+      "city": { "ar": "مسقط", "en": "Muscat" }, "country": { "ar": "عُمان", "en": "Oman" },
+      "start": "2026-10-27", "end": "2026-10-28",
+      "url": "https://www.asyadgroup.com/",
+      "note": { "ar": "نظّمته أسياد بالشراكة مع وزارة الخارجية ووزارة النقل وجهاز الاستثمار، وخرج بمقترح إطار مسقط للمرونة البحرية.", "en": "Organised by Asyad with the foreign and transport ministries and the investment authority, it produced the proposed Muscat Maritime Resilience Framework." }
+    },
+    {
+      "slug": "oman-maritime-ports-energy-forum", "region": "gulf", "type": "forum",
+      "name": { "ar": "ملتقى عُمان البحري والموانئ والطاقة", "en": "Oman Maritime, Ports and Energy Forum" },
+      "organizer": { "ar": "ship.energy بشراكة أسياد", "en": "ship.energy with Asyad" },
+      "city": { "ar": "مسقط", "en": "Muscat" }, "country": { "ar": "عُمان", "en": "Oman" },
+      "venue": { "ar": "مركز عُمان للمؤتمرات والمعارض", "en": "Oman Convention & Exhibition Centre" },
+      "tbd": true,
+      "url": "https://ship.energy/",
+      "note": { "ar": "سنوي، وعُقدت نسخته الأولى في أبريل ٢٠٢٥ برعاية وزير النقل، ومن رعاته ميناء صحار. تواريخ النسخة القادمة لم تُعلن — راقب موقع المنظّم.", "en": "Annual; the first edition ran in April 2025 under the transport minister's patronage, with Sohar Port among its sponsors. Next dates are not yet announced." }
+    },
+    {
+      "slug": "oman-maritime-exhibition-conference", "region": "gulf", "type": "conference",
+      "name": { "ar": "معرض ومؤتمر عُمان البحري", "en": "Oman Maritime Exhibition and Conference" },
+      "organizer": { "ar": "وزارة الثروة الزراعية والسمكية وموارد المياه", "en": "Ministry of Agriculture, Fisheries and Water Resources" },
+      "city": { "ar": "مسقط", "en": "Muscat" }, "country": { "ar": "عُمان", "en": "Oman" },
+      "venue": { "ar": "مركز عُمان للمؤتمرات والمعارض", "en": "Oman Convention & Exhibition Centre" },
+      "tbd": true,
+      "url": "https://www.maf.gov.om/",
+      "note": { "ar": "تحت شعار «نحو اقتصاد أزرق وتكامل قطاعي»، ويجمع اللوجستيات البحرية وإدارة الموانئ والاستزراع السمكي. تواريخ النسخة القادمة لم تُعلن.", "en": "Themed around the blue economy and sector integration, covering maritime logistics, port management and aquaculture. Next dates not yet announced." }
+    },
+    {
+      "slug": "flow-2026", "region": "gulf", "type": "exhibition",
+      "name": { "ar": "فلو ٢٠٢٦", "en": "FLOW 2026" },
+      "organizer": { "ar": "منظمو فلو العالمية", "en": "FLOW Global" },
+      "city": { "ar": "دبي", "en": "Dubai" }, "country": { "ar": "الإمارات", "en": "UAE" },
+      "venue": { "ar": "إكسبو سيتي دبي", "en": "Expo City Dubai" },
+      "start": "2026-11-04", "end": "2026-11-05",
+      "url": "https://flowglobal.ai/",
+      "note": { "ar": "يركّز على التقنية والذكاء الاصطناعي في سلاسل الإمداد، ويُقام مع معرض لوجستيات الأغذية.", "en": "Focused on technology and AI in supply chains, co-located with the food logistics show." }
+    },
+    {
+      "slug": "world-cold-chain-expo-2026", "region": "gulf", "type": "exhibition",
+      "name": { "ar": "معرض سلسلة التبريد العالمي ٢٠٢٦", "en": "World Cold Chain Expo 2026" },
+      "organizer": { "ar": "منظمو المعرض", "en": "World Cold Chain" },
+      "city": { "ar": "دبي", "en": "Dubai" }, "country": { "ar": "الإمارات", "en": "UAE" },
+      "venue": { "ar": "فستيفال أرينا", "en": "Festival Arena" },
+      "start": "2026-09-02", "end": "2026-09-03",
+      "url": "https://www.worldcoldchain.com/",
+      "note": { "ar": "للشحن المبرّد والمجمّد — قطاع حسّاس في الخليج بحكم المناخ واعتماد المنطقة على استيراد الأغذية.", "en": "Refrigerated and frozen freight — a sensitive sector in the Gulf given the climate and the region's reliance on food imports." }
+    },
+    {
+      "slug": "move-middle-east-2026", "region": "gulf", "type": "exhibition",
+      "name": { "ar": "موف الشرق الأوسط ٢٠٢٦", "en": "MOVE Middle East 2026" },
+      "organizer": { "ar": "تيرابين", "en": "Terrapinn" },
+      "city": { "ar": "دبي", "en": "Dubai" }, "country": { "ar": "الإمارات", "en": "UAE" },
+      "venue": { "ar": "مركز دبي التجاري العالمي", "en": "Dubai World Trade Centre" },
+      "start": "2026-06-09", "end": "2026-06-10",
+      "url": "https://www.terrapinn.com/exhibition/move-me/",
+      "note": { "ar": "عن مستقبل النقل والتنقل، بما فيه النقل البري والتوصيل.", "en": "On the future of transport and mobility, including road freight and delivery." }
+    },
+    {
+      "slug": "transport-logistic-singapore-2027", "region": "global", "type": "exhibition",
+      "name": { "ar": "ترانسبورت لوجستيك سنغافورة ٢٠٢٧", "en": "transport logistic Singapore 2027" },
+      "organizer": { "ar": "ميسه ميونخ", "en": "Messe München" },
+      "city": { "ar": "سنغافورة", "en": "Singapore" }, "country": { "ar": "سنغافورة", "en": "Singapore" },
+      "start": "2027-10-25", "end": "2027-10-27",
+      "url": "https://www.transportlogistic.de/",
+      "note": { "ar": "في أكبر مركز إعادة شحن في العالم، ومن خلاله تمرّ شحنات كثيرة إلى الخليج.", "en": "In the world's largest transshipment hub, through which much Gulf-bound cargo passes." }
+    }
+  ]
+}

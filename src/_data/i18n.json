@@ -9,7 +9,8 @@
       "ports": "موانئ",
       "about": "من نحن",
       "tools": "حاسبة التكلفة",
-      "glossary": "المعجم اللوجستي"
+      "glossary": "المعجم اللوجستي",
+      "events": "المعارض"
     },
     "home": {
       "heroTitle": "ما يعنيه كل تغيير في الممرات البحرية لمن يشحن من الخليج وإليه",
@@ -229,6 +230,33 @@
       "ctaTitle": "الأرقام هنا تصنعها الشبكة",
       "ctaText": "عندك عرض سعر حديث على أي خط؟ شاركه ويظهر في الجدول دون اسمك.",
       "ctaBtn": "شارك عرض سعر"
+    },
+    "events": {
+      "title": "المعارض والمؤتمرات اللوجستية",
+      "lead": "ما يُقام الآن، وما هو قادم، وما مضى — في الخليج وعالميًا. التواريخ تتغير دائمًا، فكل بطاقة تحمل رابط المنظّم الرسمي وهو المرجع.",
+      "filterLabel": "تصفية",
+      "all": "الكل",
+      "ongoing": "جارية الآن",
+      "upcoming": "قادمة",
+      "tbd": "سنوية — مواعيدها لم تُعلن",
+      "past": "ما مضى",
+      "tbdDates": "التواريخ لم تُعلن بعد",
+      "startsToday": "يبدأ اليوم",
+      "inDays": "بعد {n} يومًا",
+      "addCal": "أضف إلى تقويمي",
+      "conflict": "⚠ المصادر تتضارب في تواريخ هذه النسخة — تأكد من موقع المنظّم قبل الحجز.",
+      "found": "{n} حدثًا",
+      "verifyNote": "آخر تحقق من هذه القائمة:",
+      "tellUs": "تعرف معرضًا ناقصًا أو تاريخًا تغيّر؟",
+      "tellUsLink": "أخبرنا",
+      "noscript": "فعّل الجافاسكربت لعرض الأحداث مصنّفة حسب تاريخ اليوم.",
+      "noMatch": "لا أحداث مطابقة لهذا التصفية.",
+      "tomorrow": "غدًا",
+      "inTwo": "بعد يومين",
+      "inFew": "بعد {n} أيام",
+      "found1": "حدث واحد",
+      "found2": "حدثان",
+      "foundFew": "{n} أحداث"
     }
   },
   "en": {
@@ -241,7 +269,8 @@
       "ports": "Ports",
       "about": "About",
       "tools": "Landed cost",
-      "glossary": "Glossary"
+      "glossary": "Glossary",
+      "events": "Events"
     },
     "home": {
       "heroTitle": "What every shift in the sea lanes means for the people shipping to and from the Gulf",
@@ -461,6 +490,33 @@
       "ctaTitle": "These numbers are built by the network",
       "ctaText": "Hold a recent quote on any lane? Share it and it appears in the table without your name.",
       "ctaBtn": "Share a quote"
+    },
+    "events": {
+      "title": "Logistics exhibitions and conferences",
+      "lead": "What is running now, what is coming, and what has passed — in the Gulf and worldwide. Dates move constantly, so every card carries the organiser's official link, which is the reference.",
+      "filterLabel": "Filter",
+      "all": "All",
+      "ongoing": "Happening now",
+      "upcoming": "Upcoming",
+      "tbd": "Annual — dates not yet announced",
+      "past": "Past",
+      "tbdDates": "Dates not yet announced",
+      "startsToday": "Starts today",
+      "inDays": "in {n} days",
+      "addCal": "Add to calendar",
+      "conflict": "⚠ Sources disagree on this edition's dates — confirm with the organiser before booking.",
+      "found": "{n} events",
+      "verifyNote": "This list was last verified on",
+      "tellUs": "Know an event we are missing, or a date that changed?",
+      "tellUsLink": "Tell us",
+      "noscript": "Enable JavaScript to see events sorted against today's date.",
+      "noMatch": "No events match this filter.",
+      "tomorrow": "Tomorrow",
+      "inTwo": "in 2 days",
+      "inFew": "in {n} days",
+      "found1": "1 event",
+      "found2": "2 events",
+      "foundFew": "{n} events"
     }
   }
 }

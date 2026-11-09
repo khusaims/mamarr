@@ -1,0 +1,9 @@
+---
+layout: base.njk
+eleventyComputed:
+  title: "{{ i18n[lang].events.title }}"
+  description: "{{ i18n[lang].events.lead }}"
+permalink: /en/events/
+ogImage: en-events
+---
+{% include "events-body.njk" %}

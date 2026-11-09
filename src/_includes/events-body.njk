@@ -1,0 +1,154 @@
+{%- set t = i18n[lang] -%}
+{%- set e = t.events -%}
+<div class="wrap">
+  <header class="page-head">
+    <h1>{{ e.title }}</h1>
+    <p>{{ e.lead }}</p>
+  </header>
+
+  <div class="port-controls">
+    <div class="region-filter" role="group" aria-label="{{ e.filterLabel }}">
+      <button type="button" class="chip is-on" data-f="all">{{ e.all }}</button>
+      {% for r in events.regions %}<button type="button" class="chip" data-f="{{ r.id }}">{{ r[lang] }}</button>{% endfor %}
+      {% for ty in events.types %}<button type="button" class="chip" data-f="{{ ty.id }}">{{ ty[lang] }}</button>{% endfor %}
+    </div>
+    <p class="port-count" id="ev-count" role="status"></p>
+  </div>
+
+  <section class="ev-group" id="g-now" hidden>
+    <h2><span class="live-dot" aria-hidden="true"></span>{{ e.ongoing }}</h2>
+    <ul class="ev-list" id="l-now"></ul>
+  </section>
+  <section class="ev-group" id="g-next" hidden>
+    <h2>{{ e.upcoming }}</h2>
+    <ul class="ev-list" id="l-next"></ul>
+  </section>
+  <section class="ev-group" id="g-tbd" hidden>
+    <h2>{{ e.tbd }}</h2>
+    <ul class="ev-list" id="l-tbd"></ul>
+  </section>
+  <section class="ev-group" id="g-past" hidden>
+    <h2>{{ e.past }}</h2>
+    <ul class="ev-list" id="l-past"></ul>
+  </section>
+
+  <p class="ev-empty" id="ev-empty" hidden>{{ e.noMatch }}</p>
+
+  <aside class="ev-verify">
+    <p>{{ e.verifyNote }} <strong><time datetime="{{ events.verified }}">{{ events.verified | dateHuman(lang) }}</time></strong>.</p>
+    <p>{{ e.tellUs }} <a href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ e.tellUsLink }}</a></p>
+  </aside>
+</div>
+
+<script id="ev-data" type="application/json">{{ events.events | dump | safe }}</script>
+<script>
+(function () {
+  var host = document.getElementById("l-next");
+  if (!host) return;
+  var LANG = {{ lang | dump | safe }};
+  var DATA = JSON.parse(document.getElementById("ev-data").textContent);
+  var T = {{ e | dump | safe }};
+  var locale = LANG === "ar" ? "ar-OM" : "en-GB";
+  var filter = "all";
+
+  function d(s) { var p = String(s).split("-"); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); }
+  function today() { var n = new Date(); return new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate())); }
+  function fmtRange(ev) {
+    var o = { day: "numeric", month: "long", year: "numeric", numberingSystem: LANG === "ar" ? "arab" : "latn" };
+    var s = d(ev.start), e2 = d(ev.end || ev.start);
+    if (ev.start === ev.end || !ev.end) return s.toLocaleDateString(locale, o);
+    var sameMonth = s.getUTCMonth() === e2.getUTCMonth() && s.getUTCFullYear() === e2.getUTCFullYear();
+    if (sameMonth) {
+      return s.toLocaleDateString(locale, { day: "numeric", numberingSystem: o.numberingSystem }) + "–" + e2.toLocaleDateString(locale, o);
+    }
+    return s.toLocaleDateString(locale, o) + " – " + e2.toLocaleDateString(locale, o);
+  }
+  function daysTo(ev) {
+    return Math.round((d(ev.start) - today()) / 86400000);
+  }
+  function gcal(ev) {
+    var end = d(ev.end || ev.start); end.setUTCDate(end.getUTCDate() + 1);
+    function z(x) { return String(x).padStart(2, "0"); }
+    function stamp(dt) { return dt.getUTCFullYear() + z(dt.getUTCMonth() + 1) + z(dt.getUTCDate()); }
+    var loc = [ev.venue && ev.venue[LANG], ev.city[LANG], ev.country[LANG]].filter(Boolean).join(", ");
+    return "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent(ev.name[LANG]) +
+      "&dates=" + stamp(d(ev.start)) + "/" + stamp(end) +
+      "&location=" + encodeURIComponent(loc) +
+      "&details=" + encodeURIComponent(ev.url || "");
+  }
+  // جموع العدد في العربية: مفرد، مثنى، جمع قلة (٣–١٠)، ثم تمييز مفرد منصوب
+  function arabicCount(n, keys) {
+    var num = n.toLocaleString(LANG === "ar" ? "ar-EG" : "en-US");
+    if (n === 1 && keys.one) return keys.one;
+    if (n === 2 && keys.two) return keys.two;
+    if (n >= 3 && n <= 10 && keys.few) return keys.few.replace("{n}", num);
+    return keys.many.replace("{n}", num);
+  }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+
+  function card(ev, state) {
+    var loc = [ev.city[LANG], ev.country[LANG]].filter(Boolean).join("، ");
+    var when = ev.tbd ? T.tbdDates : fmtRange(ev);
+    var countdown = "";
+    if (state === "next") {
+      var n = daysTo(ev);
+      var when2 = n === 0 ? T.startsToday
+        : n === 1 ? T.tomorrow
+        : arabicCount(n, { two: T.inTwo, few: T.inFew, many: T.inDays });
+      countdown = '<span class="ev-count">' + esc(when2) + "</span>";
+    }
+    return '<li class="ev-card" data-region="' + ev.region + '" data-type="' + ev.type + '">' +
+      '<p class="ev-when"><time datetime="' + (ev.start || "") + '">' + esc(when) + "</time>" + countdown + "</p>" +
+      '<h3><a href="' + esc(ev.url) + '" rel="noopener">' + esc(ev.name[LANG]) + "</a></h3>" +
+      '<p class="ev-where">' + esc(loc) + (ev.venue ? " · " + esc(ev.venue[LANG]) : "") + "</p>" +
+      '<p class="ev-note">' + esc(ev.note[LANG]) + "</p>" +
+      (ev.conflict ? '<p class="ev-warn">' + esc(T.conflict) + "</p>" : "") +
+      '<p class="ev-actions"><span class="ev-org">' + esc(ev.organizer[LANG]) + "</span>" +
+      (ev.tbd ? "" : ' <a class="ev-cal" href="' + gcal(ev) + '" rel="noopener">' + esc(T.addCal) + "</a>") + "</p>" +
+      "</li>";
+  }
+
+  function render() {
+    var now = today();
+    var buckets = { now: [], next: [], tbd: [], past: [] };
+    DATA.forEach(function (ev) {
+      if (filter !== "all" && ev.region !== filter && ev.type !== filter) return;
+      if (ev.tbd) { buckets.tbd.push(ev); return; }
+      var s = d(ev.start), e2 = d(ev.end || ev.start);
+      if (s <= now && now <= e2) buckets.now.push(ev);
+      else if (s > now) buckets.next.push(ev);
+      else buckets.past.push(ev);
+    });
+    buckets.now.sort(function (a, b) { return d(a.start) - d(b.start); });
+    buckets.next.sort(function (a, b) { return d(a.start) - d(b.start); });
+    buckets.past.sort(function (a, b) { return d(b.start) - d(a.start); });
+
+    var total = 0;
+    ["now", "next", "tbd", "past"].forEach(function (k) {
+      var list = buckets[k];
+      total += list.length;
+      document.getElementById("l-" + k).innerHTML = list.map(function (ev) { return card(ev, k); }).join("");
+      document.getElementById("g-" + k).hidden = list.length === 0;
+    });
+    document.getElementById("ev-empty").hidden = total > 0;
+    document.getElementById("ev-count").textContent = total
+      ? arabicCount(total, { one: T.found1, two: T.found2, few: T.foundFew, many: T.found })
+      : "";
+  }
+
+  [].slice.call(document.querySelectorAll(".region-filter .chip")).forEach(function (b) {
+    b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false");
+    b.addEventListener("click", function () {
+      [].slice.call(document.querySelectorAll(".region-filter .chip")).forEach(function (x) {
+        x.classList.remove("is-on"); x.setAttribute("aria-pressed", "false");
+      });
+      b.classList.add("is-on"); b.setAttribute("aria-pressed", "true");
+      filter = b.dataset.f;
+      render();
+    });
+  });
+  render();
+})();
+</script>
+<noscript><p class="ev-empty">{{ e.noscript }}</p></noscript>

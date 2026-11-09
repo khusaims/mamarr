@@ -125,6 +125,28 @@ table { border-collapse: collapse; width: 100%; }
   .rates-table .trend-col, .rates-table .trend { display: none; }
 }
 
+/* Events calendar */
+.ev-group { margin-bottom: 2.5rem; }
+.ev-group h2 { font-size: 1.15rem; padding-bottom: .5rem; border-bottom: 2px solid var(--ink); margin-bottom: 1.25rem; display: flex; align-items: center; gap: .5rem; }
+.live-dot { width: .6rem; height: .6rem; border-radius: 50%; background: var(--buoy); display: inline-block; }
+.ev-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1px; background: var(--sand); border: 1px solid var(--sand); }
+@media (min-width: 720px) { .ev-list { grid-template-columns: 1fr 1fr; } }
+.ev-card { background: var(--white); padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: .35rem; }
+.ev-when { margin: 0; color: var(--buoy); font-weight: 700; font-size: .92rem; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: baseline; }
+.ev-count { color: var(--muted); font-weight: 400; font-size: .85rem; }
+.ev-card h3 { margin: 0; font-size: 1.1rem; line-height: 1.4; }
+.ev-card h3 a { color: var(--ink); text-decoration-color: var(--sand); }
+.ev-card h3 a:hover { color: var(--teal-2); }
+.ev-where { margin: 0; color: var(--muted); font-size: .9rem; }
+.ev-note { margin: .25rem 0 0; font-size: .95rem; line-height: 1.6; }
+.ev-warn { margin: .5rem 0 0; font-size: .88rem; color: #8a4b00; background: var(--sand-2); padding: .5rem .7rem; border-radius: 3px; }
+.ev-actions { margin: .6rem 0 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; align-items: baseline; font-size: .88rem; }
+.ev-org { color: var(--muted); }
+.ev-cal { white-space: nowrap; }
+.ev-empty { color: var(--muted); padding: 1.5rem 0; }
+.ev-verify { border-top: 1px solid var(--sand); padding-top: 1.25rem; margin-top: 1rem; color: var(--muted); font-size: .9rem; }
+.ev-verify p { margin: 0 0 .35rem; }
+
 /* Contribute form */
 .why-list { list-style: none; padding: 0; margin: 0 0 2.5rem; display: grid; gap: 1px; background: var(--sand); border: 1px solid var(--sand); }
 .why-list li { background: var(--white); padding: .9rem 1.15rem; font-size: .95rem; line-height: 1.6; }
