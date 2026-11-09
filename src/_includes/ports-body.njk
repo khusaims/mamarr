@@ -1,17 +1,74 @@
 {%- set t = i18n[lang] -%}
-{%- set ports = collections["ports_" + lang] -%}
 <div class="wrap">
   <header class="page-head">
-    <h1>{{ title }}</h1>
-    <p>{{ description }}</p>
+    <h1>{{ t.ports.title }}</h1>
+    <p>{{ t.ports.lead }}</p>
   </header>
-  <ul class="port-list">
-    {% for p in ports %}
-    <li>
-      <h3><a href="{{ p.url | rel(page.url) }}">{{ p.data.title }}</a></h3>
-      <p>{{ p.data.dek }}</p>
-      <p class="port-facts">{{ t.ports.operator }}: {{ p.data.operator }} · {{ t.ports.type }}: {{ p.data.type }}</p>
-    </li>
-    {% endfor %}
-  </ul>
+
+  <div class="port-controls">
+    <p class="field port-search">
+      <label for="pq">{{ t.ports.search }}</label>
+      <input id="pq" type="search" autocomplete="off" placeholder="{{ t.ports.placeholder }}">
+    </p>
+    <div class="region-filter" role="group" aria-label="{{ t.ports.region }}">
+      <button type="button" class="chip is-on" data-region="all">{{ t.ports.allRegions }}</button>
+      {% for r in ports.regions %}<button type="button" class="chip" data-region="{{ r.id }}">{{ r[lang] }}</button>{% endfor %}
+    </div>
+    <p class="port-count" id="port-count" role="status"></p>
+  </div>
+
+  {% for r in ports.regions %}
+  <section class="port-region" data-region="{{ r.id }}">
+    <h2>{{ r[lang] }}</h2>
+    <ul class="port-grid">
+      {% for p in ports.ports %}{% if p.region == r.id %}
+      <li class="port-card" data-search="{{ p.name.ar }} {{ p.name.en }} {{ p.country.ar }} {{ p.country.en }} {{ p.slug }}">
+        <h3><a href="{{ ('/' + lang + '/ports/' + p.slug + '/') | rel(page.url) }}">{{ p.name[lang] }}</a></h3>
+        <p class="port-country">{{ p.country[lang] }}{% if p.detailed %} <span class="port-badge">{{ t.ports.detailed }}</span>{% endif %}</p>
+        <p class="port-dek">{{ p.dek[lang] }}</p>
+        <p class="port-type">{{ p.type[lang] }}</p>
+      </li>
+      {% endif %}{% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
 </div>
+
+<script>
+(function () {
+  var q = document.getElementById("pq");
+  if (!q) return;
+  var cards = [].slice.call(document.querySelectorAll(".port-card"));
+  var regions = [].slice.call(document.querySelectorAll(".port-region"));
+  var chips = [].slice.call(document.querySelectorAll(".chip"));
+  var out = document.getElementById("port-count");
+  var active = "all";
+  var none = {{ t.ports.noResults | dump | safe }};
+  var found = {{ t.ports.found | dump | safe }};
+  var locale = {{ lang | dump | safe }} === "ar" ? "ar-EG" : "en-US";
+  function norm(s) { return s.toLowerCase().replace(/[ً-ْـ]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي"); }
+  function run() {
+    var v = norm(q.value.trim());
+    var n = 0;
+    cards.forEach(function (c) {
+      var inRegion = active === "all" || c.closest(".port-region").dataset.region === active;
+      var hit = inRegion && (!v || norm(c.dataset.search).indexOf(v) !== -1);
+      c.hidden = !hit;
+      if (hit) n++;
+    });
+    regions.forEach(function (r) { r.hidden = !r.querySelector(".port-card:not([hidden])"); });
+    out.textContent = n ? found.replace("{n}", n.toLocaleString(locale)) : none;
+  }
+  chips.forEach(function (b) {
+    b.addEventListener("click", function () {
+      chips.forEach(function (x) { x.classList.remove("is-on"); x.setAttribute("aria-pressed", "false"); });
+      b.classList.add("is-on"); b.setAttribute("aria-pressed", "true");
+      active = b.dataset.region;
+      run();
+    });
+    b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false");
+  });
+  q.addEventListener("input", run);
+  run();
+})();
+</script>

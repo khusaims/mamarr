@@ -19,6 +19,7 @@ import { promisify } from "node:util";
 import path from "node:path";
 
 const run = promisify(execFile);
+const require = createRequire(import.meta.url);
 const ROOT = new URL("..", import.meta.url).pathname;
 const OUT = path.join(ROOT, "src/img/og");
 const TMP = path.join(ROOT, ".og-tmp");
@@ -132,8 +133,15 @@ async function collect() {
     }
   }
 
+  // الموانئ المولّدة من ports.json
+  const portsData = require("../src/_data/ports.json");
+  for (const lang of ["ar", "en"]) {
+    for (const p of portsData.ports.filter((x) => !x.detailed)) {
+      jobs.push({ slug: `${lang}-portx-${p.slug}`, lang, kind: lang === "ar" ? "ميناء" : "Port", title: p.name[lang] });
+    }
+  }
+
   // مصطلحات المعجم
-  const require = createRequire(import.meta.url);
   const glossary = require("../src/_data/glossary.json");
   for (const lang of ["ar", "en"]) {
     for (const t of glossary.terms) {

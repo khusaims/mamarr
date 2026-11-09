@@ -1,0 +1,13 @@
+---
+layout: base.njk
+pagination:
+  data: portsGen
+  size: 1
+  alias: port
+permalink: "/en/ports/{{ port.slug }}/"
+eleventyComputed:
+  title: "{{ port.name.en }}"
+  description: "{{ port.dek.en }}"
+  ogImage: "en-portx-{{ port.slug }}"
+---
+{% include "port-entry.njk" %}

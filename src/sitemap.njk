@@ -21,9 +21,18 @@ eleventyExcludeFromCollections: true
   </url>
 {%- endfor -%}
 {%- endfor -%}
+{%- for lang in ["ar", "en"] -%}
+{%- for p in ports.ports %}
+  <url>
+    <loc>{{ site.url }}/{{ lang }}/ports/{{ p.slug }}/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="{{ site.url }}/ar/ports/{{ p.slug }}/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ site.url }}/en/ports/{{ p.slug }}/"/>
+  </url>
+{%- endfor -%}
+{%- endfor -%}
 {%- set pages = collections.all | selectattr("url") -%}
 {%- for p in pages -%}
-{%- if p.url and not p.url.endsWith(".xml") and not p.url.endsWith(".txt") and p.url != "/index.html" and p.url not in extra and "/glossary/" not in p.url %}
+{%- if p.url and not p.url.endsWith(".xml") and not p.url.endsWith(".txt") and p.url != "/index.html" and p.url not in extra and "/glossary/" not in p.url and "/ports/" not in p.url %}
   <url>
     <loc>{{ site.url }}{{ p.url }}</loc>
     {%- if p.date %}

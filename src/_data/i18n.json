@@ -73,7 +73,18 @@
       "title": "الموانئ",
       "operator": "المشغّل",
       "type": "النوع",
-      "all": "كل الموانئ"
+      "all": "كل الموانئ",
+      "lead": "صفحة لكل ميناء: البلد والمشغّل ونوع المناولة، وما يحتاج المستورد معرفته قبل أن يوجّه شحنته إليه. صفّ بالمنطقة أو ابحث بالاسم أو البلد.",
+      "country": "البلد",
+      "region": "المنطقة",
+      "why": "ما يحتاج المستورد معرفته",
+      "search": "ابحث عن ميناء",
+      "placeholder": "مثال: صحار، Rotterdam، الهند",
+      "allRegions": "كل المناطق",
+      "detailed": "صفحة تفصيلية",
+      "noResults": "لا موانئ مطابقة. جرّب اسمًا آخر أو منطقة أخرى.",
+      "found": "{n} ميناء",
+      "stub": "هذه صفحة موجزة. الموانئ التي نشحن عبرها كثيرًا لها صفحات تفصيلية — وتُضاف تباعًا."
     },
     "about": {
       "title": "من نحن"
@@ -204,7 +215,18 @@
       "title": "Ports",
       "operator": "Operator",
       "type": "Type",
-      "all": "All ports"
+      "all": "All ports",
+      "lead": "One page per port: country, operator, what it handles, and what an importer should know before routing cargo there. Filter by region or search by name or country.",
+      "country": "Country",
+      "region": "Region",
+      "why": "What an importer should know",
+      "search": "Search for a port",
+      "placeholder": "e.g. Sohar, Rotterdam, India",
+      "allRegions": "All regions",
+      "detailed": "Full page",
+      "noResults": "No matching ports. Try another name or region.",
+      "found": "{n} ports",
+      "stub": "This is a short entry. Ports we ship through often get full pages, and more are being added."
     },
     "about": {
       "title": "About"

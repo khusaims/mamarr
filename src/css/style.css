@@ -125,6 +125,33 @@ table { border-collapse: collapse; width: 100%; }
   .rates-table .trend-col, .rates-table .trend { display: none; }
 }
 
+/* Ports: filter, grid, entry */
+.port-controls { margin-bottom: 2rem; }
+.port-search { max-width: 24rem; margin: 0 0 1rem; }
+.region-filter { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem; }
+.chip { font: inherit; font-size: .92rem; padding: .4rem .9rem; border: 1px solid var(--sand); background: var(--white); color: var(--ink); border-radius: 999px; cursor: pointer; }
+.chip:hover { border-color: var(--teal); }
+.chip.is-on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.port-count { color: var(--muted); font-size: .9rem; margin: 0; min-height: 1.4em; }
+.port-region { margin-bottom: 2.5rem; }
+.port-region[hidden] { display: none; }
+.port-region h2 { font-size: 1.15rem; padding-bottom: .5rem; border-bottom: 2px solid var(--ink); margin-bottom: 1.25rem; }
+.port-grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 1px; background: var(--sand); border: 1px solid var(--sand); }
+@media (min-width: 620px) { .port-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 960px) { .port-grid { grid-template-columns: repeat(3, 1fr); } }
+.port-card { background: var(--white); padding: 1rem 1.15rem; }
+.port-card[hidden] { display: none; }
+.port-card h3 { margin: 0 0 .15rem; font-size: 1.05rem; }
+.port-card h3 a { color: var(--ink); text-decoration: none; }
+.port-card h3 a:hover { color: var(--teal-2); text-decoration: underline; }
+.port-country { margin: 0 0 .4rem; color: var(--muted); font-size: .88rem; }
+.port-badge { display: inline-block; font-size: .75rem; color: var(--buoy); border: 1px solid var(--sand); border-radius: 3px; padding: .05em .4em; }
+.port-dek { margin: 0 0 .5rem; font-size: .95rem; line-height: 1.6; }
+.port-type { margin: 0; color: var(--muted); font-size: .85rem; }
+.port-facts-table { width: 100%; }
+.port-facts-table th { width: 10rem; font-weight: 400; color: var(--muted); }
+.port-stub { color: var(--muted); font-size: .9rem; border-top: 1px solid var(--sand); padding-top: 1rem; margin-top: 2rem; }
+
 /* Glossary */
 .gloss-search { max-width: 26rem; margin: 0 0 .5rem; }
 .gloss-count { color: var(--muted); font-size: .9rem; min-height: 1.4em; margin: 0 0 1.5rem; }
