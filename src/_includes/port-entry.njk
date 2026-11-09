@@ -22,5 +22,17 @@
     {% endif %}
     <p class="port-stub">{{ t.ports.stub }}</p>
   </div>
+
+  {%- set myLanes = rates.lanes | lanesFor(port.slug, 6) -%}
+  {% if myLanes.length %}
+  <section class="related">
+    <h2>{{ t.misc.lanesHere }}</h2>
+    <ul>
+      {% for l in myLanes %}
+      <li><a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}">{{ l.from[lang] }} {{ "←" if lang == "ar" else "→" }} {{ l.to[lang] }} <span class="kind">{{ l.usd | num(lang) }} USD</span></a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
   <p class="article-back"><a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}">{{ t.ports.all }}</a></p>
 </article>

@@ -1,0 +1,28 @@
+---
+permalink: /en/search.json
+eleventyExcludeFromCollections: true
+lang: en
+---
+{%- set items = [] -%}
+{%- for a in collections["articles_" + lang] -%}
+{%- set items = (items.concat([{ "t": a.data.title, "d": a.data.dek or a.data.description, "u": a.url, "k": "article" }])) -%}
+{%- endfor -%}
+{%- for x in glossary.terms -%}
+{%- set items = (items.concat([{ "t": x.term[lang], "a": x.term.en if lang == "ar" else x.term.ar, "b": x.abbr, "d": x.def[lang], "u": "/" + lang + "/glossary/" + x.slug + "/", "k": "term" }])) -%}
+{%- endfor -%}
+{%- for p in ports.ports -%}
+{%- set items = (items.concat([{ "t": p.name[lang], "a": p.name.en if lang == "ar" else p.name.ar, "d": p.country[lang] + " · " + p.dek[lang], "u": "/" + lang + "/ports/" + p.slug + "/", "k": "port" }])) -%}
+{%- endfor -%}
+{%- for ev in events.events -%}
+{%- set items = (items.concat([{ "t": ev.name[lang], "a": ev.name.en if lang == "ar" else ev.name.ar, "d": ev.city[lang] + " · " + ev.note[lang], "u": "/" + lang + "/events/", "k": "event" }])) -%}
+{%- endfor -%}
+{%- for pg in [
+  { "t": i18n[lang].calc.title, "d": i18n[lang].calc.lead, "u": "/" + lang + "/calculator/", "k": "tool" },
+  { "t": i18n[lang].rates.title, "d": i18n[lang].rates.lead, "u": "/" + lang + "/rates/", "k": "page" },
+  { "t": i18n[lang].contribute.title, "d": i18n[lang].contribute.lead, "u": "/" + lang + "/contribute/", "k": "page" },
+  { "t": i18n[lang].events.title, "d": i18n[lang].events.lead, "u": "/" + lang + "/events/", "k": "page" },
+  { "t": i18n[lang].glossary.title, "d": i18n[lang].glossary.lead, "u": "/" + lang + "/glossary/", "k": "page" }
+] -%}
+{%- set items = (items.concat([pg])) -%}
+{%- endfor -%}
+{{ items | dump | safe }}

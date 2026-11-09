@@ -1,0 +1,101 @@
+{#- بيانات منظمة (JSON-LD) — تُحقن في <head> لكل صفحة حسب نوعها -#}
+{%- set t = i18n[lang] -%}
+{%- set org = {
+  "@type": "Organization",
+  "@id": site.url + "/#org",
+  "name": site.name[lang],
+  "url": site.url + "/" + lang + "/",
+  "description": site.tagline[lang],
+  "email": site.contactEmail,
+  "sameAs": [site.linkedin]
+} -%}
+{%- set person = {
+  "@type": "Person",
+  "@id": site.url + "/#author",
+  "name": site.author.name[lang],
+  "jobTitle": site.author.role[lang],
+  "description": site.author.bio[lang],
+  "knowsAbout": site.author.knowsAbout[lang],
+  "sameAs": [site.linkedin]
+} -%}
+
+{#- فتات التنقّل -#}
+{%- set crumbs = [{ "name": site.name[lang], "url": "/" + lang + "/" }] -%}
+{%- if section == "articles" or "/articles/" in page.url -%}{%- set crumbs = (crumbs.concat([{ "name": t.nav.analysis, "url": "/" + lang + "/articles/" }])) -%}
+{%- elif section == "ports" or "/ports/" in page.url -%}{%- set crumbs = (crumbs.concat([{ "name": t.ports.title, "url": "/" + lang + "/ports/" }])) -%}
+{%- elif "/glossary/" in page.url -%}{%- set crumbs = (crumbs.concat([{ "name": t.glossary.title, "url": "/" + lang + "/glossary/" }])) -%}
+{%- elif "/events/" in page.url -%}{%- set crumbs = (crumbs.concat([{ "name": t.events.title, "url": "/" + lang + "/events/" }])) -%}
+{%- endif -%}
+{%- if title and page.url != "/" + lang + "/" -%}
+{%- set isIndex = (page.url == "/" + lang + "/articles/") or (page.url == "/" + lang + "/ports/") or (page.url == "/" + lang + "/glossary/") or (page.url == "/" + lang + "/events/") -%}
+{%- if not isIndex -%}{%- set crumbs = (crumbs.concat([{ "name": title, "url": page.url }])) -%}{%- endif -%}
+{%- endif -%}
+{%- set crumbList = [] -%}
+{%- for c in crumbs -%}
+{%- set crumbList = (crumbList.concat([{ "@type": "ListItem", "position": loop.index, "name": c.name, "item": site.url + c.url }])) -%}
+{%- endfor -%}
+
+{%- set graph = [org, person, { "@type": "BreadcrumbList", "itemListElement": crumbList }] -%}
+
+{#- المقالات -#}
+{%- if section == "articles" and term is not defined and "/articles/" in page.url and page.url != "/" + lang + "/articles/" -%}
+{%- set graph = (graph.concat([{
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "inLanguage": lang,
+  "datePublished": page.date | dateISO,
+  "dateModified": page.date | dateISO,
+  "author": { "@id": site.url + "#author" },
+  "publisher": { "@id": site.url + "#org" },
+  "image": site.url + "/img/og/" + ogslug + ".png",
+  "mainEntityOfPage": site.url + page.url
+}])) -%}
+{%- endif -%}
+
+{#- صفحات الموانئ -#}
+{%- if "/ports/" in page.url and page.url != "/" + lang + "/ports/" -%}
+{%- set pname = (port.name[lang] if port else title) -%}
+{%- set pcity = (port.city[lang] if port and port.city else "") -%}
+{%- set graph = (graph.concat([{
+  "@type": "Place",
+  "name": pname,
+  "description": description,
+  "address": { "@type": "PostalAddress", "addressCountry": (port.country[lang] if port else "") }
+}])) -%}
+{%- endif -%}
+
+{#- مصطلحات المعجم -#}
+{%- if term -%}
+{%- set graph = (graph.concat([{
+  "@type": "DefinedTerm",
+  "name": term.term[lang],
+  "description": term.def[lang],
+  "inDefinedTermSet": { "@type": "DefinedTermSet", "name": t.glossary.title, "url": site.url + "/" + lang + "/glossary/" }
+}])) -%}
+{%- endif -%}
+
+{#- المعارض: كل حدث قادم كـ Event -#}
+{%- if "/events/" in page.url -%}
+{%- for ev in events.events -%}
+{%- if not ev.tbd -%}
+{%- set graph = (graph.concat([{
+  "@type": "Event",
+  "name": ev.name[lang],
+  "description": ev.note[lang],
+  "startDate": ev.start,
+  "endDate": ev.end,
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": (ev.venue[lang] if ev.venue else ev.city[lang]),
+    "address": { "@type": "PostalAddress", "addressLocality": ev.city[lang], "addressCountry": ev.country[lang] }
+  },
+  "organizer": { "@type": "Organization", "name": ev.organizer[lang] },
+  "url": ev.url
+}])) -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endif -%}
+
+<script type="application/ld+json">{{ { "@context": "https://schema.org", "@graph": graph } | dump | safe }}</script>

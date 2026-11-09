@@ -15,10 +15,23 @@ layout: base.njk
     </p>
   </header>
   <div class="prose">
-    {{ content | safe }}
+    {% if section == "articles" %}{{ content | linkTerms(lang, page.url) | safe }}{% else %}{{ content | safe }}{% endif %}
   </div>
-  {% if layout != 'port' and section == 'articles' %}
+
+  {%- set relTerms = content | mentionedTerms(lang, 8) -%}
+  {%- set relPorts = content | mentionedPorts(lang, 6) -%}
+  {% if relTerms.length or relPorts.length %}
+  <section class="related">
+    <h2>{{ t.misc.related }}</h2>
+    <ul>
+      {% for x in relTerms %}<li><a href="{{ ('/' + lang + '/glossary/' + x.slug + '/') | rel(page.url) }}">{{ x.text }} <span class="kind">{{ t.misc.kindTerm }}</span></a></li>{% endfor %}
+      {% for x in relPorts %}{% if x.slug != page.fileSlug %}<li><a href="{{ ('/' + lang + '/ports/' + x.slug + '/') | rel(page.url) }}">{{ x.text }} <span class="kind">{{ t.misc.kindPort }}</span></a></li>{% endif %}{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% if section == 'articles' %}
   <aside class="article-note"><p>{{ t.article.disclaimer }}</p></aside>
+  {% include "author-box.njk" %}
   {% endif %}
   <p class="article-back"><a href="{{ ('/' + lang + '/' + (section or 'articles') + '/') | rel(page.url) }}">{{ t.ports.all if section == 'ports' else t.article.back }}</a></p>
 </article>

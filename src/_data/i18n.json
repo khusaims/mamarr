@@ -10,7 +10,8 @@
       "about": "من نحن",
       "tools": "حاسبة التكلفة",
       "glossary": "المعجم اللوجستي",
-      "events": "المعارض"
+      "events": "المعارض",
+      "search": "بحث"
     },
     "home": {
       "heroTitle": "ما يعنيه كل تغيير في الممرات البحرية لمن يشحن من الخليج وإليه",
@@ -22,7 +23,18 @@
       "ratesAll": "جدول الأسعار الكامل",
       "portsTitle": "الموانئ",
       "portsLead": "صفحة لكل ميناء: ما يُناوَل فيه، ومن يُشغّله، وما يجب أن يعرفه المستورد قبل أن يوجّه شحنته إليه.",
-      "indicesTitle": "المؤشرات العالمية"
+      "indicesTitle": "المؤشرات العالمية",
+      "toolsTitle": "أدوات ومراجع",
+      "toolsLead": "ما تعود إليه لا ما تقرأه مرة واحدة.",
+      "toolCalc": "احسب الرسم الجمركي والضريبة والتكلفة النهائية لشحنتك في أي دولة خليجية.",
+      "toolGlossary": "خمسون مصطلحًا بالعربية والإنجليزية، كل واحد بشرح عملي لما يعنيه للمستورد.",
+      "toolEvents": "ما يُقام الآن وما هو قادم في الخليج وعالميًا.",
+      "nextEvent": "القادم: {name} — {when}.",
+      "whenToday": "اليوم",
+      "whenTomorrow": "غدًا",
+      "whenTwo": "بعد يومين",
+      "whenFew": "بعد {n} أيام",
+      "whenMany": "بعد {n} يومًا"
     },
     "corridor": {
       "caption": "الممر: شنغهاي ← كولومبو ← صلالة ← مضيق هرمز ← صحار ← جبل علي. الأرقام على الخط هي الأيام التقريبية بين كل محطتين لخدمة مباشرة.",
@@ -257,6 +269,33 @@
       "found1": "حدث واحد",
       "found2": "حدثان",
       "foundFew": "{n} أحداث"
+    },
+    "misc": {
+      "breadcrumb": "مسار التنقّل",
+      "home": "الرئيسية",
+      "authorBox": "عن الكاتب",
+      "e404title": "الصفحة غير موجودة",
+      "e404lead": "الرابط الذي فتحته لا يقابل صفحة على ممرّ. ربما تغيّر، أو كُتب خطأ.",
+      "e404where": "إلى أين تذهب؟",
+      "related": "اقرأ أيضًا",
+      "kindTerm": "مصطلح",
+      "kindPort": "ميناء",
+      "lanesHere": "خطوط الشحن عبر هذا الميناء"
+    },
+    "search": {
+      "title": "ابحث في ممرّ",
+      "lead": "مقالات، مصطلحات، موانئ، معارض، وأدوات — في مربع واحد. اكتب حرفين على الأقل.",
+      "placeholder": "مثال: أرضيات، صحار، demurrage، حاسبة",
+      "found": "{n} نتيجة",
+      "noMatch": "لا نتائج. جرّب كلمة أقصر أو المقابل في اللغة الأخرى.",
+      "kinds": {
+        "article": "مقال",
+        "term": "مصطلح",
+        "port": "ميناء",
+        "event": "معرض",
+        "tool": "أداة",
+        "page": "صفحة"
+      }
     }
   },
   "en": {
@@ -270,7 +309,8 @@
       "about": "About",
       "tools": "Landed cost",
       "glossary": "Glossary",
-      "events": "Events"
+      "events": "Events",
+      "search": "Search"
     },
     "home": {
       "heroTitle": "What every shift in the sea lanes means for the people shipping to and from the Gulf",
@@ -282,7 +322,18 @@
       "ratesAll": "Full rates table",
       "portsTitle": "Ports",
       "portsLead": "One page per port: what it handles, who runs it, and what an importer should know before routing cargo there.",
-      "indicesTitle": "Global indices"
+      "indicesTitle": "Global indices",
+      "toolsTitle": "Tools and references",
+      "toolsLead": "The things you come back to, not the things you read once.",
+      "toolCalc": "Work out duty, VAT and the final landed cost of a shipment in any GCC country.",
+      "toolGlossary": "Fifty terms in Arabic and English, each explained in what it means for an importer.",
+      "toolEvents": "What is running now and what is coming, in the Gulf and worldwide.",
+      "nextEvent": "Next up: {name} — {when}.",
+      "whenToday": "today",
+      "whenTomorrow": "tomorrow",
+      "whenTwo": "in 2 days",
+      "whenFew": "in {n} days",
+      "whenMany": "in {n} days"
     },
     "corridor": {
       "caption": "The corridor: Shanghai → Colombo → Salalah → Strait of Hormuz → Sohar → Jebel Ali. Numbers on the line are approximate days between calls on a direct service.",
@@ -517,6 +568,33 @@
       "found1": "1 event",
       "found2": "2 events",
       "foundFew": "{n} events"
+    },
+    "misc": {
+      "breadcrumb": "Breadcrumb",
+      "home": "Home",
+      "authorBox": "About the author",
+      "e404title": "Page not found",
+      "e404lead": "The link you opened does not match a page on Mamarr. It may have moved, or been mistyped.",
+      "e404where": "Where to go",
+      "related": "Read next",
+      "kindTerm": "term",
+      "kindPort": "port",
+      "lanesHere": "Freight lanes through this port"
+    },
+    "search": {
+      "title": "Search Mamarr",
+      "lead": "Articles, terms, ports, events and tools in one box. Type at least two characters.",
+      "placeholder": "e.g. demurrage, Sohar, أرضيات, calculator",
+      "found": "{n} results",
+      "noMatch": "No matches. Try a shorter word, or the term in the other language.",
+      "kinds": {
+        "article": "Article",
+        "term": "Term",
+        "port": "Port",
+        "event": "Event",
+        "tool": "Tool",
+        "page": "Page"
+      }
     }
   }
 }

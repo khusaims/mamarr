@@ -1,0 +1,71 @@
+{%- set t = i18n[lang] -%}
+{%- set s = t.search -%}
+<div class="wrap-narrow">
+  <header class="page-head">
+    <h1>{{ s.title }}</h1>
+    <p>{{ s.lead }}</p>
+  </header>
+  <p class="field">
+    <label class="visually-hidden" for="sq">{{ s.title }}</label>
+    <input id="sq" type="search" autocomplete="off" autofocus placeholder="{{ s.placeholder }}">
+  </p>
+  <p class="port-count" id="s-count" role="status"></p>
+  <ul class="s-results" id="s-results"></ul>
+  <p class="ev-empty" id="s-empty" hidden>{{ s.noMatch }}</p>
+</div>
+<script>
+(function () {
+  var q = document.getElementById("sq");
+  if (!q) return;
+  var LANG = {{ lang | dump | safe }};
+  var T = {{ s | dump | safe }};
+  var out = document.getElementById("s-results");
+  var empty = document.getElementById("s-empty");
+  var count = document.getElementById("s-count");
+  var locale = LANG === "ar" ? "ar-EG" : "en-US";
+  var data = null;
+
+  function norm(x) { return String(x || "").toLowerCase().replace(/[ً-ْـ]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي"); }
+  function esc(x) { return String(x || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function base() { var d = location.pathname.split("/").filter(Boolean).length; return d ? "../".repeat(d) : "./"; }
+  var PREFIX = base();
+  function href(u) { return PREFIX + u.replace(/^\//, "") + ({{ "true" if env.PREVIEW else "false" }} ? "index.html" : ""); }
+
+  function load() {
+    if (data) return Promise.resolve(data);
+    return fetch(PREFIX + LANG + "/search.json").then(function (r) { return r.json(); }).then(function (j) { data = j; return j; });
+  }
+
+  function score(item, v) {
+    var tt = norm(item.t), aa = norm(item.a), bb = norm(item.b), dd = norm(item.d);
+    if (tt === v) return 100;
+    if (tt.indexOf(v) === 0) return 80;
+    if (bb && bb === v) return 75;
+    if (tt.indexOf(v) !== -1) return 60;
+    if (aa && aa.indexOf(v) !== -1) return 50;
+    if (dd.indexOf(v) !== -1) return 25;
+    return 0;
+  }
+
+  function run() {
+    var v = norm(q.value.trim());
+    if (v.length < 2) { out.innerHTML = ""; empty.hidden = true; count.textContent = ""; return; }
+    load().then(function (items) {
+      var hits = items.map(function (i) { return { i: i, s: score(i, v) }; })
+        .filter(function (x) { return x.s > 0; })
+        .sort(function (a, b) { return b.s - a.s || a.i.t.length - b.i.t.length; })
+        .slice(0, 40);
+      empty.hidden = hits.length > 0;
+      count.textContent = hits.length ? T.found.replace("{n}", hits.length.toLocaleString(locale)) : "";
+      out.innerHTML = hits.map(function (x) {
+        return '<li><a href="' + href(x.i.u) + '"><span class="s-kind">' + esc(T.kinds[x.i.k] || "") + "</span>" +
+          "<strong>" + esc(x.i.t) + "</strong>" + (x.i.a ? ' <span class="s-alt">' + esc(x.i.a) + "</span>" : "") +
+          "<span class=\"s-desc\">" + esc(String(x.i.d || "").slice(0, 150)) + "</span></a></li>";
+      }).join("");
+    });
+  }
+  q.addEventListener("input", run);
+  var pre = new URLSearchParams(location.search).get("q");
+  if (pre) { q.value = pre; run(); }
+})();
+</script>

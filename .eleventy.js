@@ -4,6 +4,18 @@
 
 const PREVIEW = !!process.env.PREVIEW;
 
+// الرابط النسبي من صفحة إلى هدف مطلق — تستخدمه فلاتر الربط الداخلي أيضًا
+function relative(target, from) {
+  if (!target) return "#";
+  if (/^(https?:)?\/\//.test(target) || target.startsWith("#") || target.startsWith("mailto:")) return target;
+  const fromDir = (from || "/").endsWith("/") ? (from || "/") : (from || "/").slice(0, (from || "/").lastIndexOf("/") + 1);
+  const depth = fromDir.split("/").filter(Boolean).length;
+  const prefix = depth ? "../".repeat(depth) : "./";
+  let t = target.replace(/^\//, "");
+  if (PREVIEW && (t === "" || t.endsWith("/"))) t += "index.html";
+  return prefix + t;
+}
+
 module.exports = function (eleventyConfig) {
   // Static assets copied as-is
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
@@ -11,16 +23,7 @@ module.exports = function (eleventyConfig) {
 
   // Relative link from the current page to a root-absolute target.
   // Lets the same build work at a domain root, in a sub-folder, or as a hosted preview.
-  eleventyConfig.addFilter("rel", (target, from) => {
-    if (!target) return "#";
-    if (/^(https?:)?\/\//.test(target) || target.startsWith("#") || target.startsWith("mailto:")) return target;
-    const fromDir = from.endsWith("/") ? from : from.slice(0, from.lastIndexOf("/") + 1);
-    const depth = fromDir.split("/").filter(Boolean).length;
-    const prefix = depth ? "../".repeat(depth) : "./";
-    let t = target.replace(/^\//, "");
-    if (PREVIEW && (t === "" || t.endsWith("/"))) t += "index.html";
-    return prefix + t;
-  });
+  eleventyConfig.addFilter("rel", (target, from) => relative(target, from));
 
   // Swap language prefix: /ar/x/ ↔ /en/x/
   eleventyConfig.addFilter("altLang", (url) => {
@@ -28,6 +31,99 @@ module.exports = function (eleventyConfig) {
     if (url.startsWith("/en/")) return "/ar/" + url.slice(4);
     return url;
   });
+
+  // ---- Cross-linking: glossary terms and ports mentioned in prose ----
+  const glossaryData = require("./src/_data/glossary.json");
+  const portsData = require("./src/_data/ports.json");
+
+  // Terms longest-first so "رمز النظام المنسّق" wins over a shorter overlapping term
+  const termsByLang = (lang) =>
+    glossaryData.terms
+      .map((t) => ({ slug: t.slug, text: t.term[lang] }))
+      .sort((a, b) => b.text.length - a.text.length);
+
+  const portsByLang = (lang) =>
+    portsData.ports
+      .map((p) => ({ slug: p.slug, text: p.name[lang] }))
+      .sort((a, b) => b.text.length - a.text.length);
+
+  const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // Arabic letters must not sit directly against the match; Latin uses word edges
+  const boundaried = (text) => {
+    const AR = "\\u0621-\\u064A";
+    const L = `(^|[^${AR}\\w])`;
+    const R = `($|[^${AR}\\w])`;
+    return new RegExp(L + "(" + escRe(text) + ")" + R);
+  };
+
+  // Walk HTML, applying fn only to text outside anchors, headings, code and attributes
+  function mapTextNodes(html, fn) {
+    const parts = String(html).split(/(<[^>]+>)/);
+    let skip = 0;
+    return parts
+      .map((part) => {
+        if (part.startsWith("<")) {
+          if (/^<(a|h1|h2|h3|code|pre)\b/i.test(part)) skip++;
+          else if (/^<\/(a|h1|h2|h3|code|pre)>/i.test(part)) skip = Math.max(0, skip - 1);
+          return part;
+        }
+        return skip > 0 ? part : fn(part);
+      })
+      .join("");
+  }
+
+  // Link the first mention of each glossary term, capped so prose stays readable
+  eleventyConfig.addFilter("linkTerms", function (html, lang, fromUrl, max) {
+    if (!html || !lang) return html;
+    const cap = max || 10;
+    const used = new Set();
+    let count = 0;
+    let out = String(html);
+    for (const term of termsByLang(lang)) {
+      if (count >= cap || used.has(term.slug)) continue;
+      const re = boundaried(term.text);
+      let done = false;
+      out = mapTextNodes(out, (text) => {
+        if (done || count >= cap) return text;
+        const m = re.exec(text);
+        if (!m) return text;
+        done = true;
+        count++;
+        used.add(term.slug);
+        const href = relative(`/${lang}/glossary/${term.slug}/`, fromUrl);
+        return (
+          text.slice(0, m.index) + m[1] +
+          `<a class="gterm" href="${href}">${m[2]}</a>` +
+          m[3] + text.slice(m.index + m[0].length)
+        );
+      });
+    }
+    return out;
+  });
+
+  // Which glossary terms / ports does this prose mention?
+  eleventyConfig.addFilter("mentionedTerms", (html, lang, max) => {
+    const hits = [];
+    const plain = String(html || "").replace(/<[^>]+>/g, " ");
+    for (const term of termsByLang(lang)) {
+      if (hits.length >= (max || 8)) break;
+      if (boundaried(term.text).test(plain)) hits.push(term);
+    }
+    return hits;
+  });
+  eleventyConfig.addFilter("mentionedPorts", (html, lang, max) => {
+    const hits = [];
+    const plain = String(html || "").replace(/<[^>]+>/g, " ");
+    for (const p of portsByLang(lang)) {
+      if (hits.length >= (max || 8)) break;
+      if (boundaried(p.text).test(plain)) hits.push(p);
+    }
+    return hits;
+  });
+
+  // Lanes that touch a given port slug
+  eleventyConfig.addFilter("lanesFor", (lanes, slug, max) =>
+    (lanes || []).filter((l) => l.from.slug === slug || l.to.slug === slug).slice(0, max || 6));
 
   // Unique objects by a nested key path, keeping first occurrence
   eleventyConfig.addFilter("uniqueBy", (arr, path) => {

@@ -67,6 +67,27 @@
 
 <section class="section">
   <div class="wrap">
+    <h2>{{ t.home.toolsTitle }}</h2>
+    <p class="section-lead">{{ t.home.toolsLead }}</p>
+    <ul class="tool-grid">
+      <li class="tool-card">
+        <h3><a href="{{ ('/' + lang + '/calculator/') | rel(page.url) }}">{{ t.calc.title }}</a></h3>
+        <p>{{ t.home.toolCalc }}</p>
+      </li>
+      <li class="tool-card">
+        <h3><a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}">{{ t.glossary.title }}</a></h3>
+        <p>{{ t.home.toolGlossary }}</p>
+      </li>
+      <li class="tool-card">
+        <h3><a href="{{ ('/' + lang + '/events/') | rel(page.url) }}">{{ t.events.title }}</a></h3>
+        <p id="home-next-event">{{ t.home.toolEvents }}</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
     <div class="section-head">
       <h2>{{ t.home.portsTitle }}</h2>
       <a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}">{{ t.ports.all }}</a>
@@ -80,5 +101,36 @@
       </li>
       {% endfor %}
     </ul>
+
+    <aside class="contribute-cta">
+      <h3>{{ t.contribute.ctaTitle }}</h3>
+      <p>{{ t.contribute.ctaText }}</p>
+      <p><a class="btn-primary" href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ t.contribute.ctaBtn }}</a></p>
+    </aside>
   </div>
 </section>
+
+<script id="home-events" type="application/json">{{ events.events | dump | safe }}</script>
+<script>
+(function () {
+  var el = document.getElementById("home-next-event");
+  if (!el) return;
+  try {
+    var LANG = {{ lang | dump | safe }};
+    var H = {{ i18n[lang].home | dump | safe }};
+    var data = JSON.parse(document.getElementById("home-events").textContent);
+    var now = new Date(); now.setHours(0, 0, 0, 0);
+    var next = data.filter(function (e) { return !e.tbd && new Date(e.start) >= now; })
+      .sort(function (a, b) { return new Date(a.start) - new Date(b.start); })[0];
+    if (!next) return;
+    var days = Math.round((new Date(next.start) - now) / 86400000);
+    var num = days.toLocaleString(LANG === "ar" ? "ar-EG" : "en-US");
+    var when = days === 0 ? H.whenToday
+      : days === 1 ? H.whenTomorrow
+      : days === 2 ? H.whenTwo
+      : days <= 10 ? H.whenFew.replace("{n}", num)
+      : H.whenMany.replace("{n}", num);
+    el.textContent = H.nextEvent.replace("{name}", next.name[LANG]).replace("{when}", when);
+  } catch (e) {}
+})();
+</script>

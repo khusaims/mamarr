@@ -1,0 +1,27 @@
+---
+permalink: /404.html
+eleventyExcludeFromCollections: true
+lang: ar
+noCrumbs: true
+title: الصفحة غير موجودة
+layout: base.njk
+---
+{%- set t = i18n[lang] -%}
+<div class="wrap-narrow article">
+  <header class="article-head">
+    <h1>{{ t.misc.e404title }}</h1>
+    <p class="dek">{{ t.misc.e404lead }}</p>
+    <p class="dek" lang="en" dir="ltr">{{ i18n.en.misc.e404lead }}</p>
+  </header>
+  <div class="prose">
+    <h2>{{ t.misc.e404where }}</h2>
+    <ul>
+      <li><a href="/ar/">{{ t.misc.home }}</a> · <a href="/en/" lang="en" dir="ltr">Home</a></li>
+      <li><a href="/ar/articles/">{{ t.nav.analysis }}</a></li>
+      <li><a href="/ar/rates/">{{ t.nav.rates }}</a></li>
+      <li><a href="/ar/glossary/">{{ t.glossary.title }}</a></li>
+      <li><a href="/ar/ports/">{{ t.ports.title }}</a></li>
+      <li><a href="/ar/events/">{{ t.events.title }}</a></li>
+    </ul>
+  </div>
+</div>

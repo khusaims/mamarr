@@ -16,5 +16,35 @@
   "linkedin": "https://www.linkedin.com/",
   "contactEmail": "hello@mamarr.com",
   "founded": 2026,
-  "analyticsToken": ""
+  "analyticsToken": "",
+  "author": {
+    "name": {
+      "ar": "محمد الخصيبي",
+      "en": "Mohammed Al Khusaibi"
+    },
+    "role": {
+      "ar": "يعمل في العمليات اللوجستية والمشتريات بقطاع الطاقة في عُمان",
+      "en": "Works in logistics operations and procurement in Oman's energy sector"
+    },
+    "bio": {
+      "ar": "يتعامل يوميًا مع التخليص الجمركي عبر نظام بيان، ومقدّمي الخدمات اللوجستية، وتقارير الأداء. حاصل على بكالوريوس إدارة العمليات من جامعة السلطان قابوس، ويدرس الماجستير في اللوجستيات وإدارة سلاسل الإمداد بجامعة لندن، إلى جانب شهادات من CILT وIPSCMI.",
+      "en": "Deals daily with customs clearance on the Bayan system, logistics service providers and performance reporting. Holds a BSc in Operations Management from Sultan Qaboos University, is reading for an MSc in Logistics and Supply Chain Management at the University of London, and holds certifications from CILT and IPSCMI."
+    },
+    "knowsAbout": {
+      "ar": [
+        "اللوجستيات",
+        "سلاسل الإمداد",
+        "التخليص الجمركي",
+        "المشتريات",
+        "الشحن البحري"
+      ],
+      "en": [
+        "Logistics",
+        "Supply chain management",
+        "Customs clearance",
+        "Procurement",
+        "Ocean freight"
+      ]
+    }
+  }
 }

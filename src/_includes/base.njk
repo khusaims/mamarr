@@ -42,6 +42,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="alternate" type="application/rss+xml" title="{{ site.name[lang] }}" href="{{ site.url }}/{{ lang }}/feed.xml">
   <link rel="stylesheet" href="{{ '/css/style.css' | rel(page.url) }}">
+  {% include "schema.njk" %}
 </head>
 <body class="{{ bodyClass or '' }}">
 <a class="skip" href="#main">{{ "تجاوز إلى المحتوى" if lang == "ar" else "Skip to content" }}</a>
@@ -63,11 +64,25 @@
       <a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}" {% if '/glossary/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.glossary }}</a>
       <a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}" {% if '/ports/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.ports }}</a>
       <a href="{{ ('/' + lang + '/about/') | rel(page.url) }}" {% if '/about/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.about }}</a>
+      <a class="nav-search" href="{{ ('/' + lang + '/search/') | rel(page.url) }}" {% if '/search/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.search }}</a>
       <a class="lang-switch" href="{{ alt | rel(page.url) }}" lang="{{ 'en' if lang == 'ar' else 'ar' }}" hreflang="{{ 'en' if lang == 'ar' else 'ar' }}">{{ t.switch }}</a>
     </nav>
   </div>
 </header>
 
+{%- set showCrumbs = page.url != "/" + lang + "/" and not noCrumbs -%}
+{% if showCrumbs %}
+<nav class="crumbs" aria-label="{{ t.misc.breadcrumb }}">
+  <div class="wrap">
+    <a href="{{ ('/' + lang + '/') | rel(page.url) }}">{{ t.misc.home }}</a>
+    {%- if section == "articles" or "/articles/" in page.url %} <span aria-hidden="true">/</span> <a href="{{ ('/' + lang + '/articles/') | rel(page.url) }}">{{ t.nav.analysis }}</a>
+    {%- elif "/ports/" in page.url %} <span aria-hidden="true">/</span> <a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}">{{ t.ports.title }}</a>
+    {%- elif "/glossary/" in page.url %} <span aria-hidden="true">/</span> <a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}">{{ t.glossary.title }}</a>
+    {%- elif "/events/" in page.url %} <span aria-hidden="true">/</span> <a href="{{ ('/' + lang + '/events/') | rel(page.url) }}">{{ t.events.title }}</a>
+    {%- endif %}
+  </div>
+</nav>
+{% endif %}
 <main id="main">
 {{ content | safe }}
 </main>

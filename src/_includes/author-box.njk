@@ -1,0 +1,11 @@
+{%- set t = i18n[lang] -%}
+{%- set a = site.author -%}
+<aside class="author-box">
+  <div class="author-avatar" aria-hidden="true">{{ a.name[lang] | first }}</div>
+  <div>
+    <h2>{{ t.misc.authorBox }}</h2>
+    <p class="author-name">{{ a.name[lang] }}</p>
+    <p class="author-role">{{ a.role[lang] }}</p>
+    <p class="author-bio">{{ a.bio[lang] }}</p>
+  </div>
+</aside>
