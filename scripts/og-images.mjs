@@ -108,7 +108,7 @@ async function collect() {
     jobs.push({ slug: `${lang}-contribute`, lang, kind: lang === "ar" ? "شارك" : "Contribute",
       title: lang === "ar" ? "شارك عرض سعر شحن" : "Share a freight quote" });
     jobs.push({ slug: `${lang}-glossary`, lang, kind: lang === "ar" ? "مرجع" : "Reference",
-      title: lang === "ar" ? "معجم مصطلحات اللوجستيات" : "Logistics glossary" });
+      title: lang === "ar" ? "المعجم اللوجستي" : "Logistics glossary" });
     jobs.push({ slug: `${lang}-calculator`, lang, kind: lang === "ar" ? "أداة" : "Tool",
       title: lang === "ar" ? "حاسبة التكلفة الواصلة للاستيراد إلى الخليج" : "GCC landed cost calculator" });
     jobs.push({ slug: `${lang}-about`, lang, kind: "", title: lang === "ar" ? "من نحن" : "About Mamarr" });
