@@ -125,6 +125,33 @@ table { border-collapse: collapse; width: 100%; }
   .rates-table .trend-col, .rates-table .trend { display: none; }
 }
 
+/* Freight lane table: controls, summary, bars */
+.lane-controls { margin-bottom: 1.25rem; }
+.lane-row { display: grid; gap: 1rem; margin-bottom: 1rem; }
+@media (min-width: 620px) { .lane-row { grid-template-columns: 2fr 1fr; align-items: end; } }
+.dest-filter { display: flex; flex-wrap: wrap; gap: .5rem; }
+.lane-summary { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: 1px; background: var(--sand); border: 1px solid var(--sand); }
+@media (min-width: 680px) { .lane-summary { grid-template-columns: repeat(4, 1fr); } }
+.lane-summary li { background: var(--white); padding: .8rem 1rem; display: flex; flex-direction: column; gap: .2rem; }
+.sum-label { color: var(--muted); font-size: .82rem; }
+.sum-value { color: var(--ink); font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.lane-table td, .lane-table th { vertical-align: middle; }
+.lane-table .lane { font-weight: 500; }
+.lane-table .lane a { color: var(--ink); text-decoration-color: var(--sand); }
+.lane-table .lane a:hover { color: var(--teal-2); }
+.lane-arrow { color: var(--buoy); padding: 0 .15em; }
+.lane-service { font-size: .9rem; white-space: nowrap; }
+.svc-direct { color: var(--teal); font-weight: 500; }
+.svc-via { color: var(--muted); }
+.num-col { text-align: start; }
+.rates-table td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rates-table td.num small { color: var(--muted); font-weight: 400; font-size: .8em; }
+.rate-cell { position: relative; }
+.rate-bar { position: absolute; inset-inline-start: 0; bottom: .35rem; height: 3px; width: var(--w); background: var(--sand); border-radius: 2px; }
+.rate-value { position: relative; }
+.lane-empty { color: var(--muted); padding: 1.5rem 0; margin: 0; }
+@media (max-width: 760px) { .lane-table .lane-service { display: none; } .lane-table thead th:nth-child(2) { display: none; } }
+
 /* Ports: filter, grid, entry */
 .port-controls { margin-bottom: 2rem; }
 .port-search { max-width: 24rem; margin: 0 0 1rem; }

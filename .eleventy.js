@@ -29,6 +29,33 @@ module.exports = function (eleventyConfig) {
     return url;
   });
 
+  // Unique objects by a nested key path, keeping first occurrence
+  eleventyConfig.addFilter("uniqueBy", (arr, path) => {
+    const seen = new Set();
+    const out = [];
+    for (const item of arr || []) {
+      const key = path.split(".").reduce((o, k) => (o == null ? o : o[k]), item);
+      if (key == null || seen.has(key)) continue;
+      seen.add(key);
+      out.push(item);
+    }
+    return out;
+  });
+
+  // Median of a numeric array
+  eleventyConfig.addFilter("median", (arr) => {
+    const v = (arr || []).slice().sort((a, b) => a - b);
+    if (!v.length) return 0;
+    const m = Math.floor(v.length / 2);
+    return v.length % 2 ? v[m] : Math.round((v[m - 1] + v[m]) / 2);
+  });
+
+  // Pluck a nested key from each item
+  eleventyConfig.addFilter("pluck", (arr, path) =>
+    (arr || []).map((i) => path.split(".").reduce((o, k) => (o == null ? o : o[k]), i)));
+
+  eleventyConfig.addFilter("maxOf", (arr) => Math.max.apply(null, arr || [0]));
+
   // First n items of an array
   eleventyConfig.addFilter("head", (arr, n) => (arr || []).slice(0, n));
 

@@ -1,0 +1,25 @@
+{%- set t = i18n[lang] -%}
+{% if rates.sample %}<p class="sample-banner">{{ t.rates.sampleNotice }}</p>{% endif %}
+<table class="rates-table">
+  <thead>
+    <tr>
+      <th scope="col">{{ t.rates.lane }}</th>
+      <th scope="col" class="num-col">{{ t.rates.days }}</th>
+      <th scope="col" class="num-col">{{ t.rates.rate }}</th>
+      <th scope="col" class="num-col">{{ t.rates.change }}</th>
+      <th scope="col" class="trend-col">{{ t.rates.trend }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for l in rates.lanes | head(6) %}
+    {%- set dirClass = "up" if l.change_pct > 0 else ("down" if l.change_pct < 0 else "flat") -%}
+    <tr>
+      <td class="lane">{{ l.from[lang] }} <span class="lane-arrow" aria-hidden="true">{{ "←" if lang == "ar" else "→" }}</span> {{ l.to[lang] }}</td>
+      <td class="num">{{ l.days | num(lang) }}<small> {{ t.rates.daysUnit }}</small></td>
+      <td class="num">{{ l.usd | num(lang) }}</td>
+      <td><span class="chg {{ dirClass }}">{{ l.change_pct | pct(lang) }}</span></td>
+      <td class="trend"><span class="spark-{{ dirClass }}">{{ l.series | sparkline | safe }}</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

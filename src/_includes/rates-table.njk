@@ -1,24 +1,140 @@
 {%- set t = i18n[lang] -%}
+{%- set maxRate = rates.lanes | pluck("usd") | maxOf -%}
 {% if rates.sample %}<p class="sample-banner">{{ t.rates.sampleNotice }}</p>{% endif %}
-<table class="rates-table">
+
+<div class="lane-controls">
+  <div class="lane-row">
+    <p class="field lane-search">
+      <label for="lq">{{ t.rates.searchOrigin }}</label>
+      <input id="lq" type="search" autocomplete="off" placeholder="{{ t.rates.originPlaceholder }}">
+    </p>
+    <p class="field lane-sort">
+      <label for="lsort">{{ t.rates.sort }}</label>
+      <select id="lsort">
+        <option value="rate-asc">{{ t.rates.sortRateAsc }}</option>
+        <option value="rate-desc">{{ t.rates.sortRateDesc }}</option>
+        <option value="days-asc">{{ t.rates.sortDays }}</option>
+        <option value="chg-desc">{{ t.rates.sortChange }}</option>
+        <option value="origin">{{ t.rates.sortOrigin }}</option>
+      </select>
+    </p>
+  </div>
+  <div class="dest-filter" role="group" aria-label="{{ t.rates.destination }}">
+    <button type="button" class="chip is-on" data-dest="all">{{ t.rates.allDest }}</button>
+    {% for l in rates.lanes | uniqueBy("to.slug") %}<button type="button" class="chip" data-dest="{{ l.to.slug }}">{{ l.to[lang] }}</button>{% endfor %}
+  </div>
+</div>
+
+<ul class="lane-summary" id="lane-summary">
+  <li><span class="sum-label">{{ t.rates.sumLanes }}</span><span class="sum-value" id="sum-lanes">—</span></li>
+  <li><span class="sum-label">{{ t.rates.sumMedian }}</span><span class="sum-value" id="sum-median">—</span></li>
+  <li><span class="sum-label">{{ t.rates.sumRiser }}</span><span class="sum-value" id="sum-riser">—</span></li>
+  <li><span class="sum-label">{{ t.rates.sumFaller }}</span><span class="sum-value" id="sum-faller">—</span></li>
+</ul>
+
+<table class="rates-table lane-table">
   <thead>
     <tr>
       <th scope="col">{{ t.rates.lane }}</th>
-      <th scope="col">{{ t.rates.rate }}</th>
-      <th scope="col">{{ t.rates.change }}</th>
+      <th scope="col">{{ t.rates.service }}</th>
+      <th scope="col" class="num-col">{{ t.rates.days }}</th>
+      <th scope="col" class="num-col">{{ t.rates.rate }}</th>
+      <th scope="col" class="num-col">{{ t.rates.change }}</th>
       <th scope="col" class="trend-col">{{ t.rates.trend }}</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="lane-body">
     {% for l in rates.lanes %}
     {%- set dirClass = "up" if l.change_pct > 0 else ("down" if l.change_pct < 0 else "flat") -%}
-    <tr>
-      <td class="lane">{{ l.from[lang] }} {{ "←" if lang == "ar" else "→" }} {{ l.to[lang] }}<small>{{ rates.unit }}</small></td>
-      <td class="num">{{ l.usd | num(lang) }}</td>
+    <tr data-dest="{{ l.to.slug }}" data-origin="{{ l.from.ar }} {{ l.from.en }} {{ l.from.slug }}"
+        data-rate="{{ l.usd }}" data-chg="{{ l.change_pct }}" data-days="{{ l.days }}" data-sort-origin="{{ l.from[lang] }}">
+      <td class="lane">
+        <a href="{{ ('/' + lang + '/ports/' + l.from.slug + '/') | rel(page.url) }}">{{ l.from[lang] }}</a>
+        <span class="lane-arrow" aria-hidden="true">{{ "←" if lang == "ar" else "→" }}</span>
+        <a href="{{ ('/' + lang + '/ports/' + l.to.slug + '/') | rel(page.url) }}">{{ l.to[lang] }}</a>
+      </td>
+      <td class="lane-service">
+        {%- if l.via %}<span class="svc-via">{{ t.rates.viaLabel }} <a href="{{ ('/' + lang + '/ports/' + l.via.slug + '/') | rel(page.url) }}">{{ l.via[lang] }}</a></span>
+        {%- else %}<span class="svc-direct">{{ t.rates.direct }}</span>{% endif -%}
+      </td>
+      <td class="num">{{ l.days | num(lang) }}<small> {{ t.rates.daysUnit }}</small></td>
+      <td class="num rate-cell">
+        <span class="rate-bar" style="--w: {{ (l.usd / maxRate * 100) | round }}%"></span>
+        <span class="rate-value">{{ l.usd | num(lang) }}</span>
+      </td>
       <td><span class="chg {{ dirClass }}">{{ l.change_pct | pct(lang) }}</span></td>
-      <td class="trend"><span class="spark-{{ dirClass }}">{{ l.series | sparkline | safe }}</span></td>
+      <td class="trend"><span class="spark-{{ dirClass }}">{{ l.series | sparkline(110, 26) | safe }}</span></td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+<p class="lane-empty" id="lane-empty" hidden>{{ t.rates.noLanes }}</p>
+<p class="rates-note">{{ t.rates.laneNote }}</p>
 <p class="rates-note">{{ t.rates.updated }}: <time datetime="{{ rates.updated }}">{{ rates.updated | dateHuman(lang) }}</time></p>
+
+<script>
+(function () {
+  var body = document.getElementById("lane-body");
+  if (!body) return;
+  var rows = [].slice.call(body.rows);
+  var chips = [].slice.call(document.querySelectorAll(".dest-filter .chip"));
+  var q = document.getElementById("lq");
+  var sort = document.getElementById("lsort");
+  var empty = document.getElementById("lane-empty");
+  var locale = {{ lang | dump | safe }} === "ar" ? "ar-EG" : "en-US";
+  var dest = "all";
+  function norm(s) { return s.toLowerCase().replace(/[ً-ْـ]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي"); }
+  function fmt(n) { return Math.round(n).toLocaleString(locale); }
+  function pct(n) { return (n > 0 ? "+" : "") + n.toLocaleString(locale, { maximumFractionDigits: 1 }) + "%"; }
+
+  function apply() {
+    var v = norm(q.value.trim());
+    var shown = [];
+    rows.forEach(function (r) {
+      var hit = (dest === "all" || r.dataset.dest === dest) && (!v || norm(r.dataset.origin).indexOf(v) !== -1);
+      r.hidden = !hit;
+      if (hit) shown.push(r);
+    });
+
+    var mode = sort.value;
+    var sorted = shown.slice().sort(function (a, b) {
+      if (mode === "rate-asc") return a.dataset.rate - b.dataset.rate;
+      if (mode === "rate-desc") return b.dataset.rate - a.dataset.rate;
+      if (mode === "days-asc") return a.dataset.days - b.dataset.days;
+      if (mode === "chg-desc") return b.dataset.chg - a.dataset.chg;
+      return a.dataset.sortOrigin.localeCompare(b.dataset.sortOrigin, locale);
+    });
+    sorted.forEach(function (r) { body.appendChild(r); });
+    rows.filter(function (r) { return r.hidden; }).forEach(function (r) { body.appendChild(r); });
+
+    empty.hidden = shown.length > 0;
+    document.getElementById("sum-lanes").textContent = shown.length ? fmt(shown.length) : "—";
+    if (!shown.length) {
+      ["sum-median", "sum-riser", "sum-faller"].forEach(function (id) { document.getElementById(id).textContent = "—"; });
+      return;
+    }
+    var vals = shown.map(function (r) { return +r.dataset.rate; }).sort(function (a, b) { return a - b; });
+    var m = Math.floor(vals.length / 2);
+    var med = vals.length % 2 ? vals[m] : (vals[m - 1] + vals[m]) / 2;
+    document.getElementById("sum-median").textContent = fmt(med);
+    var byChg = shown.slice().sort(function (a, b) { return b.dataset.chg - a.dataset.chg; });
+    var top = byChg[0], low = byChg[byChg.length - 1];
+    function label(r) { return r.cells[0].textContent.replace(/\s+/g, " ").trim(); }
+    document.getElementById("sum-riser").textContent = +top.dataset.chg > 0 ? label(top) + "  " + pct(+top.dataset.chg) : "—";
+    document.getElementById("sum-faller").textContent = +low.dataset.chg < 0 ? label(low) + "  " + pct(+low.dataset.chg) : "—";
+  }
+
+  chips.forEach(function (b) {
+    b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false");
+    b.addEventListener("click", function () {
+      chips.forEach(function (x) { x.classList.remove("is-on"); x.setAttribute("aria-pressed", "false"); });
+      b.classList.add("is-on"); b.setAttribute("aria-pressed", "true");
+      dest = b.dataset.dest;
+      apply();
+    });
+  });
+  q.addEventListener("input", apply);
+  sort.addEventListener("change", apply);
+  apply();
+})();
+</script>
