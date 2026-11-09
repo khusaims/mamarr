@@ -1,0 +1,24 @@
+{%- set t = i18n[lang] -%}
+{%- set catName = "" -%}
+{%- for c in glossary.categories -%}{%- if c.id == term.cat -%}{%- set catName = c[lang] -%}{%- endif -%}{%- endfor -%}
+<article class="article wrap-narrow">
+  <header class="article-head">
+    <p class="article-section"><a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}">{{ t.nav.glossary }}</a> · {{ catName }}</p>
+    <h1>{{ term.term[lang] }}{% if term.abbr %} <span class="term-abbr">{{ term.abbr }}</span>{% endif %}</h1>
+    <p class="term-other"><span>{{ "بالإنجليزية" if lang == "ar" else "In Arabic" }}:</span> <bdi lang="{{ 'en' if lang == 'ar' else 'ar' }}" dir="{{ 'ltr' if lang == 'ar' else 'rtl' }}">{{ term.term.en if lang == "ar" else term.term.ar }}</bdi></p>
+  </header>
+  <div class="prose">
+    <p class="term-def">{{ term.def[lang] }}</p>
+    <h2>{{ t.glossary.why }}</h2>
+    <p>{{ term.note[lang] }}</p>
+    {%- set rel = [] -%}
+    {%- for r in term.related -%}{%- for x in glossary.terms -%}{%- if x.slug == r and x.slug != term.slug -%}{%- set rel = (rel.push(x), rel) -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
+    {% if rel.length %}
+    <h2>{{ t.glossary.related }}</h2>
+    <ul class="term-related">
+      {% for x in rel %}<li><a href="{{ ('/' + lang + '/glossary/' + x.slug + '/') | rel(page.url) }}">{{ x.term[lang] }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  <p class="article-back"><a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}">{{ t.glossary.all }}</a></p>
+</article>

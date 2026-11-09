@@ -8,7 +8,8 @@
       "rates": "أسعار الشحن",
       "ports": "موانئ",
       "about": "من نحن",
-      "tools": "حاسبة التكلفة"
+      "tools": "حاسبة التكلفة",
+      "glossary": "المعجم"
     },
     "home": {
       "heroTitle": "ما يعنيه كل تغيير في الممرات البحرية لمن يشحن من الخليج وإليه",
@@ -116,6 +117,17 @@
       "how3": "ضريبة القيمة المضافة = نسبتها × (CIF + الرسم الجمركي + الضريبة الانتقائية).",
       "how4": "التكلفة الواصلة = CIF + ما دُفع للجمارك + المصاريف المحلية.",
       "disclaimer": "النتيجة تقديرية للتخطيط، وليست تقييمًا جمركيًا. النسبة الفعلية تعتمد على رمز HS وبلد المنشأ والاتفاقيات التفضيلية وقرارات الإعفاء. المرجع النهائي هو الإدارة الجمركية في بلد الوصول."
+    },
+    "glossary": {
+      "title": "معجم مصطلحات اللوجستيات",
+      "lead": "مصطلح بالعربية والإنجليزية، وتعريف مختصر، ثم ما يعنيه عمليًا لمن يستورد أو يشحن عبر الخليج. اكتب أي كلمة للبحث.",
+      "search": "ابحث في المعجم",
+      "placeholder": "مثال: أرضيات، HS، بوليصة",
+      "why": "لماذا يهمّك",
+      "related": "مصطلحات ذات صلة",
+      "all": "كل المصطلحات",
+      "found": "{n} نتيجة",
+      "noResults": "لا نتائج. جرّب كلمة أخرى أو المقابل الإنجليزي."
     }
   },
   "en": {
@@ -127,7 +139,8 @@
       "rates": "Freight rates",
       "ports": "Ports",
       "about": "About",
-      "tools": "Landed cost"
+      "tools": "Landed cost",
+      "glossary": "Glossary"
     },
     "home": {
       "heroTitle": "What every shift in the sea lanes means for the people shipping to and from the Gulf",
@@ -235,6 +248,17 @@
       "how3": "VAT = VAT rate × (CIF + customs duty + excise).",
       "how4": "Landed cost = CIF + what customs took + local charges.",
       "disclaimer": "This is a planning estimate, not a customs assessment. The actual rate depends on your HS code, country of origin, preferential agreements and exemption decisions. The customs administration in the destination country is the final reference."
+    },
+    "glossary": {
+      "title": "Logistics glossary",
+      "lead": "Each term in Arabic and English, a short definition, then what it actually means for someone importing or shipping through the Gulf. Type any word to search.",
+      "search": "Search the glossary",
+      "placeholder": "e.g. demurrage, HS, bill of lading",
+      "why": "Why it matters",
+      "related": "Related terms",
+      "all": "All terms",
+      "found": "{n} results",
+      "noResults": "No matches. Try another word or the Arabic term."
     }
   }
 }

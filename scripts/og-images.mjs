@@ -13,6 +13,7 @@
  */
 
 import { readdir, readFile, writeFile, mkdir, rm } from "node:fs/promises";
+import { createRequire } from "node:module";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import path from "node:path";
@@ -103,6 +104,8 @@ async function collect() {
       : "Gulf and Red Sea logistics, for the people who ship through it" });
     jobs.push({ slug: `${lang}-rates`, lang, kind: lang === "ar" ? "بيانات" : "Data",
       title: lang === "ar" ? "أسعار الشحن للخطوط الخليجية" : "Freight rates on Gulf lanes" });
+    jobs.push({ slug: `${lang}-glossary`, lang, kind: lang === "ar" ? "مرجع" : "Reference",
+      title: lang === "ar" ? "معجم مصطلحات اللوجستيات" : "Logistics glossary" });
     jobs.push({ slug: `${lang}-calculator`, lang, kind: lang === "ar" ? "أداة" : "Tool",
       title: lang === "ar" ? "حاسبة التكلفة الواصلة للاستيراد إلى الخليج" : "GCC landed cost calculator" });
     jobs.push({ slug: `${lang}-about`, lang, kind: "", title: lang === "ar" ? "من نحن" : "About Mamarr" });
@@ -126,6 +129,20 @@ async function collect() {
           title: fm.title
         });
       }
+    }
+  }
+
+  // مصطلحات المعجم
+  const require = createRequire(import.meta.url);
+  const glossary = require("../src/_data/glossary.json");
+  for (const lang of ["ar", "en"]) {
+    for (const t of glossary.terms) {
+      jobs.push({
+        slug: `${lang}-glossary-${t.slug}`,
+        lang,
+        kind: lang === "ar" ? "مصطلح" : "Term",
+        title: t.term[lang]
+      });
     }
   }
   return jobs;

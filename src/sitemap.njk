@@ -4,7 +4,7 @@ eleventyExcludeFromCollections: true
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-{%- set extra = ["/ar/", "/en/", "/ar/articles/", "/en/articles/", "/ar/ports/", "/en/ports/", "/ar/calculator/", "/en/calculator/"] -%}
+{%- set extra = ["/ar/", "/en/", "/ar/articles/", "/en/articles/", "/ar/ports/", "/en/ports/", "/ar/calculator/", "/en/calculator/", "/ar/glossary/", "/en/glossary/"] -%}
 {%- for u in extra %}
   <url>
     <loc>{{ site.url }}{{ u }}</loc>
@@ -12,9 +12,18 @@ eleventyExcludeFromCollections: true
     <xhtml:link rel="alternate" hreflang="{{ 'en' if '/ar/' in u else 'ar' }}" href="{{ site.url }}{{ u | altLang }}"/>
   </url>
 {%- endfor -%}
+{%- for lang in ["ar", "en"] -%}
+{%- for term in glossary.terms %}
+  <url>
+    <loc>{{ site.url }}/{{ lang }}/glossary/{{ term.slug }}/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="{{ site.url }}/ar/glossary/{{ term.slug }}/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ site.url }}/en/glossary/{{ term.slug }}/"/>
+  </url>
+{%- endfor -%}
+{%- endfor -%}
 {%- set pages = collections.all | selectattr("url") -%}
 {%- for p in pages -%}
-{%- if p.url and not p.url.endsWith(".xml") and not p.url.endsWith(".txt") and p.url != "/index.html" and p.url not in extra %}
+{%- if p.url and not p.url.endsWith(".xml") and not p.url.endsWith(".txt") and p.url != "/index.html" and p.url not in extra and "/glossary/" not in p.url %}
   <url>
     <loc>{{ site.url }}{{ p.url }}</loc>
     {%- if p.date %}

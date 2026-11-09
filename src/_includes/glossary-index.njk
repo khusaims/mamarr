@@ -1,0 +1,55 @@
+{%- set t = i18n[lang] -%}
+<div class="wrap-narrow">
+  <header class="page-head">
+    <h1>{{ t.glossary.title }}</h1>
+    <p>{{ t.glossary.lead }}</p>
+  </header>
+
+  <p class="field gloss-search">
+    <label for="q">{{ t.glossary.search }}</label>
+    <input id="q" type="search" autocomplete="off" placeholder="{{ t.glossary.placeholder }}">
+  </p>
+  <p class="gloss-count" id="gloss-count" role="status"></p>
+
+  {% for c in glossary.categories %}
+  <section class="gloss-cat" data-cat="{{ c.id }}">
+    <h2>{{ c[lang] }}</h2>
+    <ul class="gloss-list">
+      {% for x in glossary.terms %}{% if x.cat == c.id %}
+      <li data-term="{{ x.term.ar }} {{ x.term.en }} {{ x.abbr or '' }} {{ x.slug }}">
+        <a href="{{ ('/' + lang + '/glossary/' + x.slug + '/') | rel(page.url) }}">{{ x.term[lang] }}</a>
+        {% if x.abbr %}<span class="term-abbr">{{ x.abbr }}</span>{% endif %}
+        <span class="gloss-alt"><bdi dir="{{ 'ltr' if lang == 'ar' else 'rtl' }}">{{ x.term.en if lang == "ar" else x.term.ar }}</bdi></span>
+      </li>
+      {% endif %}{% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+</div>
+
+<script>
+(function () {
+  var q = document.getElementById("q");
+  if (!q) return;
+  var items = [].slice.call(document.querySelectorAll(".gloss-list li"));
+  var cats = [].slice.call(document.querySelectorAll(".gloss-cat"));
+  var out = document.getElementById("gloss-count");
+  var none = {{ t.glossary.noResults | dump | safe }};
+  var found = {{ t.glossary.found | dump | safe }};
+  function norm(s) { return s.toLowerCase().replace(/[ً-ْـ]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي"); }
+  function run() {
+    var v = norm(q.value.trim());
+    var n = 0;
+    items.forEach(function (li) {
+      var hit = !v || norm(li.dataset.term).indexOf(v) !== -1;
+      li.hidden = !hit;
+      if (hit) n++;
+    });
+    cats.forEach(function (c) {
+      c.hidden = !c.querySelector(".gloss-list li:not([hidden])");
+    });
+    out.textContent = !v ? "" : (n ? found.replace("{n}", n.toLocaleString({{ lang | dump | safe }} === "ar" ? "ar-EG" : "en-US")) : none);
+  }
+  q.addEventListener("input", run);
+})();
+</script>

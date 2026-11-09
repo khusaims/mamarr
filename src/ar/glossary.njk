@@ -1,0 +1,13 @@
+---
+layout: base.njk
+pagination:
+  data: glossary.terms
+  size: 1
+  alias: term
+permalink: "/ar/glossary/{{ term.slug }}/"
+eleventyComputed:
+  title: "{{ term.term.ar }}"
+  description: "{{ term.def.ar }}"
+  ogImage: "ar-glossary-{{ term.slug }}"
+---
+{% include "term.njk" %}

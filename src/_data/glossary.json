@@ -1,0 +1,1091 @@
+{
+  "_readme": "معجم مصطلحات اللوجستيات. لإضافة مصطلح: انسخ أي عنصر، واملأ slug (بالإنجليزية بشرطات) و ar/en لكل حقل. cat من: docs, ocean, customs, ops, contracts. related = قائمة slugs. بعد الإضافة شغّل node scripts/og-images.mjs ثم npm run build.",
+  "categories": [
+    {
+      "id": "docs",
+      "ar": "مستندات التجارة",
+      "en": "Trade documents"
+    },
+    {
+      "id": "ocean",
+      "ar": "الشحن البحري",
+      "en": "Ocean freight"
+    },
+    {
+      "id": "customs",
+      "ar": "الجمارك والضرائب",
+      "en": "Customs and tax"
+    },
+    {
+      "id": "ops",
+      "ar": "المخزون والتشغيل",
+      "en": "Inventory and operations"
+    },
+    {
+      "id": "contracts",
+      "ar": "العقود ومقدّمو الخدمة",
+      "en": "Contracts and providers"
+    }
+  ],
+  "terms": [
+    {
+      "slug": "incoterms",
+      "cat": "docs",
+      "term": {
+        "ar": "شروط التسليم (إنكوترمز)",
+        "en": "Incoterms"
+      },
+      "abbr": "Incoterms 2020",
+      "def": {
+        "ar": "قواعد تجارية دولية تحدد بدقة أين تنتقل مسؤولية البضاعة وتكلفتها ومخاطرها من البائع إلى المشتري.",
+        "en": "A set of international trade rules that fix exactly where responsibility, cost and risk for the goods pass from seller to buyer."
+      },
+      "note": {
+        "ar": "اختيار الشرط يحدد من يدفع الشحن والتأمين ومن يتحمّل الخسارة إن غرقت الحاوية. أكثر ما يُستخدم في الخليج: FOB وCIF وEXW وDDP. اذكر الشرط صراحة في الفاتورة، وإلا قدّرت الجمارك القيمة CIF باجتهادها.",
+        "en": "The term decides who pays freight and insurance and who bears the loss if the container goes overboard. The common ones in the Gulf are FOB, CIF, EXW and DDP. State the term explicitly on the invoice, or customs will estimate the CIF value itself."
+      },
+      "related": [
+        "fob",
+        "cif",
+        "exw",
+        "ddp"
+      ]
+    },
+    {
+      "slug": "fob",
+      "cat": "docs",
+      "term": {
+        "ar": "التسليم على ظهر السفينة",
+        "en": "Free on Board"
+      },
+      "abbr": "FOB",
+      "def": {
+        "ar": "البائع مسؤول حتى تُحمَّل البضاعة على السفينة في ميناء الشحن، وبعدها تنتقل التكلفة والمخاطر إلى المشتري.",
+        "en": "The seller is responsible until the goods are loaded on the vessel at the port of shipment; cost and risk then pass to the buyer."
+      },
+      "note": {
+        "ar": "الخيار المفضّل للمستورد الذي يريد التحكم في أجرة الشحن واختيار وكيله — وغالبًا أرخص من CIF لأنك تتفاوض على الشحن بنفسك بدل أن يضيف المصدّر هامشه عليه.",
+        "en": "Preferred by importers who want to control the freight cost and choose their own forwarder — usually cheaper than CIF, because you negotiate the freight yourself instead of paying the exporter's margin on it."
+      },
+      "related": [
+        "incoterms",
+        "cif",
+        "exw"
+      ]
+    },
+    {
+      "slug": "cif",
+      "cat": "docs",
+      "term": {
+        "ar": "التكلفة والتأمين وأجرة الشحن",
+        "en": "Cost, Insurance and Freight"
+      },
+      "abbr": "CIF",
+      "def": {
+        "ar": "البائع يدفع قيمة البضاعة والشحن والتأمين حتى ميناء الوصول، لكن المخاطر تنتقل للمشتري عند التحميل.",
+        "en": "The seller pays for the goods, freight and insurance to the port of arrival, but risk passes to the buyer at loading."
+      },
+      "note": {
+        "ar": "القيمة CIF هي الأساس الذي تُحسب عليه الرسوم الجمركية في دول الخليج، ولهذا تظهر في كل حاسبة تكلفة. انتبه: دفع البائع للتأمين لا يعني أنه يتحمّل الخسارة.",
+        "en": "The CIF value is the base on which GCC customs duty is assessed, which is why it appears in every cost calculation. Note the trap: the seller paying for insurance does not mean the seller bears the loss."
+      },
+      "related": [
+        "incoterms",
+        "fob",
+        "customs-duty"
+      ]
+    },
+    {
+      "slug": "exw",
+      "cat": "docs",
+      "term": {
+        "ar": "التسليم في المصنع",
+        "en": "Ex Works"
+      },
+      "abbr": "EXW",
+      "def": {
+        "ar": "البضاعة تُسلَّم عند باب مصنع البائع، والمشتري يتحمّل كل شيء بعد ذلك: التحميل والنقل والتصدير والشحن والاستيراد.",
+        "en": "The goods are handed over at the seller's premises, and the buyer takes on everything after that: loading, inland transport, export clearance, freight and import."
+      },
+      "note": {
+        "ar": "يبدو الأرخص في جدول الأسعار وهو غالبًا الأغلى فعليًا للمستورد الصغير، لأنك تتولى التخليص في بلد لا تعرف إجراءاته ولا وكلاءه.",
+        "en": "It looks cheapest on a price list and is often the most expensive in practice for a small importer, because you take on export clearance in a country whose procedures and agents you do not know."
+      },
+      "related": [
+        "incoterms",
+        "fob",
+        "ddp"
+      ]
+    },
+    {
+      "slug": "ddp",
+      "cat": "docs",
+      "term": {
+        "ar": "التسليم خالص الرسوم",
+        "en": "Delivered Duty Paid"
+      },
+      "abbr": "DDP",
+      "def": {
+        "ar": "البائع يتحمّل كل شيء حتى تصل البضاعة إلى عنوان المشتري، بما في ذلك الرسوم الجمركية في بلد الوصول.",
+        "en": "The seller bears everything until the goods reach the buyer's address, including import duties in the destination country."
+      },
+      "note": {
+        "ar": "مريح للمشتري لكنه يخفي التكاليف داخل سعر البضاعة، ويصعّب عليك استرداد ضريبة القيمة المضافة لأن البيان قد لا يكون باسمك.",
+        "en": "Convenient for the buyer, but it hides costs inside the goods price and can block your VAT recovery, because the customs declaration may not be in your name."
+      },
+      "related": [
+        "incoterms",
+        "exw",
+        "vat"
+      ]
+    },
+    {
+      "slug": "bill-of-lading",
+      "cat": "docs",
+      "term": {
+        "ar": "بوليصة الشحن",
+        "en": "Bill of Lading"
+      },
+      "abbr": "B/L",
+      "def": {
+        "ar": "مستند يصدره الناقل البحري، وهو إيصال استلام البضاعة وعقد النقل وسند ملكية في آن واحد.",
+        "en": "A document issued by the ocean carrier that is at once a receipt for the goods, the contract of carriage, and a document of title."
+      },
+      "note": {
+        "ar": "من يحمل البوليصة الأصلية يملك حق استلام البضاعة — ولهذا تُستخدم في الاعتمادات المستندية. وأي اختلاف بينها وبين الفاتورة أو قائمة التعبئة يُعلّق البيان الجمركي.",
+        "en": "Whoever holds the original bill controls the right to collect the cargo, which is why it underpins letters of credit. Any mismatch between it and the invoice or packing list will hold the customs declaration."
+      },
+      "related": [
+        "telex-release",
+        "delivery-order",
+        "packing-list",
+        "awb"
+      ]
+    },
+    {
+      "slug": "telex-release",
+      "cat": "docs",
+      "term": {
+        "ar": "الإفراج البرقي",
+        "en": "Telex release"
+      },
+      "def": {
+        "ar": "إشعار من الناقل في ميناء الشحن إلى وكيله في ميناء الوصول بتسليم البضاعة دون تقديم بوليصة شحن أصلية.",
+        "en": "A notice from the carrier at origin to its agent at destination to release the cargo without presenting an original bill of lading."
+      },
+      "note": {
+        "ar": "يوفّر أيام انتظار بريد البوليصة الأصلية. يُستخدم حين يكون الدفع مسبقًا أو الثقة قائمة مع المورد، ولا يصلح مع الاعتمادات المستندية.",
+        "en": "It saves the days spent waiting for the original bill to arrive by courier. Used when payment is upfront or trust with the supplier is established; not suitable with letters of credit."
+      },
+      "related": [
+        "bill-of-lading",
+        "delivery-order"
+      ]
+    },
+    {
+      "slug": "packing-list",
+      "cat": "docs",
+      "term": {
+        "ar": "قائمة التعبئة",
+        "en": "Packing list"
+      },
+      "def": {
+        "ar": "مستند من المصدّر يفصّل محتويات كل طرد: الكمية والوزن الصافي والإجمالي والأبعاد وطريقة التعبئة.",
+        "en": "A document from the exporter detailing the contents of each package: quantity, net and gross weight, dimensions and how it is packed."
+      },
+      "note": {
+        "ar": "المدقق الجمركي يقارنها بالفاتورة والبوليصة بندًا بندًا. اختلاف عدد الطرود أو الوزن — ولو بقدر بسيط — سبب شائع لتعليق الشحنة.",
+        "en": "The customs examiner compares it line by line with the invoice and the bill of lading. A difference in package count or weight, however small, is a common reason a shipment is held."
+      },
+      "related": [
+        "bill-of-lading",
+        "commercial-invoice"
+      ]
+    },
+    {
+      "slug": "commercial-invoice",
+      "cat": "docs",
+      "term": {
+        "ar": "الفاتورة التجارية",
+        "en": "Commercial invoice"
+      },
+      "def": {
+        "ar": "فاتورة البائع التي تثبت قيمة البضاعة وعملتها وشرط التسليم ووصفها التفصيلي وبلد منشئها.",
+        "en": "The seller's invoice establishing the value, currency, delivery term, detailed description and country of origin of the goods."
+      },
+      "note": {
+        "ar": "أهم مستند في تقدير القيمة الجمركية. الوصف العام مثل «قطع غيار» يستدعي أسئلة وتأخيرًا؛ والوصف التفصيلي مع رمز HS يمرّ أسرع.",
+        "en": "The single most important document for customs valuation. A generic description such as \"spare parts\" invites questions and delay; a detailed description with the HS code clears faster."
+      },
+      "related": [
+        "packing-list",
+        "hs-code",
+        "certificate-of-origin"
+      ]
+    },
+    {
+      "slug": "certificate-of-origin",
+      "cat": "docs",
+      "term": {
+        "ar": "شهادة المنشأ",
+        "en": "Certificate of origin"
+      },
+      "abbr": "C/O",
+      "def": {
+        "ar": "وثيقة تثبت البلد الذي صُنعت فيه البضاعة، تصدرها عادةً غرفة التجارة في بلد المصدّر وتُصدَّق منها.",
+        "en": "A document proving the country where the goods were made, normally issued and attested by the chamber of commerce in the exporting country."
+      },
+      "note": {
+        "ar": "تحدد ما إذا كانت الشحنة تستحق إعفاءً تفضيليًا. الشهادة غير المصدّقة قد تُقبل مقابل تأمين نقدي يُستردّ لاحقًا — أي أنك تدفع مقدمًا وتلاحق استرداده.",
+        "en": "It decides whether the shipment qualifies for preferential treatment. An unattested certificate may be accepted against a cash deposit refunded later — meaning you pay upfront and chase the refund."
+      },
+      "related": [
+        "commercial-invoice",
+        "gcc-common-tariff",
+        "makasa"
+      ]
+    },
+    {
+      "slug": "delivery-order",
+      "cat": "docs",
+      "term": {
+        "ar": "إذن التسليم",
+        "en": "Delivery order"
+      },
+      "abbr": "D/O",
+      "def": {
+        "ar": "إذن يصدره وكيل الخط البحري في ميناء الوصول يسمح بتسليم الحاوية بعد سداد رسوم الخط.",
+        "en": "An authorisation issued by the shipping line's agent at destination allowing the container to be released once the line's charges are settled."
+      },
+      "note": {
+        "ar": "الإفراج الجمركي وحده لا يُخرج الحاوية. كثير من حالات «الشحنة أُفرج عنها ولم تصل» سببها إذن تسليم لم يُستخرج أو رسوم خط لم تُسدّد.",
+        "en": "Customs release alone does not move the box. Many cases of \"it cleared but never arrived\" come down to a delivery order never collected or line charges never paid."
+      },
+      "related": [
+        "bill-of-lading",
+        "demurrage",
+        "customs-release"
+      ]
+    },
+    {
+      "slug": "awb",
+      "cat": "docs",
+      "term": {
+        "ar": "بوليصة الشحن الجوي",
+        "en": "Air Waybill"
+      },
+      "abbr": "AWB",
+      "def": {
+        "ar": "مستند النقل في الشحن الجوي: إيصال وعقد نقل، لكنه ليس سند ملكية خلافًا للبوليصة البحرية.",
+        "en": "The transport document in air freight: a receipt and a contract of carriage, but unlike an ocean bill of lading it is not a document of title."
+      },
+      "note": {
+        "ar": "لأنه ليس سند ملكية، تُسلَّم البضاعة للمرسل إليه المذكور فيه مباشرة — فتأكد أن الاسم صحيح قبل الإقلاع، لأن تعديله بعد الوصول مكلف وبطيء.",
+        "en": "Because it is not a title document, the cargo goes straight to the named consignee — so check the name is right before departure; amending it after arrival is slow and costly."
+      },
+      "related": [
+        "bill-of-lading"
+      ]
+    },
+    {
+      "slug": "letter-of-credit",
+      "cat": "docs",
+      "term": {
+        "ar": "الاعتماد المستندي",
+        "en": "Letter of credit"
+      },
+      "abbr": "L/C",
+      "def": {
+        "ar": "تعهّد من بنك المشتري بدفع قيمة البضاعة للبائع متى قدّم مستندات مطابقة تمامًا لشروط الاعتماد.",
+        "en": "An undertaking by the buyer's bank to pay the seller once the seller presents documents that comply exactly with the credit's terms."
+      },
+      "note": {
+        "ar": "البنك يدفع على المستندات لا على البضاعة. حرف ناقص في اسم أو تاريخ متأخر بيوم يجعل المستندات «غير مطابقة» ويعطّل الدفع، فراجع الشروط قبل الشحن لا بعده.",
+        "en": "The bank pays against documents, not goods. A missing letter in a name or a date one day late makes the presentation \"discrepant\" and stalls payment, so check the terms before shipping, not after."
+      },
+      "related": [
+        "bill-of-lading",
+        "commercial-invoice"
+      ]
+    },
+    {
+      "slug": "fcl",
+      "cat": "ocean",
+      "term": {
+        "ar": "حاوية كاملة",
+        "en": "Full Container Load"
+      },
+      "abbr": "FCL",
+      "def": {
+        "ar": "شحنة تملأ حاوية كاملة مخصّصة لمرسل واحد، تُختم عند التحميل ولا تُفتح حتى الوجهة.",
+        "en": "A shipment filling a whole container dedicated to one shipper, sealed at loading and not opened until destination."
+      },
+      "note": {
+        "ar": "أسرع وأأمن من LCL وأرخص للوحدة عند الكميات الكبيرة. القاعدة التقريبية: تجاوز ١٥ مترًا مكعبًا يجعل الحاوية الكاملة أجدى غالبًا.",
+        "en": "Faster and safer than LCL, and cheaper per unit at volume. Rule of thumb: past about 15 cubic metres a full container usually wins."
+      },
+      "related": [
+        "lcl",
+        "teu",
+        "cfs"
+      ]
+    },
+    {
+      "slug": "lcl",
+      "cat": "ocean",
+      "term": {
+        "ar": "شحنة جزئية",
+        "en": "Less than Container Load"
+      },
+      "abbr": "LCL",
+      "def": {
+        "ar": "شحنة صغيرة تُجمَّع مع شحنات مرسلين آخرين داخل حاوية واحدة، وتُفرز في مستودع عند الوصول.",
+        "en": "A small shipment consolidated with other shippers' cargo in one container and sorted at a warehouse on arrival."
+      },
+      "note": {
+        "ar": "مناسبة للكميات الصغيرة، لكن احسب رسوم المستودع والفرز — فكثيرًا ما تلتهم فرق السعر عن الحاوية الكاملة، وتضيف أيامًا للتسليم.",
+        "en": "Right for small volumes, but price in the warehouse and deconsolidation charges — they often eat the saving against a full container and add days to delivery."
+      },
+      "related": [
+        "fcl",
+        "cfs",
+        "consolidation"
+      ]
+    },
+    {
+      "slug": "teu",
+      "cat": "ocean",
+      "term": {
+        "ar": "الحاوية النمطية",
+        "en": "Twenty-foot Equivalent Unit"
+      },
+      "abbr": "TEU",
+      "def": {
+        "ar": "وحدة قياس تعادل حاوية بطول عشرين قدمًا، تُقاس بها طاقة الموانئ والسفن.",
+        "en": "A unit of measure equal to one twenty-foot container, used to express port and vessel capacity."
+      },
+      "note": {
+        "ar": "حاوية الأربعين قدمًا تساوي اثنتين. حين تقرأ أن ميناءً ناول مليوني حاوية نمطية، فهذه وحدة القياس المقصودة لا عدد الصناديق الفعلي.",
+        "en": "A forty-foot box counts as two. When you read that a port handled two million TEU, that is the unit meant, not the actual number of boxes."
+      },
+      "related": [
+        "fcl",
+        "transshipment"
+      ]
+    },
+    {
+      "slug": "demurrage",
+      "cat": "ocean",
+      "term": {
+        "ar": "الأرضيات",
+        "en": "Demurrage"
+      },
+      "def": {
+        "ar": "رسوم يومية تُفرض على بقاء الحاوية داخل الميناء بعد انتهاء فترة السماح المجانية.",
+        "en": "A daily charge for leaving a container inside the port after the free time has expired."
+      },
+      "note": {
+        "ar": "ترتفع تصاعديًا كل بضعة أيام، وهي أكبر تكلفة خفية في الاستيراد. ابدأ البيان الجمركي قبل رسو السفينة، ودوّن تاريخ انتهاء فترة السماح يوم وصول الإشعار.",
+        "en": "It escalates in tiers every few days and is the biggest hidden cost in importing. Start the customs declaration before the vessel berths, and write down the free-time expiry the day the arrival notice lands."
+      },
+      "related": [
+        "detention",
+        "free-time",
+        "delivery-order"
+      ]
+    },
+    {
+      "slug": "detention",
+      "cat": "ocean",
+      "term": {
+        "ar": "غرامة تأخير الحاوية",
+        "en": "Detention"
+      },
+      "def": {
+        "ar": "رسوم يومية على تأخّر إعادة الحاوية الفارغة إلى الخط البحري بعد خروجها من الميناء.",
+        "en": "A daily charge for returning the empty container to the shipping line late after it has left the port."
+      },
+      "note": {
+        "ar": "تُخلط كثيرًا بالأرضيات، والفرق جوهري: الأرضيات داخل الميناء، والتأخير بعد خروج الحاوية. وقد تدفعهما معًا في شحنة واحدة.",
+        "en": "Often confused with demurrage, and the difference matters: demurrage is inside the port, detention is after the box leaves. You can pay both on one shipment."
+      },
+      "related": [
+        "demurrage",
+        "free-time"
+      ]
+    },
+    {
+      "slug": "free-time",
+      "cat": "ocean",
+      "term": {
+        "ar": "فترة السماح",
+        "en": "Free time"
+      },
+      "def": {
+        "ar": "عدد الأيام المسموح بها لبقاء الحاوية في الميناء أو لدى المستورد دون رسوم إضافية.",
+        "en": "The number of days a container may stay in the port, or with the importer, before extra charges begin."
+      },
+      "note": {
+        "ar": "تُحدَّد باتفاق الخط البحري لا بتعرفة الميناء وحدها، وهي قابلة للتفاوض في عقود الشحن المنتظمة — ويوم إضافي واحد قد يساوي مئات الدولارات.",
+        "en": "It is set by agreement with the shipping line, not by the port tariff alone, and is negotiable on regular contracts — one extra day can be worth hundreds of dollars."
+      },
+      "related": [
+        "demurrage",
+        "detention"
+      ]
+    },
+    {
+      "slug": "transshipment",
+      "cat": "ocean",
+      "term": {
+        "ar": "إعادة الشحن",
+        "en": "Transshipment"
+      },
+      "def": {
+        "ar": "نقل الحاوية من سفينة إلى أخرى في ميناء وسيط قبل وصولها إلى وجهتها النهائية.",
+        "en": "Moving a container from one vessel to another at an intermediate port before it reaches its final destination."
+      },
+      "note": {
+        "ar": "كثير من الشحنات إلى صحار أو جبل علي تمرّ عبر صلالة أو كولومبو. اسأل وكيلك: مباشر أم عبر مناولة؟ الفرق أيام في الزمن واحتمال أكبر للتأخير.",
+        "en": "Much cargo to Sohar or Jebel Ali relays through Salalah or Colombo. Ask your forwarder whether the service is direct or transshipped: the difference is days of transit and a higher chance of delay."
+      },
+      "related": [
+        "teu",
+        "feeder-vessel",
+        "transit-time"
+      ]
+    },
+    {
+      "slug": "feeder-vessel",
+      "cat": "ocean",
+      "term": {
+        "ar": "السفينة المغذية",
+        "en": "Feeder vessel"
+      },
+      "def": {
+        "ar": "سفينة صغيرة تنقل الحاويات بين ميناء محوري كبير وموانئ إقليمية أصغر لا تخدمها السفن العملاقة.",
+        "en": "A smaller vessel moving containers between a large hub port and regional ports that the biggest ships do not call at."
+      },
+      "note": {
+        "ar": "هي الحلقة التي تربط صلالة بموانئ الخليج. تأخّر السفينة الأم يعني فوات السفينة المغذية وانتظار الرحلة التالية — وهنا يضيع أغلب الوقت.",
+        "en": "It is the link between Salalah and the Gulf ports. A late mother vessel means a missed feeder and a wait for the next sailing, which is where most lost time comes from."
+      },
+      "related": [
+        "transshipment",
+        "transit-time"
+      ]
+    },
+    {
+      "slug": "cfs",
+      "cat": "ocean",
+      "term": {
+        "ar": "محطة الشحن بالحاويات",
+        "en": "Container Freight Station"
+      },
+      "abbr": "CFS",
+      "def": {
+        "ar": "مستودع قرب الميناء تُجمَّع فيه الشحنات الجزئية داخل الحاويات أو تُفرَز منها بعد الوصول.",
+        "en": "A warehouse near the port where LCL shipments are consolidated into containers or broken down after arrival."
+      },
+      "note": {
+        "ar": "رسومه بند منفصل عن أجرة الشحن، وكثيرًا ما يُنسى عند مقارنة عروض الأسعار للشحنات الجزئية.",
+        "en": "Its charges are a separate line from the freight rate, and they are routinely forgotten when comparing LCL quotes."
+      },
+      "related": [
+        "lcl",
+        "consolidation",
+        "thc"
+      ]
+    },
+    {
+      "slug": "thc",
+      "cat": "ocean",
+      "term": {
+        "ar": "رسوم المناولة بالميناء",
+        "en": "Terminal Handling Charges"
+      },
+      "abbr": "THC",
+      "def": {
+        "ar": "رسوم تفرضها محطة الميناء مقابل مناولة الحاوية: الرفع والتنزيل والتحريك داخل الساحة.",
+        "en": "Charges levied by the terminal for handling the container: lifting, landing and moving it within the yard."
+      },
+      "note": {
+        "ar": "تُدفع في ميناءي الشحن والوصول، وليست ضمن أجرة الشحن البحري عادةً. اطلب دائمًا عرض سعر «شاملًا كل الرسوم المحلية» لتتجنب المفاجآت.",
+        "en": "Payable at both load and discharge ports and normally outside the ocean freight rate. Always ask for a quote \"all local charges included\" to avoid surprises."
+      },
+      "related": [
+        "cfs",
+        "demurrage"
+      ]
+    },
+    {
+      "slug": "transit-time",
+      "cat": "ocean",
+      "term": {
+        "ar": "زمن العبور",
+        "en": "Transit time"
+      },
+      "def": {
+        "ar": "المدة بين مغادرة الشحنة ميناء الشحن ووصولها ميناء الوجهة.",
+        "en": "The time between a shipment leaving the port of loading and arriving at the destination port."
+      },
+      "note": {
+        "ar": "لا يشمل زمن التخليص ولا النقل البري، وهذه أكثر نقطة يُخطئ فيها المستوردون الجدد عند وعد عملائهم بموعد تسليم.",
+        "en": "It excludes clearance and inland transport — the most common place new importers go wrong when promising a delivery date."
+      },
+      "related": [
+        "transshipment",
+        "feeder-vessel",
+        "lead-time"
+      ]
+    },
+    {
+      "slug": "vgm",
+      "cat": "ocean",
+      "term": {
+        "ar": "الوزن الإجمالي المحقَّق",
+        "en": "Verified Gross Mass"
+      },
+      "abbr": "VGM",
+      "def": {
+        "ar": "الوزن الكلي للحاوية محمّلة، يقرّه المرسل رسميًا قبل التحميل بموجب اتفاقية سلامة الأرواح في البحار.",
+        "en": "The total weight of a loaded container, formally declared by the shipper before loading under the SOLAS convention."
+      },
+      "note": {
+        "ar": "إلزامي عالميًا: بلا إقرار وزن محقَّق لا تُحمَّل الحاوية على السفينة. مسؤولية المرسل لا الناقل.",
+        "en": "Mandatory worldwide: without a verified weight declaration the box is not loaded. The duty sits with the shipper, not the carrier."
+      },
+      "related": [
+        "packing-list",
+        "fcl"
+      ]
+    },
+    {
+      "slug": "reefer",
+      "cat": "ocean",
+      "term": {
+        "ar": "الحاوية المبرّدة",
+        "en": "Reefer container"
+      },
+      "def": {
+        "ar": "حاوية مزوّدة بوحدة تبريد تحافظ على درجة حرارة محددة طوال الرحلة.",
+        "en": "A container with a refrigeration unit that holds a set temperature for the whole voyage."
+      },
+      "note": {
+        "ar": "تحتاج تيارًا كهربائيًا في الميناء وعلى السفينة، ورسومها وأرضياتها أعلى بكثير — والتأخير فيها لا يكلّف مالًا فقط بل قد يتلف الشحنة.",
+        "en": "It needs power at the port and on board, and its charges and demurrage run far higher — delay here costs not just money but potentially the cargo itself."
+      },
+      "related": [
+        "demurrage",
+        "dangerous-goods"
+      ]
+    },
+    {
+      "slug": "dangerous-goods",
+      "cat": "ocean",
+      "term": {
+        "ar": "البضائع الخطرة",
+        "en": "Dangerous goods"
+      },
+      "abbr": "IMDG",
+      "def": {
+        "ar": "بضائع تمثّل خطرًا أثناء النقل — كالكيماويات والبطاريات والدهانات — وتُصنَّف وتُعبَّأ وفق مدونة البضائع الخطرة البحرية.",
+        "en": "Cargo that poses a hazard in transit — chemicals, batteries, paints — classified and packed under the IMDG code."
+      },
+      "note": {
+        "ar": "تحتاج إقرارًا وتصنيفًا ورقم أمم متحدة وملصقات. إخفاء طبيعة البضاعة لتفادي الرسوم مخالفة جسيمة تعرّضك لغرامات ومسؤولية جنائية.",
+        "en": "They require a declaration, a classification, a UN number and labels. Hiding the nature of the cargo to dodge the surcharge is a serious offence carrying fines and criminal liability."
+      },
+      "related": [
+        "reefer",
+        "packing-list"
+      ]
+    },
+    {
+      "slug": "hs-code",
+      "cat": "customs",
+      "term": {
+        "ar": "رمز النظام المنسّق",
+        "en": "Harmonised System code"
+      },
+      "abbr": "HS",
+      "def": {
+        "ar": "رمز رقمي دولي يصنّف السلعة، وتُحدَّد على أساسه نسبة الرسم الجمركي والتصاريح المطلوبة.",
+        "en": "An international numeric code that classifies a product and determines its duty rate and any permits required."
+      },
+      "note": {
+        "ar": "نظام بيان في عُمان يتطلب الصيغة المكوّنة من اثني عشر رقمًا؛ الصيغة القديمة ذات الثمانية أرقام تُرفض آليًا. تحقق من الرمز قبل التعاقد لا بعد وصول الحاوية.",
+        "en": "Oman's Bayan system requires the twelve-digit form; the older eight-digit form is rejected automatically. Verify the code before you sign the contract, not after the container lands."
+      },
+      "related": [
+        "customs-duty",
+        "gcc-common-tariff",
+        "bayan"
+      ]
+    },
+    {
+      "slug": "customs-duty",
+      "cat": "customs",
+      "term": {
+        "ar": "الرسم الجمركي",
+        "en": "Customs duty"
+      },
+      "def": {
+        "ar": "ضريبة تُفرض على البضاعة المستوردة، وتُحسب في دول الخليج كنسبة من القيمة CIF.",
+        "en": "A tax levied on imported goods, calculated in the GCC as a percentage of the CIF value."
+      },
+      "note": {
+        "ar": "النسبة الموحدة في دول المجلس خمسة بالمئة على أغلب السلع، مع إعفاءات لسلع أساسية ومواد إنتاج، ونسب أعلى لسلع محدودة كالتبغ.",
+        "en": "The common GCC rate is five per cent on most goods, with exemptions for staples and production inputs, and higher rates on a narrow set such as tobacco."
+      },
+      "related": [
+        "cif",
+        "hs-code",
+        "vat",
+        "gcc-common-tariff"
+      ]
+    },
+    {
+      "slug": "vat",
+      "cat": "customs",
+      "term": {
+        "ar": "ضريبة القيمة المضافة",
+        "en": "Value Added Tax"
+      },
+      "abbr": "VAT",
+      "def": {
+        "ar": "ضريبة استهلاك تُحصَّل عند الاستيراد على مجموع القيمة CIF والرسم الجمركي والضريبة الانتقائية.",
+        "en": "A consumption tax collected at import on the sum of the CIF value, the customs duty and any excise."
+      },
+      "note": {
+        "ar": "النسبة في عُمان والإمارات والبحرين والسعودية تختلف، ولا تُطبَّق حاليًا في قطر والكويت. المستورد المسجّل يستردّها عبر إقراره، وغير المسجّل يتحمّلها تكلفة نهائية.",
+        "en": "Rates differ across Oman, the UAE, Bahrain and Saudi Arabia, and it does not currently apply in Qatar and Kuwait. A registered importer recovers it through its return; an unregistered one bears it as a final cost."
+      },
+      "related": [
+        "customs-duty",
+        "excise-tax",
+        "cif"
+      ]
+    },
+    {
+      "slug": "excise-tax",
+      "cat": "customs",
+      "term": {
+        "ar": "الضريبة الانتقائية",
+        "en": "Excise tax"
+      },
+      "def": {
+        "ar": "ضريبة إضافية على سلع محددة تُعدّ ضارة بالصحة أو البيئة، كالتبغ ومشروبات الطاقة والمشروبات المحلّاة.",
+        "en": "An additional tax on specific goods deemed harmful to health or the environment, such as tobacco, energy drinks and sweetened beverages."
+      },
+      "note": {
+        "ar": "تُحسب قبل ضريبة القيمة المضافة، فترفع القاعدة الضريبية وتضاعف أثرها. إغفالها عند التسعير يقلب هامش الربح إلى خسارة.",
+        "en": "It is calculated before VAT, so it raises the taxable base and compounds. Leaving it out of your pricing can turn a margin into a loss."
+      },
+      "related": [
+        "vat",
+        "customs-duty",
+        "hs-code"
+      ]
+    },
+    {
+      "slug": "gcc-common-tariff",
+      "cat": "customs",
+      "term": {
+        "ar": "التعرفة الجمركية الموحدة",
+        "en": "GCC Common Customs Tariff"
+      },
+      "def": {
+        "ar": "جدول رسوم موحّد تطبّقه دول مجلس التعاون الست على الواردات من خارج المجلس.",
+        "en": "A single duty schedule applied by the six GCC states to imports from outside the bloc."
+      },
+      "note": {
+        "ar": "يعني أن البضاعة التي دُفع رسمها في دولة الدخول الأولى تنتقل بين دول المجلس دون رسم جديد، مقابل البيان الإحصائي.",
+        "en": "It means goods on which duty was paid at the first point of entry move between GCC states without a second duty, against a statistical declaration."
+      },
+      "related": [
+        "customs-duty",
+        "makasa",
+        "certificate-of-origin"
+      ]
+    },
+    {
+      "slug": "makasa",
+      "cat": "customs",
+      "term": {
+        "ar": "المكسة (البيان الإحصائي)",
+        "en": "Statistical declaration (makasa)"
+      },
+      "def": {
+        "ar": "مستند يثبت أن الرسم الجمركي دُفع في دولة خليجية أخرى، فتدخل البضاعة بلا رسم جديد.",
+        "en": "A document proving customs duty was already paid in another GCC state, so the goods enter without a second duty."
+      },
+      "note": {
+        "ar": "مهم لمن يستورد عبر جبل علي ثم ينقل برًا إلى عُمان. بدونه قد تدفع الرسم مرتين على الشحنة نفسها.",
+        "en": "It matters for anyone importing through Jebel Ali and trucking into Oman. Without it you may pay duty twice on the same cargo."
+      },
+      "related": [
+        "gcc-common-tariff",
+        "customs-duty",
+        "certificate-of-origin"
+      ]
+    },
+    {
+      "slug": "bayan",
+      "cat": "customs",
+      "term": {
+        "ar": "نظام بيان",
+        "en": "Bayan system"
+      },
+      "def": {
+        "ar": "النظام الإلكتروني للجمارك العُمانية، تُقدَّم عبره البيانات الجمركية وتُسدَّد الرسوم ويصدر الإفراج.",
+        "en": "Oman's electronic customs system, through which declarations are filed, duties paid and release issued."
+      },
+      "note": {
+        "ar": "المستورد المسجّل مسؤول قانونًا عن البيان حتى لو رفعه مخلّص بالنيابة عنه — راجع ما يُقدَّم باسمك قبل الإرسال.",
+        "en": "The registered importer is legally answerable for the declaration even when a broker files it — review what goes out in your name before it is submitted."
+      },
+      "related": [
+        "hs-code",
+        "customs-broker",
+        "customs-release"
+      ]
+    },
+    {
+      "slug": "customs-release",
+      "cat": "customs",
+      "term": {
+        "ar": "الإفراج الجمركي",
+        "en": "Customs release"
+      },
+      "def": {
+        "ar": "موافقة الجمارك على خروج البضاعة بعد قبول البيان وسداد الرسوم واجتياز التدقيق أو الفحص.",
+        "en": "Customs approval for the goods to leave, after the declaration is accepted, duties are paid and any check or inspection is passed."
+      },
+      "note": {
+        "ar": "خطوة واحدة من اثنتين: تحتاج بعدها إذن التسليم من الخط البحري. الإفراج وحده لا يحرّك الحاوية من الساحة.",
+        "en": "One of two steps: you still need the delivery order from the shipping line. Release alone does not move the box out of the yard."
+      },
+      "related": [
+        "bayan",
+        "delivery-order",
+        "customs-broker"
+      ]
+    },
+    {
+      "slug": "bonded-warehouse",
+      "cat": "customs",
+      "term": {
+        "ar": "المستودع الجمركي",
+        "en": "Bonded warehouse"
+      },
+      "def": {
+        "ar": "مستودع مرخّص تُخزَّن فيه البضاعة المستوردة دون سداد الرسوم حتى تخرج منه إلى السوق المحلي.",
+        "en": "A licensed warehouse where imported goods are stored without paying duty until they leave for the local market."
+      },
+      "note": {
+        "ar": "أداة سيولة مهمة: تدفع الرسم على ما تبيعه فعليًا لا على الشحنة كاملة دفعة واحدة. مفيد للموسمية وللبضاعة بطيئة الدوران.",
+        "en": "A useful cash-flow tool: you pay duty on what you actually sell rather than on the whole shipment at once. Valuable for seasonal and slow-moving stock."
+      },
+      "related": [
+        "free-zone",
+        "customs-duty"
+      ]
+    },
+    {
+      "slug": "free-zone",
+      "cat": "customs",
+      "term": {
+        "ar": "المنطقة الحرة",
+        "en": "Free zone"
+      },
+      "def": {
+        "ar": "منطقة مخصّصة تُعامَل جمركيًا كأنها خارج البلاد: تدخلها البضاعة وتُخزَّن وتُصنَّع وتُعاد تصديرها بلا رسوم.",
+        "en": "A designated area treated for customs purposes as outside the country: goods enter, are stored, processed and re-exported without duty."
+      },
+      "note": {
+        "ar": "نقل البضاعة من المنطقة الحرة إلى السوق المحلي يُعامَل كاستيراد كامل بقيمتها وقت النقل — وهذه النقطة يغفل عنها كثيرون في التخطيط الضريبي.",
+        "en": "Moving goods from the zone into the local market counts as a full import at their value at that moment — a point many miss in tax planning."
+      },
+      "related": [
+        "bonded-warehouse",
+        "customs-duty",
+        "icv"
+      ]
+    },
+    {
+      "slug": "customs-broker",
+      "cat": "contracts",
+      "term": {
+        "ar": "المخلّص الجمركي",
+        "en": "Customs broker"
+      },
+      "def": {
+        "ar": "وكيل مرخّص يتولى إعداد البيانات الجمركية وإجراءات الإفراج نيابةً عن المستورد.",
+        "en": "A licensed agent who prepares customs declarations and handles release procedures on the importer's behalf."
+      },
+      "note": {
+        "ar": "تفويضه لا ينقل المسؤولية القانونية عنك. اطلب نسخة من كل بيان يُقدَّم باسمك واحتفظ بها — فأنت من يُسأل عند التدقيق.",
+        "en": "Authorising one does not transfer legal responsibility away from you. Ask for a copy of every declaration filed in your name and keep it — you are the one audited."
+      },
+      "related": [
+        "bayan",
+        "freight-forwarder",
+        "customs-release"
+      ]
+    },
+    {
+      "slug": "freight-forwarder",
+      "cat": "contracts",
+      "term": {
+        "ar": "وكيل الشحن",
+        "en": "Freight forwarder"
+      },
+      "def": {
+        "ar": "وسيط ينظّم نقل البضاعة من المصدر إلى الوجهة: يحجز المساحة ويرتّب النقل والمستندات والتخليص.",
+        "en": "An intermediary who arranges the movement of goods end to end: booking space and organising transport, documents and clearance."
+      },
+      "note": {
+        "ar": "ليس ناقلًا بالضرورة؛ كثير منهم يشتري المساحة ويعيد بيعها. اسأل دائمًا: هل الخدمة مباشرة أم عبر إعادة شحن، وما الرسوم المحلية غير المذكورة في العرض؟",
+        "en": "Not necessarily a carrier; many buy space and resell it. Always ask whether the service is direct or transshipped, and which local charges the quote leaves out."
+      },
+      "related": [
+        "customs-broker",
+        "3pl",
+        "transshipment"
+      ]
+    },
+    {
+      "slug": "3pl",
+      "cat": "contracts",
+      "term": {
+        "ar": "مقدّم الخدمة اللوجستية",
+        "en": "Third-Party Logistics"
+      },
+      "abbr": "3PL",
+      "def": {
+        "ar": "شركة خارجية تتولى عمليات لوجستية كاملة نيابةً عن العميل: التخزين وإدارة المخزون والتوزيع.",
+        "en": "An external company running whole logistics functions for a client: warehousing, inventory management and distribution."
+      },
+      "note": {
+        "ar": "نجاح التعاقد معه يعتمد على اتفاقية مستوى الخدمة ومؤشرات أداء مكتوبة ومقاسة شهريًا — لا على حسن النية.",
+        "en": "Success with one rests on a service level agreement and written KPIs measured monthly, not on goodwill."
+      },
+      "related": [
+        "sla",
+        "otif",
+        "freight-forwarder"
+      ]
+    },
+    {
+      "slug": "sla",
+      "cat": "contracts",
+      "term": {
+        "ar": "اتفاقية مستوى الخدمة",
+        "en": "Service Level Agreement"
+      },
+      "abbr": "SLA",
+      "def": {
+        "ar": "وثيقة تعاقدية تحدد مستوى الأداء المتوقع من مقدّم الخدمة، وطريقة قياسه، وعواقب الإخلال به.",
+        "en": "A contractual document setting the performance expected from a provider, how it is measured, and what follows a breach."
+      },
+      "note": {
+        "ar": "المؤشر الذي لا تُعرَّف طريقة قياسه بدقة لا يمكن المحاسبة عليه. حدّد مصدر البيانات ودورية التقرير قبل التوقيع.",
+        "en": "A metric whose measurement is not precisely defined cannot be enforced. Fix the data source and reporting cadence before signing."
+      },
+      "related": [
+        "3pl",
+        "otif",
+        "kpi"
+      ]
+    },
+    {
+      "slug": "kpi",
+      "cat": "ops",
+      "term": {
+        "ar": "مؤشر الأداء الرئيسي",
+        "en": "Key Performance Indicator"
+      },
+      "abbr": "KPI",
+      "def": {
+        "ar": "مقياس رقمي متفق عليه يتتبّع أداء عملية معيّنة مقارنةً بهدف محدد.",
+        "en": "An agreed numeric measure tracking how a process performs against a defined target."
+      },
+      "note": {
+        "ar": "ثلاثة مؤشرات تُقاس وتُراجَع شهريًا أنفع من عشرين مؤشرًا في تقرير لا يفتحه أحد.",
+        "en": "Three metrics that are measured and reviewed monthly beat twenty in a report nobody opens."
+      },
+      "related": [
+        "otif",
+        "sla",
+        "lead-time"
+      ]
+    },
+    {
+      "slug": "otif",
+      "cat": "ops",
+      "term": {
+        "ar": "التسليم في الموعد وبالكامل",
+        "en": "On Time In Full"
+      },
+      "abbr": "OTIF",
+      "def": {
+        "ar": "مؤشر يقيس نسبة الطلبات التي وصلت في موعدها وبكامل الكمية المطلوبة دون نقص.",
+        "en": "A metric measuring the share of orders delivered on the promised date and in the full quantity ordered."
+      },
+      "note": {
+        "ar": "صارم عمدًا: الطلب الذي وصل في موعده ناقصًا صنفًا واحدًا يُحسب إخفاقًا كاملًا، وهذا ما يجعله مؤشرًا صادقًا عن تجربة العميل.",
+        "en": "Deliberately strict: an order that arrives on time but one item short counts as a complete miss, which is what makes it an honest measure of the customer's experience."
+      },
+      "related": [
+        "kpi",
+        "sla",
+        "lead-time"
+      ]
+    },
+    {
+      "slug": "lead-time",
+      "cat": "ops",
+      "term": {
+        "ar": "زمن التوريد",
+        "en": "Lead time"
+      },
+      "def": {
+        "ar": "المدة الكاملة من إصدار أمر الشراء حتى توفّر البضاعة للاستخدام أو البيع.",
+        "en": "The full time from issuing a purchase order to the goods being available to use or sell."
+      },
+      "note": {
+        "ar": "يشمل التصنيع والشحن والتخليص والنقل الداخلي والفحص — لا زمن العبور وحده. تقديره بأقل من حقيقته أكثر أسباب نفاد المخزون شيوعًا.",
+        "en": "It covers production, freight, clearance, inland transport and inspection — not just transit time. Underestimating it is the most common cause of stockouts."
+      },
+      "related": [
+        "transit-time",
+        "safety-stock",
+        "reorder-point"
+      ]
+    },
+    {
+      "slug": "safety-stock",
+      "cat": "ops",
+      "term": {
+        "ar": "مخزون الأمان",
+        "en": "Safety stock"
+      },
+      "def": {
+        "ar": "كمية إضافية تُحتفظ بها لامتصاص تقلّب الطلب أو تأخّر التوريد دون انقطاع البيع.",
+        "en": "Extra inventory held to absorb demand variability or supply delay without running out."
+      },
+      "note": {
+        "ar": "ليس رقمًا عشوائيًا: يُحسب من تقلّب الطلب وتقلّب زمن التوريد ومستوى الخدمة المستهدف. والمبالغة فيه رأس مال مجمّد في المستودع.",
+        "en": "Not an arbitrary number: it comes from demand variability, lead-time variability and the service level you target. Overdoing it is capital frozen in the warehouse."
+      },
+      "related": [
+        "lead-time",
+        "reorder-point"
+      ]
+    },
+    {
+      "slug": "reorder-point",
+      "cat": "ops",
+      "term": {
+        "ar": "نقطة إعادة الطلب",
+        "en": "Reorder point"
+      },
+      "abbr": "ROP",
+      "def": {
+        "ar": "مستوى المخزون الذي يجب عنده إصدار طلب جديد حتى تصل الكمية قبل نفاد المتاح.",
+        "en": "The inventory level at which a new order must be placed so stock arrives before the current quantity runs out."
+      },
+      "note": {
+        "ar": "يُحسب تقريبًا: متوسط الاستهلاك اليومي × زمن التوريد بالأيام، مضافًا إليه مخزون الأمان.",
+        "en": "A working formula: average daily usage × lead time in days, plus safety stock."
+      },
+      "related": [
+        "safety-stock",
+        "lead-time"
+      ]
+    },
+    {
+      "slug": "consolidation",
+      "cat": "ops",
+      "term": {
+        "ar": "تجميع الشحنات",
+        "en": "Consolidation"
+      },
+      "def": {
+        "ar": "دمج عدة شحنات صغيرة في شحنة واحدة أكبر لخفض تكلفة النقل للوحدة.",
+        "en": "Combining several small shipments into one larger shipment to cut the transport cost per unit."
+      },
+      "note": {
+        "ar": "ينفع حين يكون لك أكثر من مورد في المنطقة نفسها: يجمعها الوكيل في مستودع واحد ويشحنها حاوية كاملة بدل عدة شحنات جزئية.",
+        "en": "It works when you have several suppliers in one region: the forwarder gathers them at one warehouse and ships a full container instead of several LCL consignments."
+      },
+      "related": [
+        "lcl",
+        "fcl",
+        "cfs"
+      ]
+    },
+    {
+      "slug": "cross-docking",
+      "cat": "ops",
+      "term": {
+        "ar": "المناولة العابرة",
+        "en": "Cross-docking"
+      },
+      "def": {
+        "ar": "تفريغ البضاعة من شاحنة واردة وتحميلها مباشرة على شاحنة صادرة دون تخزينها.",
+        "en": "Unloading goods from an inbound truck and loading them straight onto an outbound one without putting them into storage."
+      },
+      "note": {
+        "ar": "يختصر زمن المناولة وتكلفة التخزين، لكنه يتطلب دقة عالية في التوقيت وبيانات مخزون لحظية — وبدونهما يتحول إلى فوضى في الساحة.",
+        "en": "It cuts handling time and storage cost, but demands tight timing and real-time inventory data; without both it becomes chaos on the dock."
+      },
+      "related": [
+        "consolidation",
+        "3pl"
+      ]
+    },
+    {
+      "slug": "icv",
+      "cat": "contracts",
+      "term": {
+        "ar": "القيمة المحلية المضافة",
+        "en": "In-Country Value"
+      },
+      "abbr": "ICV",
+      "def": {
+        "ar": "نسبة الإنفاق التي تبقى داخل اقتصاد البلد من خلال التوريد المحلي والتوظيف وتطوير الموردين.",
+        "en": "The share of spending retained in the national economy through local sourcing, employment and supplier development."
+      },
+      "note": {
+        "ar": "في عُمان صارت شهادة القيمة المحلية عاملًا في ترسية مناقصات قطاع الطاقة وغيره — ورفع نسبتك قد يرجّح عرضك حتى لو لم يكن الأرخص.",
+        "en": "In Oman an ICV certificate now weighs in tender awards in energy and beyond — raising your score can win you a bid even when you are not the cheapest."
+      },
+      "related": [
+        "free-zone",
+        "jsrs"
+      ]
+    },
+    {
+      "slug": "jsrs",
+      "cat": "contracts",
+      "term": {
+        "ar": "نظام تسجيل الموردين الموحد",
+        "en": "Joint Supplier Registration System"
+      },
+      "abbr": "JSRS",
+      "def": {
+        "ar": "نظام تسجيل وتأهيل الموردين في عُمان، ينفَّذ لصالح وزارة الطاقة والمعادن كنافذة واحدة لمشتري القطاع.",
+        "en": "Oman's supplier registration and certification system, run on behalf of the Ministry of Energy and Minerals as a single window for sector buyers."
+      },
+      "note": {
+        "ar": "شهادته شرط مسبق للتعامل مع شركات النفط والغاز في السلطنة. ابدأ التسجيل مبكرًا — فالتأهيل يستغرق وقتًا ويطلب مستندات مالية وفنية.",
+        "en": "Its certificate is a prerequisite for working with oil and gas operators in Oman. Start early: qualification takes time and calls for financial and technical documents."
+      },
+      "related": [
+        "icv"
+      ]
+    }
+  ]
+}

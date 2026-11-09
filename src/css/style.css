@@ -125,6 +125,27 @@ table { border-collapse: collapse; width: 100%; }
   .rates-table .trend-col, .rates-table .trend { display: none; }
 }
 
+/* Glossary */
+.gloss-search { max-width: 26rem; margin: 0 0 .5rem; }
+.gloss-count { color: var(--muted); font-size: .9rem; min-height: 1.4em; margin: 0 0 1.5rem; }
+.gloss-cat { margin-bottom: 2.5rem; }
+.gloss-cat h2 { font-size: 1.15rem; padding-bottom: .5rem; border-bottom: 2px solid var(--ink); margin-bottom: 0; }
+.gloss-cat[hidden] { display: none; }
+.gloss-list { list-style: none; padding: 0; margin: 0; }
+.gloss-list li { padding: .85rem .25rem; border-bottom: 1px solid var(--sand); display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .6rem; }
+.gloss-list li[hidden] { display: none; }
+.gloss-list a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.gloss-list a:hover { color: var(--teal-2); text-decoration: underline; }
+.gloss-alt { color: var(--muted); font-size: .88rem; }
+.term-abbr { display: inline-block; font-size: .72em; font-weight: 500; color: var(--buoy); border: 1px solid var(--sand); border-radius: 3px; padding: .1em .45em; direction: ltr; unicode-bidi: isolate; vertical-align: middle; }
+.term-other { color: var(--muted); font-size: .95rem; margin: 0; }
+.term-other span { color: var(--muted); }
+.term-def { font-size: 1.2rem; line-height: 1.7; color: var(--ink); border-inline-start: 4px solid var(--buoy); padding-inline-start: 1rem; }
+.term-related { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem .75rem; }
+.term-related li { margin: 0 !important; }
+.term-related a { display: inline-block; border: 1px solid var(--sand); border-radius: 3px; padding: .35rem .8rem; background: var(--white); text-decoration: none; font-size: .95rem; }
+.term-related a:hover { border-color: var(--teal); }
+
 /* Landed cost calculator */
 .calc-page { padding-bottom: 1rem; }
 .calc { margin: 0 0 2rem; }

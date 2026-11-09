@@ -57,6 +57,7 @@
       <a href="{{ ('/' + lang + '/articles/') | rel(page.url) }}" {% if '/articles/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.analysis }}</a>
       <a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}" {% if '/rates/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.rates }}</a>
       <a href="{{ ('/' + lang + '/calculator/') | rel(page.url) }}" {% if '/calculator/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.tools }}</a>
+      <a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}" {% if '/glossary/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.glossary }}</a>
       <a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}" {% if '/ports/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.ports }}</a>
       <a href="{{ ('/' + lang + '/about/') | rel(page.url) }}" {% if '/about/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.about }}</a>
       <a class="lang-switch" href="{{ alt | rel(page.url) }}" lang="{{ 'en' if lang == 'ar' else 'ar' }}" hreflang="{{ 'en' if lang == 'ar' else 'ar' }}">{{ t.switch }}</a>
