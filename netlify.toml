@@ -1,0 +1,30 @@
+# إعدادات النشر على Netlify — تُقرأ تلقائيًا، فلا حاجة لضبطها يدويًا في لوحة التحكم.
+
+[build]
+  command = "npm run build"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# صفحة غير موجودة → حوّل الزائر إلى الصفحة العربية
+[[redirects]]
+  from = "/*"
+  to = "/ar/"
+  status = 404
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
