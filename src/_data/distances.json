@@ -1,14 +1,1123 @@
 {
   "_readme": [
-    "يُبنى آليًا. لا تحرّره يدويًا — شغّل مهمة build-distances من تبويب Actions.",
-    "ملف فارغ يعني أن المهمة لم تُشغَّل بعد؛ الصفحة تتعامل مع ذلك بلا كسر."
+    "مسافات القيادة بين الموانئ المتصلة برًّا، محسوبة مرة واحدة من OpenStreetMap عبر OSRM.",
+    "hours هو زمن قيادة صافٍ: لا يشمل الانتظار على المنافذ الحدودية ولا التحميل ولا الراحة.",
+    "لا تُحرّر هذه الأرقام يدويًا. أعد تشغيل scripts/build-distances.mjs عبر مهمة build-distances.",
+    "الموانئ الموسومة coordsFrom بغير unlocode إحداثياتها من مصدر مرجعي لا من قائمة UN/LOCODE، ودقتها على مستوى الموقع لا البوابة."
   ],
-  "builtAt": null,
+  "builtAt": "2026-11-10",
   "engine": "OSRM (router.project-osrm.org)",
   "attribution": {
     "ar": "بيانات الطرق © مساهمو OpenStreetMap، بموجب ODbL",
     "en": "Road data © OpenStreetMap contributors, under the ODbL"
   },
-  "nodes": [],
-  "pairs": []
+  "nodes": [
+    {
+      "slug": "sohar",
+      "locode": "OMSOH",
+      "name": {
+        "ar": "ميناء صحار",
+        "en": "Port of Sohar"
+      },
+      "country": {
+        "ar": "عُمان",
+        "en": "Oman"
+      },
+      "coords": [
+        24.5042,
+        56.6103
+      ],
+      "coordsFrom": "wikipedia"
+    },
+    {
+      "slug": "salalah",
+      "locode": "OMSLL",
+      "name": {
+        "ar": "ميناء صلالة",
+        "en": "Port of Salalah"
+      },
+      "country": {
+        "ar": "عُمان",
+        "en": "Oman"
+      },
+      "coords": [
+        16.9481,
+        54.0089
+      ],
+      "coordsFrom": "wikipedia"
+    },
+    {
+      "slug": "duqm",
+      "locode": "OMDQM",
+      "name": {
+        "ar": "ميناء الدقم",
+        "en": "Port of Duqm"
+      },
+      "country": {
+        "ar": "عُمان",
+        "en": "Oman"
+      },
+      "coords": [
+        19.65,
+        57.7
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "sultan-qaboos",
+      "locode": "OMSTQ",
+      "name": {
+        "ar": "ميناء السلطان قابوس",
+        "en": "Port Sultan Qaboos"
+      },
+      "country": {
+        "ar": "عُمان",
+        "en": "Oman"
+      },
+      "coords": [
+        23.6167,
+        58.55
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "jebel-ali",
+      "locode": "AEJEA",
+      "name": {
+        "ar": "ميناء جبل علي",
+        "en": "Jebel Ali Port"
+      },
+      "country": {
+        "ar": "الإمارات",
+        "en": "UAE"
+      },
+      "coords": [
+        24.9805,
+        55.0599
+      ],
+      "coordsFrom": "osm"
+    },
+    {
+      "slug": "khalifa-port",
+      "locode": "AEKHL",
+      "name": {
+        "ar": "ميناء خليفة",
+        "en": "Khalifa Port"
+      },
+      "country": {
+        "ar": "الإمارات",
+        "en": "UAE"
+      },
+      "coords": [
+        24.8333,
+        54.6667
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "fujairah",
+      "locode": "AEFJR",
+      "name": {
+        "ar": "ميناء الفجيرة",
+        "en": "Port of Fujairah"
+      },
+      "country": {
+        "ar": "الإمارات",
+        "en": "UAE"
+      },
+      "coords": [
+        25.1167,
+        56.3333
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "khor-fakkan",
+      "locode": "AEKLF",
+      "name": {
+        "ar": "ميناء خورفكان",
+        "en": "Khor Fakkan Port"
+      },
+      "country": {
+        "ar": "الإمارات",
+        "en": "UAE"
+      },
+      "coords": [
+        25.3333,
+        56.35
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "hamad-port",
+      "locode": "QAHMD",
+      "name": {
+        "ar": "ميناء حمد",
+        "en": "Hamad Port"
+      },
+      "country": {
+        "ar": "قطر",
+        "en": "Qatar"
+      },
+      "coords": [
+        25,
+        51.6167
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "shuwaikh",
+      "locode": "KWSWK",
+      "name": {
+        "ar": "ميناء الشويخ",
+        "en": "Shuwaikh Port"
+      },
+      "country": {
+        "ar": "الكويت",
+        "en": "Kuwait"
+      },
+      "coords": [
+        29.35,
+        47.9333
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "khalifa-bin-salman",
+      "locode": "BHKBS",
+      "name": {
+        "ar": "ميناء خليفة بن سلمان",
+        "en": "Khalifa Bin Salman Port"
+      },
+      "country": {
+        "ar": "البحرين",
+        "en": "Bahrain"
+      },
+      "coords": [
+        26.2,
+        50.6167
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "dammam",
+      "locode": "SADMM",
+      "name": {
+        "ar": "ميناء الملك عبدالعزيز بالدمام",
+        "en": "King Abdulaziz Port, Dammam"
+      },
+      "country": {
+        "ar": "السعودية",
+        "en": "Saudi Arabia"
+      },
+      "coords": [
+        26.5,
+        50.2
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "jubail",
+      "locode": "SAJUB",
+      "name": {
+        "ar": "ميناء الجبيل التجاري",
+        "en": "Jubail Commercial Port"
+      },
+      "country": {
+        "ar": "السعودية",
+        "en": "Saudi Arabia"
+      },
+      "coords": [
+        27.0167,
+        49.6667
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "umm-qasr",
+      "locode": "IQUQR",
+      "name": {
+        "ar": "ميناء أم قصر",
+        "en": "Umm Qasr Port"
+      },
+      "country": {
+        "ar": "العراق",
+        "en": "Iraq"
+      },
+      "coords": [
+        30.0333,
+        47.9333
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "jeddah",
+      "locode": "SAJED",
+      "name": {
+        "ar": "ميناء جدة الإسلامي",
+        "en": "Jeddah Islamic Port"
+      },
+      "country": {
+        "ar": "السعودية",
+        "en": "Saudi Arabia"
+      },
+      "coords": [
+        21.4667,
+        39.1667
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "king-abdullah-port",
+      "locode": "SAKAC",
+      "name": {
+        "ar": "ميناء الملك عبدالله",
+        "en": "King Abdullah Port"
+      },
+      "country": {
+        "ar": "السعودية",
+        "en": "Saudi Arabia"
+      },
+      "coords": [
+        22.4,
+        39.0833
+      ],
+      "coordsFrom": "unlocode"
+    },
+    {
+      "slug": "aqaba",
+      "locode": "JOAQB",
+      "name": {
+        "ar": "ميناء العقبة",
+        "en": "Port of Aqaba"
+      },
+      "country": {
+        "ar": "الأردن",
+        "en": "Jordan"
+      },
+      "coords": [
+        29.5167,
+        35
+      ],
+      "coordsFrom": "unlocode"
+    }
+  ],
+  "pairs": [
+    {
+      "from": "fujairah",
+      "to": "khor-fakkan",
+      "km": 27,
+      "hours": 0.4
+    },
+    {
+      "from": "khalifa-bin-salman",
+      "to": "dammam",
+      "km": 79,
+      "hours": 1
+    },
+    {
+      "from": "jebel-ali",
+      "to": "khalifa-port",
+      "km": 81,
+      "hours": 1.4
+    },
+    {
+      "from": "sohar",
+      "to": "fujairah",
+      "km": 87,
+      "hours": 1.3
+    },
+    {
+      "from": "shuwaikh",
+      "to": "umm-qasr",
+      "km": 95,
+      "hours": 1.5
+    },
+    {
+      "from": "dammam",
+      "to": "jubail",
+      "km": 104,
+      "hours": 1.3
+    },
+    {
+      "from": "sohar",
+      "to": "khor-fakkan",
+      "km": 110,
+      "hours": 1.6
+    },
+    {
+      "from": "jeddah",
+      "to": "king-abdullah-port",
+      "km": 131,
+      "hours": 1.6
+    },
+    {
+      "from": "jebel-ali",
+      "to": "fujairah",
+      "km": 150,
+      "hours": 1.9
+    },
+    {
+      "from": "khalifa-bin-salman",
+      "to": "jubail",
+      "km": 156,
+      "hours": 1.9
+    },
+    {
+      "from": "jebel-ali",
+      "to": "khor-fakkan",
+      "km": 161,
+      "hours": 2.1
+    },
+    {
+      "from": "sohar",
+      "to": "jebel-ali",
+      "km": 202,
+      "hours": 2.8
+    },
+    {
+      "from": "khalifa-port",
+      "to": "fujairah",
+      "km": 220,
+      "hours": 2.9
+    },
+    {
+      "from": "khalifa-port",
+      "to": "khor-fakkan",
+      "km": 231,
+      "hours": 3.1
+    },
+    {
+      "from": "sohar",
+      "to": "sultan-qaboos",
+      "km": 257,
+      "hours": 3.2
+    },
+    {
+      "from": "sohar",
+      "to": "khalifa-port",
+      "km": 270,
+      "hours": 3.8
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "fujairah",
+      "km": 329,
+      "hours": 3.8
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "khor-fakkan",
+      "km": 351,
+      "hours": 4.1
+    },
+    {
+      "from": "hamad-port",
+      "to": "dammam",
+      "km": 357,
+      "hours": 4.3
+    },
+    {
+      "from": "shuwaikh",
+      "to": "jubail",
+      "km": 358,
+      "hours": 3.9
+    },
+    {
+      "from": "hamad-port",
+      "to": "khalifa-bin-salman",
+      "km": 384,
+      "hours": 4.8
+    },
+    {
+      "from": "hamad-port",
+      "to": "jubail",
+      "km": 423,
+      "hours": 5.1
+    },
+    {
+      "from": "shuwaikh",
+      "to": "dammam",
+      "km": 434,
+      "hours": 4.8
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "jebel-ali",
+      "km": 444,
+      "hours": 5.3
+    },
+    {
+      "from": "jubail",
+      "to": "umm-qasr",
+      "km": 447,
+      "hours": 5.2
+    },
+    {
+      "from": "shuwaikh",
+      "to": "khalifa-bin-salman",
+      "km": 488,
+      "hours": 5.3
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "khalifa-port",
+      "km": 514,
+      "hours": 6.2
+    },
+    {
+      "from": "dammam",
+      "to": "umm-qasr",
+      "km": 523,
+      "hours": 6.1
+    },
+    {
+      "from": "duqm",
+      "to": "sultan-qaboos",
+      "km": 552,
+      "hours": 7.1
+    },
+    {
+      "from": "khalifa-bin-salman",
+      "to": "umm-qasr",
+      "km": 576,
+      "hours": 6.6
+    },
+    {
+      "from": "khalifa-port",
+      "to": "hamad-port",
+      "km": 660,
+      "hours": 6.9
+    },
+    {
+      "from": "jebel-ali",
+      "to": "hamad-port",
+      "km": 689,
+      "hours": 6.8
+    },
+    {
+      "from": "salalah",
+      "to": "duqm",
+      "km": 702,
+      "hours": 8
+    },
+    {
+      "from": "sohar",
+      "to": "duqm",
+      "km": 727,
+      "hours": 9.2
+    },
+    {
+      "from": "hamad-port",
+      "to": "shuwaikh",
+      "km": 750,
+      "hours": 8.5
+    },
+    {
+      "from": "khalifa-port",
+      "to": "dammam",
+      "km": 758,
+      "hours": 7.8
+    },
+    {
+      "from": "khalifa-port",
+      "to": "khalifa-bin-salman",
+      "km": 785,
+      "hours": 8.3
+    },
+    {
+      "from": "jebel-ali",
+      "to": "dammam",
+      "km": 787,
+      "hours": 7.8
+    },
+    {
+      "from": "duqm",
+      "to": "fujairah",
+      "km": 801,
+      "hours": 9.9
+    },
+    {
+      "from": "jebel-ali",
+      "to": "khalifa-bin-salman",
+      "km": 814,
+      "hours": 8.2
+    },
+    {
+      "from": "duqm",
+      "to": "khor-fakkan",
+      "km": 824,
+      "hours": 10.3
+    },
+    {
+      "from": "khalifa-port",
+      "to": "jubail",
+      "km": 824,
+      "hours": 8.6
+    },
+    {
+      "from": "fujairah",
+      "to": "hamad-port",
+      "km": 832,
+      "hours": 8.2
+    },
+    {
+      "from": "sohar",
+      "to": "hamad-port",
+      "km": 833,
+      "hours": 8.5
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "hamad-port",
+      "km": 840,
+      "hours": 8.5
+    },
+    {
+      "from": "hamad-port",
+      "to": "umm-qasr",
+      "km": 840,
+      "hours": 9.8
+    },
+    {
+      "from": "jebel-ali",
+      "to": "jubail",
+      "km": 853,
+      "hours": 8.5
+    },
+    {
+      "from": "duqm",
+      "to": "jebel-ali",
+      "km": 888,
+      "hours": 10.8
+    },
+    {
+      "from": "duqm",
+      "to": "khalifa-port",
+      "km": 907,
+      "hours": 11.3
+    },
+    {
+      "from": "fujairah",
+      "to": "dammam",
+      "km": 929,
+      "hours": 9.2
+    },
+    {
+      "from": "sohar",
+      "to": "dammam",
+      "km": 931,
+      "hours": 9.5
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "dammam",
+      "km": 937,
+      "hours": 9.4
+    },
+    {
+      "from": "fujairah",
+      "to": "khalifa-bin-salman",
+      "km": 956,
+      "hours": 9.6
+    },
+    {
+      "from": "sohar",
+      "to": "khalifa-bin-salman",
+      "km": 958,
+      "hours": 9.9
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "khalifa-bin-salman",
+      "km": 964,
+      "hours": 9.9
+    },
+    {
+      "from": "fujairah",
+      "to": "jubail",
+      "km": 996,
+      "hours": 9.9
+    },
+    {
+      "from": "sohar",
+      "to": "jubail",
+      "km": 997,
+      "hours": 10.2
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "jubail",
+      "km": 1004,
+      "hours": 10.2
+    },
+    {
+      "from": "king-abdullah-port",
+      "to": "aqaba",
+      "km": 1010,
+      "hours": 11.8
+    },
+    {
+      "from": "salalah",
+      "to": "sultan-qaboos",
+      "km": 1054,
+      "hours": 11.8
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "hamad-port",
+      "km": 1056,
+      "hours": 10.8
+    },
+    {
+      "from": "jeddah",
+      "to": "aqaba",
+      "km": 1112,
+      "hours": 12.9
+    },
+    {
+      "from": "khalifa-port",
+      "to": "shuwaikh",
+      "km": 1151,
+      "hours": 12
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "dammam",
+      "km": 1154,
+      "hours": 11.7
+    },
+    {
+      "from": "sohar",
+      "to": "salalah",
+      "km": 1155,
+      "hours": 13.7
+    },
+    {
+      "from": "jebel-ali",
+      "to": "shuwaikh",
+      "km": 1180,
+      "hours": 12
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "khalifa-bin-salman",
+      "km": 1181,
+      "hours": 12.2
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "jubail",
+      "km": 1220,
+      "hours": 12.5
+    },
+    {
+      "from": "salalah",
+      "to": "fujairah",
+      "km": 1227,
+      "hours": 14.3
+    },
+    {
+      "from": "khalifa-port",
+      "to": "umm-qasr",
+      "km": 1241,
+      "hours": 13.3
+    },
+    {
+      "from": "salalah",
+      "to": "khor-fakkan",
+      "km": 1249,
+      "hours": 14.7
+    },
+    {
+      "from": "salalah",
+      "to": "jebel-ali",
+      "km": 1257,
+      "hours": 14.5
+    },
+    {
+      "from": "jebel-ali",
+      "to": "umm-qasr",
+      "km": 1270,
+      "hours": 13.3
+    },
+    {
+      "from": "salalah",
+      "to": "khalifa-port",
+      "km": 1276,
+      "hours": 15
+    },
+    {
+      "from": "fujairah",
+      "to": "shuwaikh",
+      "km": 1322,
+      "hours": 13.3
+    },
+    {
+      "from": "sohar",
+      "to": "shuwaikh",
+      "km": 1324,
+      "hours": 13.6
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "shuwaikh",
+      "km": 1330,
+      "hours": 13.6
+    },
+    {
+      "from": "dammam",
+      "to": "jeddah",
+      "km": 1371,
+      "hours": 14.5
+    },
+    {
+      "from": "jubail",
+      "to": "jeddah",
+      "km": 1399,
+      "hours": 14.9
+    },
+    {
+      "from": "khalifa-bin-salman",
+      "to": "jeddah",
+      "km": 1410,
+      "hours": 14.9
+    },
+    {
+      "from": "fujairah",
+      "to": "umm-qasr",
+      "km": 1412,
+      "hours": 14.7
+    },
+    {
+      "from": "sohar",
+      "to": "umm-qasr",
+      "km": 1414,
+      "hours": 14.9
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "umm-qasr",
+      "km": 1420,
+      "hours": 14.9
+    },
+    {
+      "from": "shuwaikh",
+      "to": "king-abdullah-port",
+      "km": 1444,
+      "hours": 15.5
+    },
+    {
+      "from": "dammam",
+      "to": "king-abdullah-port",
+      "km": 1446,
+      "hours": 15.3
+    },
+    {
+      "from": "duqm",
+      "to": "hamad-port",
+      "km": 1449,
+      "hours": 15.8
+    },
+    {
+      "from": "jubail",
+      "to": "king-abdullah-port",
+      "km": 1474,
+      "hours": 15.7
+    },
+    {
+      "from": "khalifa-bin-salman",
+      "to": "king-abdullah-port",
+      "km": 1485,
+      "hours": 15.8
+    },
+    {
+      "from": "umm-qasr",
+      "to": "king-abdullah-port",
+      "km": 1512,
+      "hours": 16.5
+    },
+    {
+      "from": "shuwaikh",
+      "to": "jeddah",
+      "km": 1525,
+      "hours": 16.3
+    },
+    {
+      "from": "hamad-port",
+      "to": "jeddah",
+      "km": 1543,
+      "hours": 17.2
+    },
+    {
+      "from": "duqm",
+      "to": "dammam",
+      "km": 1547,
+      "hours": 16.8
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "shuwaikh",
+      "km": 1547,
+      "hours": 15.9
+    },
+    {
+      "from": "duqm",
+      "to": "khalifa-bin-salman",
+      "km": 1574,
+      "hours": 17.2
+    },
+    {
+      "from": "umm-qasr",
+      "to": "jeddah",
+      "km": 1593,
+      "hours": 17.2
+    },
+    {
+      "from": "shuwaikh",
+      "to": "aqaba",
+      "km": 1599,
+      "hours": 18
+    },
+    {
+      "from": "duqm",
+      "to": "jubail",
+      "km": 1613,
+      "hours": 17.5
+    },
+    {
+      "from": "hamad-port",
+      "to": "king-abdullah-port",
+      "km": 1618,
+      "hours": 18
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "umm-qasr",
+      "km": 1637,
+      "hours": 17.2
+    },
+    {
+      "from": "umm-qasr",
+      "to": "aqaba",
+      "km": 1667,
+      "hours": 19
+    },
+    {
+      "from": "jubail",
+      "to": "aqaba",
+      "km": 1772,
+      "hours": 19.8
+    },
+    {
+      "from": "salalah",
+      "to": "hamad-port",
+      "km": 1819,
+      "hours": 19.6
+    },
+    {
+      "from": "dammam",
+      "to": "aqaba",
+      "km": 1848,
+      "hours": 20.7
+    },
+    {
+      "from": "khalifa-bin-salman",
+      "to": "aqaba",
+      "km": 1902,
+      "hours": 21.2
+    },
+    {
+      "from": "salalah",
+      "to": "dammam",
+      "km": 1916,
+      "hours": 20.6
+    },
+    {
+      "from": "duqm",
+      "to": "shuwaikh",
+      "km": 1940,
+      "hours": 21
+    },
+    {
+      "from": "salalah",
+      "to": "khalifa-bin-salman",
+      "km": 1943,
+      "hours": 21
+    },
+    {
+      "from": "khalifa-port",
+      "to": "jeddah",
+      "km": 1943,
+      "hours": 20.7
+    },
+    {
+      "from": "jebel-ali",
+      "to": "jeddah",
+      "km": 1973,
+      "hours": 20.6
+    },
+    {
+      "from": "salalah",
+      "to": "jubail",
+      "km": 1983,
+      "hours": 21.3
+    },
+    {
+      "from": "khalifa-port",
+      "to": "king-abdullah-port",
+      "km": 2018,
+      "hours": 21.5
+    },
+    {
+      "from": "duqm",
+      "to": "umm-qasr",
+      "km": 2030,
+      "hours": 22.3
+    },
+    {
+      "from": "jebel-ali",
+      "to": "king-abdullah-port",
+      "km": 2048,
+      "hours": 21.5
+    },
+    {
+      "from": "fujairah",
+      "to": "jeddah",
+      "km": 2115,
+      "hours": 22
+    },
+    {
+      "from": "sohar",
+      "to": "jeddah",
+      "km": 2117,
+      "hours": 22.3
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "jeddah",
+      "km": 2123,
+      "hours": 22.3
+    },
+    {
+      "from": "fujairah",
+      "to": "king-abdullah-port",
+      "km": 2190,
+      "hours": 22.9
+    },
+    {
+      "from": "sohar",
+      "to": "king-abdullah-port",
+      "km": 2192,
+      "hours": 23.2
+    },
+    {
+      "from": "hamad-port",
+      "to": "aqaba",
+      "km": 2194,
+      "hours": 24
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "king-abdullah-port",
+      "km": 2198,
+      "hours": 23.1
+    },
+    {
+      "from": "salalah",
+      "to": "shuwaikh",
+      "km": 2309,
+      "hours": 24.7
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "jeddah",
+      "km": 2340,
+      "hours": 24.6
+    },
+    {
+      "from": "salalah",
+      "to": "umm-qasr",
+      "km": 2399,
+      "hours": 26
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "king-abdullah-port",
+      "km": 2415,
+      "hours": 25.4
+    },
+    {
+      "from": "salalah",
+      "to": "jeddah",
+      "km": 2491,
+      "hours": 30.6
+    },
+    {
+      "from": "khalifa-port",
+      "to": "aqaba",
+      "km": 2595,
+      "hours": 27.5
+    },
+    {
+      "from": "salalah",
+      "to": "king-abdullah-port",
+      "km": 2612,
+      "hours": 32
+    },
+    {
+      "from": "jebel-ali",
+      "to": "aqaba",
+      "km": 2624,
+      "hours": 27.4
+    },
+    {
+      "from": "duqm",
+      "to": "jeddah",
+      "km": 2733,
+      "hours": 29.7
+    },
+    {
+      "from": "fujairah",
+      "to": "aqaba",
+      "km": 2766,
+      "hours": 28.8
+    },
+    {
+      "from": "sohar",
+      "to": "aqaba",
+      "km": 2768,
+      "hours": 29.1
+    },
+    {
+      "from": "khor-fakkan",
+      "to": "aqaba",
+      "km": 2774,
+      "hours": 29.1
+    },
+    {
+      "from": "duqm",
+      "to": "king-abdullah-port",
+      "km": 2808,
+      "hours": 30.5
+    },
+    {
+      "from": "sultan-qaboos",
+      "to": "aqaba",
+      "km": 2991,
+      "hours": 31.4
+    },
+    {
+      "from": "duqm",
+      "to": "aqaba",
+      "km": 3384,
+      "hours": 36.4
+    },
+    {
+      "from": "salalah",
+      "to": "aqaba",
+      "km": 3753,
+      "hours": 40.2
+    }
+  ]
 }
