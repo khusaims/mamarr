@@ -35,7 +35,19 @@
       "whenTomorrow": "غدًا",
       "whenTwo": "بعد يومين",
       "whenFew": "بعد {n} أيام",
-      "whenMany": "بعد {n} يومًا"
+      "whenMany": "بعد {n} يومًا",
+      "heroEyebrow": "الخليج والبحر الأحمر",
+      "heroCta2": "الأيام المجانية في الموانئ",
+      "liveTitle": "المؤشرات الآن",
+      "liveUpdated": "آخر تحديث",
+      "statPorts": "ميناءً في تسع مناطق",
+      "statLanes": "خط شحن مُسعّر",
+      "statTerms": "مصطلحًا في المعجم",
+      "statEvents": "مؤتمرًا ومعرضًا",
+      "ftBandKicker": "جديد",
+      "ftBandTitle": "{min} أيام مجانية في ميناء، {max} في ميناء على بُعد يومين",
+      "ftBandBody": "ساعة الناقل وساعة المحطة تعملان معًا، ودفع إحداهما لا يُعفيك من الأخرى. الجدول يجمع الاثنتين لستة موانئ، بمصدر لكل رقم.",
+      "ftBandCta": "افتح الجدول"
     },
     "corridor": {
       "caption": "الممر: شنغهاي ← كولومبو ← صلالة ← مضيق هرمز ← صحار ← جبل علي. الأرقام على الخط هي الأيام التقريبية بين كل محطتين لخدمة مباشرة.",
@@ -369,7 +381,19 @@
       "whenTomorrow": "tomorrow",
       "whenTwo": "in 2 days",
       "whenFew": "in {n} days",
-      "whenMany": "in {n} days"
+      "whenMany": "in {n} days",
+      "heroEyebrow": "Gulf and Red Sea",
+      "heroCta2": "Free time at Gulf ports",
+      "liveTitle": "Indices now",
+      "liveUpdated": "Updated",
+      "statPorts": "ports across nine regions",
+      "statLanes": "lanes priced",
+      "statTerms": "terms in the glossary",
+      "statEvents": "conferences and fairs",
+      "ftBandKicker": "New",
+      "ftBandTitle": "{min} free days at one port, {max} at another two days away",
+      "ftBandBody": "The carrier clock and the terminal clock run together, and paying one does not settle the other. The table holds both for six ports, with a source for every figure.",
+      "ftBandCta": "Open the table"
     },
     "corridor": {
       "caption": "The corridor: Shanghai → Colombo → Salalah → Strait of Hormuz → Sohar → Jebel Ali. Numbers on the line are approximate days between calls on a direct service.",

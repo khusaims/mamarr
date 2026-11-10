@@ -194,8 +194,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("num", (n, lang) =>
     Number(n).toLocaleString(lang === "ar" ? "ar-EG" : "en-US"));
   eleventyConfig.addFilter("pct", (n, lang) => {
-    const s = Number(n).toLocaleString(lang === "ar" ? "ar-EG" : "en-US", { maximumFractionDigits: 1 });
-    return (n > 0 ? "+" : "") + s + "%";
+    // Format the magnitude, then add the sign ourselves: ar-EG prefixes a negative
+    // with U+061C (Arabic letter mark), which flips "-1.4%" to "1.4-%" when rendered.
+    const s = Math.abs(Number(n)).toLocaleString(lang === "ar" ? "ar-EG" : "en-US", { maximumFractionDigits: 1 });
+    const sign = n > 0 ? "+" : n < 0 ? "-" : "";
+    return sign + s + "%";
   });
 
   // Sparkline SVG from an array of numbers

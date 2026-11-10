@@ -1,12 +1,35 @@
 {%- set t = i18n[lang] -%}
 {%- set articles = collections["articles_" + lang] -%}
-{%- set ports = collections["ports_" + lang] -%}
+{%- set portPages = collections["ports_" + lang] -%}
 {%- set stops = t.corridor.stops -%}
 <section class="hero">
   <div class="wrap">
-    <h1>{{ t.home.heroTitle }}</h1>
-    <p class="lead">{{ t.home.heroLead }}</p>
-    <a class="hero-cta" href="#newsletter">{{ t.newsletter.title }}</a>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">{{ t.home.heroEyebrow }}</p>
+        <h1>{{ t.home.heroTitle }}</h1>
+        <p class="lead">{{ t.home.heroLead }}</p>
+        <p class="hero-actions">
+          <a class="hero-cta" href="#newsletter">{{ t.newsletter.title }}</a>
+          <a class="hero-cta hero-cta-ghost" href="{{ ('/' + lang + '/freetime/') | rel(page.url) }}">{{ t.home.heroCta2 }}</a>
+        </p>
+      </div>
+
+      <aside class="hero-panel" aria-label="{{ t.home.liveTitle }}">
+        <p class="hero-panel-head">{{ t.home.liveTitle }}</p>
+        <ul class="live-list">
+          {% for ix in rates.indices %}
+          {%- set dirClass = "up" if ix.change_pct > 0 else ("down" if ix.change_pct < 0 else "flat") %}
+          <li>
+            <span class="live-code">{{ ix.short[lang] }}</span>
+            <span class="live-value">{{ ix.value | num(lang) }}</span>
+            <span class="chg {{ dirClass }}">{{ ix.change_pct | pct(lang) }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        <p class="hero-panel-foot">{{ t.home.liveUpdated }} <time datetime="{{ rates.indices_updated }}">{{ rates.indices_updated | dateHuman(lang) }}</time></p>
+      </aside>
+    </div>
 
     <figure class="corridor" aria-labelledby="corridor-caption">
       <div class="corridor-scroll"><svg viewBox="0 0 1000 190" role="img" aria-hidden="true">
@@ -34,6 +57,30 @@
   </div>
 </section>
 
+<section class="statbar">
+  <div class="wrap">
+    <ul>
+      <li><a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}"><strong>{{ ports.ports | length | num(lang) }}</strong> <span>{{ t.home.statPorts }}</span></a></li>
+      <li><a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}"><strong>{{ rates.lanes | length | num(lang) }}</strong> <span>{{ t.home.statLanes }}</span></a></li>
+      <li><a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}"><strong>{{ glossary.terms | length | num(lang) }}</strong> <span>{{ t.home.statTerms }}</span></a></li>
+      <li><a href="{{ ('/' + lang + '/events/') | rel(page.url) }}"><strong>{{ events.events | length | num(lang) }}</strong> <span>{{ t.home.statEvents }}</span></a></li>
+    </ul>
+  </div>
+</section>
+
+{%- set ftMin = freetime.entries | minVal("carrier.days") -%}
+{%- set ftMax = freetime.entries | maxVal("carrier.days") -%}
+<section class="section section-feature">
+  <div class="wrap">
+    <a class="feature-card" href="{{ ('/' + lang + '/freetime/') | rel(page.url) }}">
+      <p class="feature-kicker">{{ t.home.ftBandKicker }}</p>
+      <h2>{{ t.home.ftBandTitle | replace("{min}", ftMin | num(lang)) | replace("{max}", ftMax | num(lang)) }}</h2>
+      <p class="feature-body">{{ t.home.ftBandBody }}</p>
+      <p class="feature-cta">{{ t.home.ftBandCta }}</p>
+    </a>
+  </div>
+</section>
+
 <section class="section">
   <div class="wrap">
     <div class="section-head">
@@ -53,14 +100,13 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section section-alt">
   <div class="wrap">
     <div class="section-head">
       <h2>{{ t.home.ratesTitle }}</h2>
       <a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}">{{ t.home.ratesAll }}</a>
     </div>
     <p class="section-lead">{{ t.home.ratesLead }}</p>
-    {% include "indices.njk" %}
     {% include "rates-compact.njk" %}
   </div>
 </section>
@@ -94,7 +140,7 @@
     </div>
     <p class="section-lead">{{ t.home.portsLead }}</p>
     <ul class="port-list">
-      {% for p in ports %}
+      {% for p in portPages %}
       <li>
         <h3><a href="{{ p.url | rel(page.url) }}">{{ p.data.title }}</a></h3>
         <p>{{ p.data.dek }}</p>
