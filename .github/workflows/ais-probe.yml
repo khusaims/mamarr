@@ -1,0 +1,30 @@
+name: مِجسّ تغطية AIS
+
+# قياس فقط. يدويًا، ولا يكتب في المستودع شيئًا.
+# مخرجه تقرير في ملخّص التشغيل: افتح Actions ← آخر تشغيل ← Summary.
+on:
+  workflow_dispatch:
+    inputs:
+      seconds:
+        description: "طول نافذة القياس بالثواني"
+        required: false
+        default: "90"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: القياس
+        env:
+          AISSTREAM_KEY: ${{ secrets.AISSTREAM_KEY }}
+          PROBE_SECONDS: ${{ inputs.seconds }}
+        run: node scripts/ais-probe.mjs

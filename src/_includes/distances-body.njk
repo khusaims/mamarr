@@ -1,0 +1,114 @@
+{%- set t = i18n[lang] -%}
+{%- set pairs = distances.pairs -%}
+<div class="wrap">
+  <header class="page-head">
+    <h1>{{ t.distances.title }}</h1>
+    <p>{{ t.distances.lead }}</p>
+  </header>
+
+  {%- if pairs | length %}
+  <p class="finding">
+    {{ t.distances.finding
+       | replace("{min}", (pairs | minVal("km")) | num(lang))
+       | replace("{max}", (pairs | maxVal("km")) | num(lang)) }}
+  </p>
+
+  <section class="callout">
+    <h2>{{ t.distances.caveat }}</h2>
+    <p>{{ t.distances.caveatBody }}</p>
+  </section>
+
+  <div class="port-controls">
+    <p class="field port-search">
+      <label class="sr-only" for="dist-q">{{ t.distances.search }}</label>
+      <input id="dist-q" type="search" autocomplete="off" placeholder="{{ t.distances.search }}">
+    </p>
+    <p class="port-count" id="dist-count" role="status"></p>
+  </div>
+
+  <div class="table-scroll">
+    <table class="dist-table" id="dist-table">
+      <caption class="sr-only">{{ t.distances.title }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{{ t.distances.from }}</th>
+          <th scope="col">{{ t.distances.to }}</th>
+          <th scope="col">{{ t.distances.km }}</th>
+          <th scope="col">{{ t.distances.hours }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for pair in pairs -%}
+        {%- set a = distances.nodes | portBySlug(pair.from) -%}
+        {%- set b = distances.nodes | portBySlug(pair.to) -%}
+        {%- if a and b %}
+        <tr data-search="{{ a.name[lang] }} {{ b.name[lang] }} {{ a.locode }} {{ b.locode }} {{ a.country[lang] }} {{ b.country[lang] }}">
+          <th scope="row">
+            <a href="{{ ('/' + lang + '/ports/' + a.slug + '/') | rel(page.url) }}">{{ a.name[lang] }}</a>
+            <span class="kind">{{ a.country[lang] }}</span>
+          </th>
+          <td>
+            <a href="{{ ('/' + lang + '/ports/' + b.slug + '/') | rel(page.url) }}">{{ b.name[lang] }}</a>
+            <span class="kind">{{ b.country[lang] }}</span>
+          </td>
+          <td class="num-cell"><strong>{{ pair.km | num(lang) }}</strong></td>
+          <td class="num-cell">{{ pair.hours | num(lang) }}</td>
+        </tr>
+        {%- endif -%}
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  <section class="callout">
+    <h2>{{ t.distances.borders }}</h2>
+    <p>{{ t.distances.bordersBody }}</p>
+  </section>
+
+  {%- set osmNodes = distances.nodes | sharing("coordsFrom", "osm") -%}
+  {%- if osmNodes | length %}
+  <p class="table-note muted">
+    {{ t.distances.coordNote }}
+    {%- for n in osmNodes %} {{ n.name[lang] }}{% if not loop.last %}،{% endif %}{% endfor %}.
+  </p>
+  {%- endif %}
+
+  <p class="table-note muted">
+    {{ distances.attribution[lang] }}.
+    {%- if distances.builtAt %} {{ t.distances.built }} {{ distances.builtAt }}.{% endif %}
+  </p>
+
+  <script>
+    (function () {
+      var q = document.getElementById("dist-q");
+      var table = document.getElementById("dist-table");
+      var count = document.getElementById("dist-count");
+      if (!q || !table) return;
+      var rows = Array.prototype.slice.call(table.tBodies[0].rows);
+      var forms = {{ t.distances.count | dump | safe }};
+      var locale = {{ i18n[lang].locale | dump | safe }};
+      // مطابقة العدد: واحد، اثنان، ٣-١٠ جمع، ١١+ مفرد منصوب
+      function label(n) {
+        if (n === 1) return forms.one;
+        if (n === 2) return forms.two;
+        var key = n >= 3 && n <= 10 ? "few" : "many";
+        return forms[key].replace("{n}", n.toLocaleString(locale));
+      }
+      function run() {
+        var needle = q.value.trim().toLowerCase();
+        var shown = 0;
+        rows.forEach(function (row) {
+          var hit = !needle || (row.dataset.search || "").toLowerCase().indexOf(needle) !== -1;
+          row.hidden = !hit;
+          if (hit) shown++;
+        });
+        if (!count) return;
+        count.textContent = !needle ? "" : shown ? label(shown) : forms.none;
+      }
+      q.addEventListener("input", run);
+    })();
+  </script>
+
+  {%- else %}
+  <p class="table-note muted">{{ t.distances.empty }}</p>
+  {%- endif %}
+</div>

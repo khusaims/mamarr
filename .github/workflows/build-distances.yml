@@ -1,0 +1,54 @@
+name: بناء جدول المسافات البرية
+
+# يدويًا فقط. المسافات لا تتغيّر، فلا جدوى من جدول زمني.
+# شغّلها إذا أضفت ميناءً بريًا جديدًا أو صحّحت إحداثية.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-distances
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: حساب المصفوفة من OSRM
+        run: node scripts/build-distances.mjs
+
+      - name: التأكد أن الموقع ما زال يُبنى
+        run: |
+          npm ci
+          npm run build
+
+      - name: حفظ التغيير ودفعه
+        run: |
+          if [ -z "$(git status --porcelain src/_data/distances.json)" ]; then
+            echo "لا تغيير — لا شيء يُدفع."
+            exit 0
+          fi
+          git config user.name "mamarr-bot"
+          git config user.email "actions@github.com"
+          git add src/_data/distances.json
+          git commit -m "بناء جدول المسافات البرية — $(date -u +%Y-%m-%d)"
+
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "تم الدفع في المحاولة $attempt."
+              exit 0
+            fi
+            echo "الدفع مرفوض — إعادة المزامنة ثم المحاولة ($attempt)."
+            git pull --rebase --autostash origin main || exit 1
+            sleep 5
+          done
+          echo "تعذّر الدفع بعد ثلاث محاولات."
+          exit 1

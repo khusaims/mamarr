@@ -14,7 +14,8 @@
       "search": "بحث",
       "freetime": "الأيام المجانية",
       "advisories": "إشعارات الناقلين",
-      "method": "المنهجية"
+      "method": "المنهجية",
+      "distances": "المسافات البرية"
     },
     "home": {
       "heroTitle": "ما يعنيه كل تغيير في الممرات البحرية لمن يشحن من الخليج وإليه",
@@ -398,6 +399,32 @@
       "agoToday": "اليوم",
       "agoTwo": "قبل يومين",
       "unit": "بالدولار الأمريكي لكل حاوية. «مجانًا» تعني بلا رسم إعادة، لا بلا شروط."
+    },
+    "distances": {
+      "title": "المسافات البرية بين الموانئ",
+      "short": "المسافات البرية",
+      "lead": "كم كيلومترًا وكم ساعة قيادة من ميناء إلى ميناء عبر شبكة طرق الخليج. محسوبة من بيانات الطرق المفتوحة، لا مقدّرة.",
+      "finding": "أقصر مسافة في الجدول {min} كم، وأطولها {max} كم.",
+      "from": "من",
+      "to": "إلى",
+      "km": "كم",
+      "hours": "ساعة قيادة",
+      "caveat": "زمن قيادة صافٍ",
+      "caveatBody": "الزمن المعروض زمن قيادة متواصلة على الطريق فقط. لا يشمل الانتظار على المنفذ الحدودي، ولا التحميل والتفريغ، ولا ساعات راحة السائق، ولا إغلاق المنافذ في الأعياد. المسافة رقم هندسي يصحّ دائمًا؛ الزمن أرضية تبني عليها لا وعد تسلّمه لعميل.",
+      "borders": "العبور الحدودي",
+      "bordersBody": "الأزواج التي تعبر حدودًا تمرّ بمنفذ واحد على الأقل، وزمن المنفذ يفوق أحيانًا زمن الطريق كله. راجع ساعات عمل المنفذ ومتطلّبات البيان قبل الوعد بموعد.",
+      "search": "ابحث عن ميناء…",
+      "noRoute": "لا طريق برّي",
+      "built": "حُسب في",
+      "coordNote": "موانئ إحداثياتها من OpenStreetMap لا من قائمة UN/LOCODE، ودقّتها على مستوى الموقع لا بوابة الميناء.",
+      "empty": "لم يُبنَ الجدول بعد. شغّل مهمة «بناء جدول المسافات البرية» من تبويب Actions.",
+      "count": {
+        "one": "زوج واحد",
+        "two": "زوجان",
+        "few": "{n} أزواج",
+        "many": "{n} زوجًا",
+        "none": "لا أزواج مطابقة. جرّب اسم ميناء آخر."
+      }
     }
   },
   "en": {
@@ -415,7 +442,8 @@
       "search": "Search",
       "freetime": "Free time",
       "advisories": "Advisories",
-      "method": "Methodology"
+      "method": "Methodology",
+      "distances": "Road distances"
     },
     "home": {
       "heroTitle": "What every shift in the sea lanes means for the people shipping to and from the Gulf",
@@ -799,6 +827,32 @@
       "agoToday": "Today",
       "agoTwo": "Two days ago",
       "unit": "USD per container. “Free” means no charge to return it, not no conditions."
+    },
+    "distances": {
+      "title": "Road distances between ports",
+      "short": "Road distances",
+      "lead": "How many kilometres and how many driving hours from port to port across the Gulf road network. Computed from open road data, not estimated.",
+      "finding": "The shortest distance in the table is {min} km, the longest {max} km.",
+      "from": "From",
+      "to": "To",
+      "km": "km",
+      "hours": "driving hours",
+      "caveat": "Pure driving time",
+      "caveatBody": "The time shown is continuous driving on the road, nothing else. It excludes waiting at the border post, loading and unloading, driver rest hours, and holiday closures. The distance is a fixed figure that always holds; the time is a floor to plan from, not a promise to give a customer.",
+      "borders": "Crossing a border",
+      "bordersBody": "Pairs that cross a border pass at least one post, and the time at the post sometimes exceeds the whole drive. Check the post's working hours and declaration requirements before committing to a date.",
+      "search": "Search for a port…",
+      "noRoute": "No road route",
+      "built": "Computed",
+      "coordNote": "Ports whose coordinates come from OpenStreetMap rather than the UN/LOCODE list, accurate to the locality rather than the port gate.",
+      "empty": "The table has not been built yet. Run the “Build road distance table” job from the Actions tab.",
+      "count": {
+        "one": "1 pair",
+        "two": "2 pairs",
+        "few": "{n} pairs",
+        "many": "{n} pairs",
+        "none": "No matching pairs. Try another port name."
+      }
     }
   }
 }

@@ -442,12 +442,12 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .muted { color: var(--muted); }
 .table-scroll { overflow-x: auto; margin: 1.5rem 0; }
-.freetime-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 42rem; }
-.freetime-table th, .freetime-table td { padding: .85rem .6rem; text-align: start; border-bottom: 1px solid var(--sand); vertical-align: top; }
-.freetime-table thead th { font-weight: 500; color: var(--muted); font-size: .9rem; border-bottom: 2px solid var(--ink); white-space: nowrap; }
-.freetime-table tbody th { font-weight: 500; color: var(--ink); }
+.freetime-table, .dist-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 42rem; }
+.freetime-table th, .freetime-table td, .dist-table th, .dist-table td { padding: .85rem .6rem; text-align: start; border-bottom: 1px solid var(--sand); vertical-align: top; }
+.freetime-table thead th, .dist-table thead th { font-weight: 500; color: var(--muted); font-size: .9rem; border-bottom: 2px solid var(--ink); white-space: nowrap; }
+.freetime-table tbody th, .dist-table tbody th { font-weight: 500; color: var(--ink); }
 .freetime-table tbody th .kind { display: block; color: var(--muted); font-weight: 400; font-size: .85rem; }
-.freetime-table .num-cell { white-space: nowrap; }
+.freetime-table .num-cell, .dist-table .num-cell { white-space: nowrap; }
 .freetime-table .num-cell strong { font-size: 1.35rem; color: var(--ink); }
 .freetime-table .num-cell .kind { color: var(--muted); font-size: .85rem; }
 .callout { background: var(--white); border: 1px solid var(--sand); padding: 1.25rem 1.5rem; border-radius: 3px; margin: 1.5rem 0; }
@@ -574,3 +574,11 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
 .rate-value.conf-stale { opacity: .55; }
 .locode { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em; letter-spacing: .06em; background: var(--sand-2); padding: .1rem .4rem; border-radius: 3px; direction: ltr; display: inline-block; }
 .port-locode { margin: .15rem 0 .35rem; }
+
+/* جدول المسافات: صفوف كثيرة، فالأرقام أصغر والصفوف أضيق من جدول الأيام المجانية */
+.dist-table { min-width: 34rem; }
+.dist-table th, .dist-table td { padding: .6rem .6rem; vertical-align: baseline; }
+.dist-table .num-cell strong { font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+.dist-table .num-cell { color: var(--muted); }
+.dist-table tbody th .kind, .dist-table td .kind { display: block; color: var(--muted); font-weight: 400; font-size: .82rem; }
+.dist-table tbody tr[hidden] { display: none; }

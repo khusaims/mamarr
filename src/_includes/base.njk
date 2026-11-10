@@ -7,6 +7,7 @@
 {%- elif "/events/" in page.url -%}{%- set ogslug = lang + "-events" -%}
 {%- elif "/freetime/" in page.url -%}{%- set ogslug = lang + "-freetime" -%}
 {%- elif "/advisories/" in page.url -%}{%- set ogslug = lang + "-advisories" -%}
+{%- elif "/distances/" in page.url -%}{%- set ogslug = lang + "-distances" -%}
 {%- elif "/method/" in page.url -%}{%- set ogslug = lang + "-method" -%}
 {%- elif "/contribute/" in page.url or "/thanks/" in page.url -%}{%- set ogslug = lang + "-contribute" -%}
 {%- elif "/calculator/" in page.url -%}{%- set ogslug = lang + "-calculator" -%}
@@ -64,6 +65,7 @@
       <a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}" {% if '/rates/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.rates }}</a>
       <a href="{{ ('/' + lang + '/freetime/') | rel(page.url) }}" {% if '/freetime/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.freetime }}</a>
       <a href="{{ ('/' + lang + '/advisories/') | rel(page.url) }}" {% if '/advisories/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.advisories }}</a>
+      <a href="{{ ('/' + lang + '/distances/') | rel(page.url) }}" {% if '/distances/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.distances }}</a>
       <a href="{{ ('/' + lang + '/calculator/') | rel(page.url) }}" {% if '/calculator/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.tools }}</a>
       <a href="{{ ('/' + lang + '/events/') | rel(page.url) }}" {% if '/events/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.events }}</a>
       <a href="{{ ('/' + lang + '/glossary/') | rel(page.url) }}" {% if '/glossary/' in page.url %}aria-current="page"{% endif %}>{{ t.nav.glossary }}</a>

@@ -1,0 +1,14 @@
+{
+  "_readme": [
+    "يُبنى آليًا. لا تحرّره يدويًا — شغّل مهمة build-distances من تبويب Actions.",
+    "ملف فارغ يعني أن المهمة لم تُشغَّل بعد؛ الصفحة تتعامل مع ذلك بلا كسر."
+  ],
+  "builtAt": null,
+  "engine": "OSRM (router.project-osrm.org)",
+  "attribution": {
+    "ar": "بيانات الطرق © مساهمو OpenStreetMap، بموجب ODbL",
+    "en": "Road data © OpenStreetMap contributors, under the ODbL"
+  },
+  "nodes": [],
+  "pairs": []
+}
