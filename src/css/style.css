@@ -572,3 +572,5 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
 .rate-meta { display: block; font-size: .78rem; color: var(--muted); margin-top: .2rem; font-weight: 400; }
 .rate-value.conf-aging { opacity: .75; }
 .rate-value.conf-stale { opacity: .55; }
+.locode { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em; letter-spacing: .06em; background: var(--sand-2); padding: .1rem .4rem; border-radius: 3px; direction: ltr; display: inline-block; }
+.port-locode { margin: .15rem 0 .35rem; }

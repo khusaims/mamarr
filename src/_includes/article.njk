@@ -7,6 +7,9 @@ layout: base.njk
     {% if section %}<p class="article-section"><a href="{{ ('/' + lang + '/' + section + '/') | rel(page.url) }}">{{ t.nav.analysis if section == 'articles' else t.ports.title }}</a></p>{% endif %}
     <h1>{{ title }}</h1>
     {% if dek %}<p class="dek">{{ dek }}</p>{% endif %}
+    {%- if section == "ports" and key -%}{%- set thisPort = ports.ports | portBySlug(key) -%}
+    {% if thisPort and thisPort.locode %}<p class="port-locode">{{ t.ports.locode }}: <code class="locode">{{ thisPort.locode }}</code></p>{% endif %}
+    {%- endif -%}
     <p class="article-meta">
       {% if author %}<span>{{ author }}</span>{% endif %}
       <time datetime="{{ date | dateISO }}">{{ date | dateHuman(lang) }}</time>

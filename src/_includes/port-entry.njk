@@ -10,6 +10,7 @@
   <div class="prose">
     <table class="port-facts-table">
       <tbody>
+        {% if port.locode %}<tr><th scope="row">{{ t.ports.locode }}</th><td><code class="locode">{{ port.locode }}</code></td></tr>{% endif %}
         <tr><th scope="row">{{ t.ports.country }}</th><td>{{ port.country[lang] }}</td></tr>
         <tr><th scope="row">{{ t.ports.region }}</th><td>{{ regionName }}</td></tr>
         <tr><th scope="row">{{ t.ports.operator }}</th><td>{{ port.operator[lang] }}</td></tr>

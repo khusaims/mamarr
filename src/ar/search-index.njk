@@ -11,7 +11,7 @@ lang: ar
 {%- set items = (items.concat([{ "t": x.term[lang], "a": x.term.en if lang == "ar" else x.term.ar, "b": x.abbr, "d": x.def[lang], "u": "/" + lang + "/glossary/" + x.slug + "/", "k": "term" }])) -%}
 {%- endfor -%}
 {%- for p in ports.ports -%}
-{%- set items = (items.concat([{ "t": p.name[lang], "a": p.name.en if lang == "ar" else p.name.ar, "d": p.country[lang] + " · " + p.dek[lang], "u": "/" + lang + "/ports/" + p.slug + "/", "k": "port" }])) -%}
+{%- set items = (items.concat([{ "t": p.name[lang], "a": (p.name.en if lang == "ar" else p.name.ar) + " " + (p.locode or ""), "d": p.country[lang] + " · " + p.dek[lang], "u": "/" + lang + "/ports/" + p.slug + "/", "k": "port" }])) -%}
 {%- endfor -%}
 {%- for ev in events.events -%}
 {%- set items = (items.concat([{ "t": ev.name[lang], "a": ev.name.en if lang == "ar" else ev.name.ar, "d": ev.city[lang] + " · " + ev.note[lang], "u": "/" + lang + "/events/", "k": "event" }])) -%}

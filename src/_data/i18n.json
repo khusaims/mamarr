@@ -153,7 +153,9 @@
       "detailed": "صفحة تفصيلية",
       "noResults": "لا موانئ مطابقة. جرّب اسمًا آخر أو منطقة أخرى.",
       "found": "{n} ميناء",
-      "stub": "هذه صفحة موجزة. الموانئ التي نشحن عبرها كثيرًا لها صفحات تفصيلية — وتُضاف تباعًا."
+      "stub": "هذه صفحة موجزة. الموانئ التي نشحن عبرها كثيرًا لها صفحات تفصيلية — وتُضاف تباعًا.",
+      "locode": "رمز UN/LOCODE",
+      "locodeNote": "الرمز المعياري الذي تستخدمه الجمارك وشركات الشحن لهذا الميناء. المصدر: قائمة UNECE."
     },
     "about": {
       "title": "من نحن"
@@ -552,7 +554,9 @@
       "detailed": "Full page",
       "noResults": "No matching ports. Try another name or region.",
       "found": "{n} ports",
-      "stub": "This is a short entry. Ports we ship through often get full pages, and more are being added."
+      "stub": "This is a short entry. Ports we ship through often get full pages, and more are being added.",
+      "locode": "UN/LOCODE",
+      "locodeNote": "The standard code customs and carriers use for this port. Source: the UNECE code list."
     },
     "about": {
       "title": "About"

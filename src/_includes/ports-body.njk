@@ -22,8 +22,9 @@
     <h2>{{ r[lang] }}</h2>
     <ul class="port-grid">
       {% for p in ports.ports %}{% if p.region == r.id %}
-      <li class="port-card" data-search="{{ p.name.ar }} {{ p.name.en }} {{ p.country.ar }} {{ p.country.en }} {{ p.slug }}">
+      <li class="port-card" data-search="{{ p.name.ar }} {{ p.name.en }} {{ p.country.ar }} {{ p.country.en }} {{ p.slug }} {{ p.locode }}">
         <h3><a href="{{ ('/' + lang + '/ports/' + p.slug + '/') | rel(page.url) }}">{{ p.name[lang] }}</a></h3>
+        {% if p.locode %}<p class="port-locode"><code class="locode">{{ p.locode }}</code></p>{% endif %}
         <p class="port-country">{{ p.country[lang] }}{% if p.detailed %} <span class="port-badge">{{ t.ports.detailed }}</span>{% endif %}</p>
         <p class="port-dek">{{ p.dek[lang] }}</p>
         <p class="port-type">{{ p.type[lang] }}</p>
