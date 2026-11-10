@@ -72,7 +72,12 @@
         "ar": "البوابة الصناعية لشمال عُمان، خارج مضيق هرمز.",
         "en": "Northern Oman's industrial gateway, outside the Strait of Hormuz."
       },
-      "locode": "OMSOH"
+      "locode": "OMSOH",
+      "coords": [
+        24.5042,
+        56.6103
+      ],
+      "coordsSource": "wikipedia"
     },
     {
       "slug": "salalah",
@@ -98,7 +103,12 @@
         "ar": "مركز إعادة الشحن العُماني على الخط الرئيسي بين آسيا وأوروبا.",
         "en": "Oman's transshipment hub on the main Asia–Europe lane."
       },
-      "locode": "OMSLL"
+      "locode": "OMSLL",
+      "coords": [
+        16.9481,
+        54.0089
+      ],
+      "coordsSource": "wikipedia"
     },
     {
       "slug": "duqm",
@@ -190,7 +200,12 @@
         "ar": "أكثر الموانئ خدمات مباشرة من آسيا وأوروبا، ولهذا تمرّ عبره شحنات كثيرة متجهة لعُمان برًا — تذكّر المكسة لتفادي دفع الرسم مرتين.",
         "en": "It has the most direct services from Asia and Europe, so much Oman-bound cargo transits it by road — remember the statistical declaration to avoid paying duty twice."
       },
-      "locode": "AEJEA"
+      "locode": "AEJEA",
+      "coords": [
+        24.9805,
+        55.0599
+      ],
+      "coordsSource": "osm"
     },
     {
       "slug": "khalifa-port",
@@ -1660,5 +1675,8 @@
       ]
     }
   ],
-  "_locode_note": "رموز UN/LOCODE والإحداثيات من قائمة UNECE الرسمية (unece.org/trade/cefact/UNLOCODE-Download). الرمز هو المعرّف المعياري للميناء عالميًا. الإحداثيات مذكورة فقط حين تنشرها القائمة — الموانئ بلا إحداثيات لا تحمل الحقل، ولم تُخترع. عند إضافة ميناء، ابحث عن رمزه في القائمة ولا تخمّنه."
+  "_locode_note": [
+    "رموز UN/LOCODE والإحداثيات من قائمة UNECE الرسمية (unece.org/trade/cefact/UNLOCODE-Download). الرمز هو المعرّف المعياري للميناء عالميًا. الإحداثيات مذكورة فقط حين تنشرها القائمة — الموانئ بلا إحداثيات لا تحمل الحقل، ولم تُخترع. عند إضافة ميناء، ابحث عن رمزه في القائمة ولا تخمّنه.",
+    "الموانئ التي تحمل coordsSource إحداثياتها ليست من قائمة UN/LOCODE بل من مصدر مرجعي مؤكّد من أكثر من جهة، ودقّتها على مستوى الموقع لا بوابة الميناء."
+  ]
 }
