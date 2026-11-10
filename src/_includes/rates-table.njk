@@ -1,6 +1,14 @@
 {%- set t = i18n[lang] -%}
-{%- set maxRate = rates.lanes | pluck("usd") | maxOf -%}
-{% if rates.sample %}<p class="sample-banner">{{ t.rates.sampleNotice }}</p>{% endif %}
+{%- set est = [] -%}
+{%- for l in rates.lanes -%}{%- set e = l | estimate(rates.indices) -%}{%- if e -%}{{ est.push(e.usd) or "" }}{%- endif -%}{%- endfor -%}
+{%- set maxRate = est | maxOf if est | length else 1 -%}
+
+<section class="callout how-box">
+  <h2>{{ t.rates.howTitle }}</h2>
+  <p>{{ t.rates.howLead }}</p>
+  <p><a href="{{ ('/' + lang + '/method/') | rel(page.url) }}">{{ t.rates.howLink }}</a></p>
+</section>
+{% if not est | length %}<p class="sample-banner">{{ t.rates.noneCalibrated }}</p>{% endif %}
 
 <div class="lane-controls">
   <div class="lane-row">
@@ -45,9 +53,11 @@
   </thead>
   <tbody id="lane-body">
     {% for l in rates.lanes %}
-    {%- set dirClass = "up" if l.change_pct > 0 else ("down" if l.change_pct < 0 else "flat") -%}
+    {%- set e = l | estimate(rates.indices) -%}
+    {%- set dirClass = "flat" if not e else ("up" if e.change_pct > 0 else ("down" if e.change_pct < 0 else "flat")) -%}
     <tr data-dest="{{ l.to.slug }}" data-origin="{{ l.from.ar }} {{ l.from.en }} {{ l.from.slug }}"
-        data-rate="{{ l.usd }}" data-chg="{{ l.change_pct }}" data-days="{{ l.days }}" data-sort-origin="{{ l.from[lang] }}">
+        data-rate="{{ e.usd if e else 0 }}" data-chg="{{ e.change_pct if e else 0 }}" data-days="{{ l.days }}"
+        data-calibrated="{{ 1 if e else 0 }}" data-sort-origin="{{ l.from[lang] }}">
       <td class="lane">
         <a href="{{ ('/' + lang + '/ports/' + l.from.slug + '/') | rel(page.url) }}">{{ l.from[lang] }}</a>
         <span class="lane-arrow" aria-hidden="true">{{ "←" if lang == "ar" else "→" }}</span>
@@ -59,11 +69,19 @@
       </td>
       <td class="num">{{ l.days | num(lang) }}<small> {{ t.rates.daysUnit }}</small></td>
       <td class="num rate-cell">
-        <span class="rate-bar" style="--w: {{ (l.usd / maxRate * 100) | round }}%"></span>
-        <span class="rate-value">{{ l.usd | num(lang) }}</span>
+        {%- if e %}
+        <span class="rate-bar" style="--w: {{ (e.usd / maxRate * 100) | round }}%"></span>
+        <span class="rate-value conf-{{ e.confidence }}">{{ e.usd | num(lang) }}</span>
+        {%- set qn = e.quotes -%}
+        {%- set qLabel = t.rates.quote1 if qn == 1 else (t.rates.quote2 if qn == 2 else (t.rates.quoteFew if qn <= 10 else t.rates.quoteMany)) -%}
+        <span class="rate-meta">{{ t.rates.calibratedOn }} {{ e.calibrated | dateHuman(lang) }}، {{ qLabel | replace("{n}", qn | num(lang)) }}</span>
+        {%- else %}
+        <span class="uncal">{{ t.rates.uncalibrated }}</span>
+        <a class="uncal-cta" href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ t.rates.uncalibratedCta }}</a>
+        {%- endif %}
       </td>
-      <td><span class="chg {{ dirClass }}">{{ l.change_pct | pct(lang) }}</span></td>
-      <td class="trend"><span class="spark-{{ dirClass }}">{{ l.series | sparkline(110, 26) | safe }}</span></td>
+      <td>{% if e %}<span class="chg {{ dirClass }}">{{ e.change_pct | pct(lang) }}</span>{% else %}<span class="chg flat">—</span>{% endif %}</td>
+      <td class="trend">{% if e %}<span class="spark-{{ dirClass }}">{{ e.series | sparkline(110, 26) | safe }}</span>{% endif %}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -98,6 +116,9 @@
 
     var mode = sort.value;
     var sorted = shown.slice().sort(function (a, b) {
+      // خط بلا معايرة ليس خطًا رخيصًا: يبقى أسفل الجدول في كل ترتيب
+      var ca = +a.dataset.calibrated, cb = +b.dataset.calibrated;
+      if (ca !== cb) return cb - ca;
       if (mode === "rate-asc") return a.dataset.rate - b.dataset.rate;
       if (mode === "rate-desc") return b.dataset.rate - a.dataset.rate;
       if (mode === "days-asc") return a.dataset.days - b.dataset.days;
@@ -108,16 +129,17 @@
     rows.filter(function (r) { return r.hidden; }).forEach(function (r) { body.appendChild(r); });
 
     empty.hidden = shown.length > 0;
-    document.getElementById("sum-lanes").textContent = shown.length ? fmt(shown.length) : "—";
-    if (!shown.length) {
+    var cal = shown.filter(function (r) { return r.dataset.calibrated === "1"; });
+    document.getElementById("sum-lanes").textContent = fmt(cal.length) + " / " + fmt(shown.length);
+    if (!cal.length) {
       ["sum-median", "sum-riser", "sum-faller"].forEach(function (id) { document.getElementById(id).textContent = "—"; });
       return;
     }
-    var vals = shown.map(function (r) { return +r.dataset.rate; }).sort(function (a, b) { return a - b; });
+    var vals = cal.map(function (r) { return +r.dataset.rate; }).sort(function (a, b) { return a - b; });
     var m = Math.floor(vals.length / 2);
     var med = vals.length % 2 ? vals[m] : (vals[m - 1] + vals[m]) / 2;
     document.getElementById("sum-median").textContent = fmt(med);
-    var byChg = shown.slice().sort(function (a, b) { return b.dataset.chg - a.dataset.chg; });
+    var byChg = cal.slice().sort(function (a, b) { return b.dataset.chg - a.dataset.chg; });
     var top = byChg[0], low = byChg[byChg.length - 1];
     function label(r) { return r.cells[0].textContent.replace(/\s+/g, " ").trim(); }
     document.getElementById("sum-riser").textContent = +top.dataset.chg > 0 ? label(top) + "  " + pct(+top.dataset.chg) : "—";

@@ -1,0 +1,51 @@
+---
+layout: base.njk
+title: Methodology — how lane rate estimates are calculated
+description: Mamarr's Gulf lane estimates are a published global index multiplied by a calibration ratio built from real quotes. This page sets out the whole calculation and its limits.
+permalink: /en/method/
+---
+<article class="article wrap-narrow">
+  <header class="article-head"><h1>Methodology</h1>
+  <p class="dek">Every figure on Mamarr should trace back to its source. This page explains where a lane estimate comes from, and when not to trust it.</p></header>
+  <div class="prose">
+
+    <h2>The problem</h2>
+    <p>Commercial lane rate data is licensed for internal use, not for publication. One vendor's terms put it plainly: no redistribution, resale or publication without prior written consent. So a rate table cannot simply be bought and published, however willing the buyer.</p>
+    <p>That leaves two roads: publish invented numbers, or build a number we own. We took the second.</p>
+
+    <h2>The calculation</h2>
+    <p>For each lane we store a single figure: <strong>its ratio to a global index</strong>. Then:</p>
+    <p class="formula">estimate = latest index value × lane ratio</p>
+    <p>The index updates itself weekly, so the estimate moves with it untouched. That is what "synced with global rates" means here: not that we buy the rates, but that the figure which moves them moves our estimate.</p>
+
+    <h3>A worked example</h3>
+    <p>A real quote reached us for Shanghai–Sohar at USD 1,850, in a week when the Drewry World Container Index stood at USD 4,389.</p>
+    <p class="formula">1,850 ÷ 4,389 = 0.42</p>
+    <p>That is the lane's ratio. In any later week, if the index reads 4,600, the estimate becomes 4,600 × 0.42 = USD 1,932 — without anyone sending a new quote.</p>
+
+    <h2>Where the ratios come from</h2>
+    <p>From real quotes sent by people who actually ship, through the <a href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">contribution form</a>. We neither buy them nor guess them. Where more than one quote arrives for a lane, we average their ratios and show how many quotes sit behind the figure.</p>
+    <p>Quotes come from companies and are published in aggregate, without the sender's name or their company's. That is the condition on which anyone shares a price at all.</p>
+
+    <h2>The limits of this number — read them before acting on it</h2>
+    <ul>
+      <li><strong>It is an estimate, not a quote.</strong> You cannot book against it, and you cannot hold your forwarder to it. It is a direction and an order of magnitude.</li>
+      <li><strong>Ratios drift.</strong> A Gulf lane's relationship to a global index is not fixed forever: surcharges, seasonal capacity and rerouting all move it. So the <strong>date of the last calibration</strong> sits beside every figure, and the figure fades as it ages.</li>
+      <li><strong>One quote is not a market.</strong> A lane built on one quote is weaker than a lane built on five. The count is shown; judge for yourself.</li>
+      <li><strong>A spot index is not a contract rate.</strong> Quoting a spot index to justify a contract rate, or the reverse, is a common error. These estimates rest on spot indices.</li>
+      <li><strong>The indices disagree with each other.</strong> Two major indices parted by USD 614 on one corridor in a month, and the following month the gap flipped sign. So no constant offset translates one into another.</li>
+    </ul>
+
+    <h2>What we never do</h2>
+    <p><strong>An uncalibrated lane shows no number.</strong> It shows "not calibrated yet" and an empty cell. We do not fill the gap with a clever guess, a regional average or an illustrative figure — because a reader cannot tell the difference, and their trust is worth more than a full table.</p>
+    <p>This means the table starts nearly empty and fills in lane by lane as quotes arrive. We would rather publish an honest table with holes than a complete invented one.</p>
+
+    <h2>The indices we use</h2>
+    <p>The indices we display are published openly and may be cited with attribution, and we show each one's source and publication date. We do not republish data licensed to us for internal use, and we do not scrape data from behind a subscription.</p>
+
+    <h2>Correcting us</h2>
+    <p>If a figure here contradicts what you actually pay, <a href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">send it</a>. A contradicting quote recalibrates the lane and corrects it for everyone who reads it after you — the fastest way to pull the number closer to reality.</p>
+    <p>For corrections generally: {{ site.contactEmail }}</p>
+
+  </div>
+</article>

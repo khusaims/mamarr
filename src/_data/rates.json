@@ -1,7 +1,6 @@
 {
-  "_readme": "قسمان: indices يُحدَّث آليًا بـ scripts/update-rates.mjs (لا تعدّله يدويًا)، وlanes تحدّثه أنت أسبوعيًا. لكل خط: أضف السعر الجديد إلى نهاية series واحذف الأقدم (٨ قيم)، واجعل usd = آخر قيمة وchange_pct نسبة التغير عن سابقتها. days = زمن العبور بالأيام، وvia = ميناء إعادة الشحن إن لم تكن الخدمة مباشرة. slug يجب أن يطابق ميناءً في ports.json ليعمل الرابط. اجعل sample = false عند أول بيانات حقيقية.",
+  "_readme": "أسعار الخطوط لا تُشترى: مصدرها معايرة. لكل خط calibration إما null (لم يُعاير — لا يُعرض رقم) أو {ratio, index, quotes, calibrated, source}. ratio = سعر عرض حقيقي ÷ قيمة المؤشر في أسبوع ذلك العرض. التقدير يُحسب وقت البناء: ratio × آخر قيمة للمؤشر، فيتحرك أسبوعيًا وحده مع تحديث المؤشرات. quotes = عدد العروض التي بُنيت عليها النسبة (متوسطها). calibrated = تاريخ آخر معايرة، ويُعرض بجانب الرقم لأن النسب تنجرف. index = معرّف المؤشر المرجعي من indices (wci افتراضيًا). لا تكتب رقمًا تقديريًا يدويًا هنا أبدًا — إن لم توجد معايرة فالصواب خانة فارغة.",
   "updated": "2026-11-09",
-  "sample": true,
   "unit": "USD / 40' HC, spot, port-to-port",
   "indices_updated": "2026-11-09",
   "indices_sample": false,
@@ -119,24 +118,13 @@
         "ar": "صحار",
         "en": "Sohar"
       },
-      "usd": 1850,
-      "change_pct": -3.1,
       "days": 18,
-      "series": [
-        2012,
-        1983,
-        1966,
-        1954,
-        1932,
-        1925,
-        1909,
-        1850
-      ],
       "via": {
         "slug": "colombo",
         "ar": "كولومبو",
         "en": "Colombo"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "sha-jea",
@@ -150,19 +138,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1720,
-      "change_pct": -2.3,
       "days": 21,
-      "series": [
-        1692,
-        1704,
-        1722,
-        1729,
-        1745,
-        1750,
-        1760,
-        1720
-      ]
+      "calibration": null
     },
     {
       "id": "sha-ham",
@@ -176,24 +153,13 @@
         "ar": "حمد",
         "en": "Hamad"
       },
-      "usd": 1960,
-      "change_pct": -1.2,
       "days": 23,
-      "series": [
-        1984,
-        1974,
-        1990,
-        1970,
-        1982,
-        1976,
-        1984,
-        1960
-      ],
       "via": {
         "slug": "jebel-ali",
         "ar": "جبل علي",
         "en": "Jebel Ali"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "sha-dmm",
@@ -207,24 +173,13 @@
         "ar": "الدمام",
         "en": "Dammam"
       },
-      "usd": 2010,
-      "change_pct": -0.8,
       "days": 24,
-      "series": [
-        2135,
-        2105,
-        2086,
-        2074,
-        2051,
-        2043,
-        2026,
-        2010
-      ],
       "via": {
         "slug": "jebel-ali",
         "ar": "جبل علي",
         "en": "Jebel Ali"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "ngb-jea",
@@ -238,19 +193,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1690,
-      "change_pct": -2.6,
       "days": 20,
-      "series": [
-        1667,
-        1679,
-        1697,
-        1704,
-        1720,
-        1725,
-        1735,
-        1690
-      ]
+      "calibration": null
     },
     {
       "id": "szx-jea",
@@ -264,19 +208,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1640,
-      "change_pct": -1.9,
       "days": 19,
-      "series": [
-        1672,
-        1664,
-        1677,
-        1660,
-        1670,
-        1665,
-        1672,
-        1640
-      ]
+      "calibration": null
     },
     {
       "id": "tao-soh",
@@ -290,24 +223,13 @@
         "ar": "صحار",
         "en": "Sohar"
       },
-      "usd": 1980,
-      "change_pct": -2.0,
       "days": 22,
-      "series": [
-        2129,
-        2099,
-        2080,
-        2068,
-        2045,
-        2037,
-        2020,
-        1980
-      ],
       "via": {
         "slug": "colombo",
         "ar": "كولومبو",
         "en": "Colombo"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "pus-jea",
@@ -321,24 +243,13 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 2150,
-      "change_pct": 0.6,
       "days": 24,
-      "series": [
-        2054,
-        2068,
-        2091,
-        2099,
-        2118,
-        2124,
-        2137,
-        2150
-      ],
       "via": {
         "slug": "singapore",
         "ar": "سنغافورة",
         "en": "Singapore"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "sin-soh",
@@ -352,19 +263,8 @@
         "ar": "صحار",
         "en": "Sohar"
       },
-      "usd": 1180,
-      "change_pct": -1.4,
       "days": 10,
-      "series": [
-        1197,
-        1191,
-        1200,
-        1188,
-        1196,
-        1192,
-        1197,
-        1180
-      ]
+      "calibration": null
     },
     {
       "id": "pkg-jea",
@@ -378,19 +278,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1090,
-      "change_pct": -0.9,
       "days": 11,
-      "series": [
-        1159,
-        1143,
-        1132,
-        1126,
-        1113,
-        1109,
-        1100,
-        1090
-      ]
+      "calibration": null
     },
     {
       "id": "lch-jea",
@@ -404,24 +293,13 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1760,
-      "change_pct": 1.1,
       "days": 19,
-      "series": [
-        1673,
-        1685,
-        1703,
-        1710,
-        1725,
-        1730,
-        1741,
-        1760
-      ],
       "via": {
         "slug": "singapore",
         "ar": "سنغافورة",
         "en": "Singapore"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "cmp-jea",
@@ -435,24 +313,13 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1820,
-      "change_pct": 0.4,
       "days": 20,
-      "series": [
-        1813,
-        1804,
-        1818,
-        1800,
-        1811,
-        1806,
-        1813,
-        1820
-      ],
       "via": {
         "slug": "singapore",
         "ar": "سنغافورة",
         "en": "Singapore"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "tpp-jea",
@@ -466,24 +333,13 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1540,
-      "change_pct": -0.6,
       "days": 17,
-      "series": [
-        1632,
-        1610,
-        1595,
-        1586,
-        1568,
-        1562,
-        1549,
-        1540
-      ],
       "via": {
         "slug": "port-klang",
         "ar": "كلانغ",
         "en": "Port Klang"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "nsa-soh",
@@ -497,19 +353,8 @@
         "ar": "صحار",
         "en": "Sohar"
       },
-      "usd": 640,
-      "change_pct": 1.6,
       "days": 5,
-      "series": [
-        605,
-        610,
-        616,
-        619,
-        624,
-        626,
-        630,
-        640
-      ]
+      "calibration": null
     },
     {
       "id": "nsa-jea",
@@ -523,19 +368,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 580,
-      "change_pct": 1.0,
       "days": 4,
-      "series": [
-        574,
-        571,
-        576,
-        570,
-        574,
-        572,
-        574,
-        580
-      ]
+      "calibration": null
     },
     {
       "id": "mun-soh",
@@ -549,19 +383,8 @@
         "ar": "صحار",
         "en": "Sohar"
       },
-      "usd": 610,
-      "change_pct": 2.1,
       "days": 4,
-      "series": [
-        630,
-        621,
-        615,
-        611,
-        605,
-        602,
-        597,
-        610
-      ]
+      "calibration": null
     },
     {
       "id": "khi-jea",
@@ -575,19 +398,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 520,
-      "change_pct": 0.8,
       "days": 3,
-      "series": [
-        496,
-        499,
-        505,
-        507,
-        511,
-        513,
-        516,
-        520
-      ]
+      "calibration": null
     },
     {
       "id": "cmb-sll",
@@ -601,19 +413,8 @@
         "ar": "صلالة",
         "en": "Salalah"
       },
-      "usd": 760,
-      "change_pct": -1.1,
       "days": 6,
-      "series": [
-        769,
-        765,
-        771,
-        763,
-        768,
-        765,
-        768,
-        760
-      ]
+      "calibration": null
     },
     {
       "id": "cgp-jea",
@@ -627,24 +428,13 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1340,
-      "change_pct": 1.8,
       "days": 14,
-      "series": [
-        1387,
-        1368,
-        1355,
-        1347,
-        1332,
-        1327,
-        1316,
-        1340
-      ],
       "via": {
         "slug": "colombo",
         "ar": "كولومبو",
         "en": "Colombo"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "rtm-sll",
@@ -658,19 +448,8 @@
         "ar": "صلالة",
         "en": "Salalah"
       },
-      "usd": 2340,
-      "change_pct": 0.0,
       "days": 18,
-      "series": [
-        2249,
-        2264,
-        2289,
-        2298,
-        2319,
-        2326,
-        2340,
-        2340
-      ]
+      "calibration": null
     },
     {
       "id": "rtm-jea",
@@ -684,19 +463,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 2480,
-      "change_pct": -0.5,
       "days": 21,
-      "series": [
-        2493,
-        2480,
-        2500,
-        2475,
-        2490,
-        2483,
-        2492,
-        2480
-      ]
+      "calibration": null
     },
     {
       "id": "anr-soh",
@@ -710,24 +478,13 @@
         "ar": "صحار",
         "en": "Sohar"
       },
-      "usd": 2520,
-      "change_pct": 0.3,
       "days": 22,
-      "series": [
-        2647,
-        2610,
-        2587,
-        2571,
-        2543,
-        2533,
-        2512,
-        2520
-      ],
       "via": {
         "slug": "salalah",
         "ar": "صلالة",
         "en": "Salalah"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "ham-jea",
@@ -741,19 +498,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 2600,
-      "change_pct": -0.7,
       "days": 23,
-      "series": [
-        2516,
-        2534,
-        2562,
-        2572,
-        2595,
-        2603,
-        2618,
-        2600
-      ]
+      "calibration": null
     },
     {
       "id": "vlc-jed",
@@ -767,19 +513,8 @@
         "ar": "جدة",
         "en": "Jeddah"
       },
-      "usd": 1480,
-      "change_pct": 1.4,
       "days": 9,
-      "series": [
-        1460,
-        1452,
-        1464,
-        1449,
-        1458,
-        1454,
-        1460,
-        1480
-      ]
+      "calibration": null
     },
     {
       "id": "pir-jed",
@@ -793,19 +528,8 @@
         "ar": "جدة",
         "en": "Jeddah"
       },
-      "usd": 1290,
-      "change_pct": 2.2,
       "days": 7,
-      "series": [
-        1330,
-        1311,
-        1300,
-        1292,
-        1278,
-        1272,
-        1262,
-        1290
-      ]
+      "calibration": null
     },
     {
       "id": "mer-jed",
@@ -819,19 +543,8 @@
         "ar": "جدة",
         "en": "Jeddah"
       },
-      "usd": 1180,
-      "change_pct": 1.7,
       "days": 6,
-      "series": [
-        1115,
-        1123,
-        1135,
-        1140,
-        1150,
-        1153,
-        1160,
-        1180
-      ]
+      "calibration": null
     },
     {
       "id": "tng-jed",
@@ -845,19 +558,8 @@
         "ar": "جدة",
         "en": "Jeddah"
       },
-      "usd": 1620,
-      "change_pct": 0.9,
       "days": 11,
-      "series": [
-        1606,
-        1598,
-        1611,
-        1594,
-        1604,
-        1599,
-        1606,
-        1620
-      ]
+      "calibration": null
     },
     {
       "id": "jea-jed",
@@ -871,19 +573,8 @@
         "ar": "جدة",
         "en": "Jeddah"
       },
-      "usd": 980,
-      "change_pct": 4.3,
       "days": 8,
-      "series": [
-        990,
-        976,
-        967,
-        962,
-        951,
-        947,
-        940,
-        980
-      ]
+      "calibration": null
     },
     {
       "id": "jea-umq",
@@ -897,19 +588,8 @@
         "ar": "أم قصر",
         "en": "Umm Qasr"
       },
-      "usd": 740,
-      "change_pct": 1.2,
       "days": 4,
-      "series": [
-        703,
-        708,
-        715,
-        718,
-        725,
-        727,
-        731,
-        740
-      ]
+      "calibration": null
     },
     {
       "id": "jea-aqj",
@@ -923,24 +603,13 @@
         "ar": "العقبة",
         "en": "Aqaba"
       },
-      "usd": 1120,
-      "change_pct": 2.6,
       "days": 10,
-      "series": [
-        1092,
-        1086,
-        1095,
-        1084,
-        1091,
-        1087,
-        1092,
-        1120
-      ],
       "via": {
         "slug": "jeddah",
         "ar": "جدة",
         "en": "Jeddah"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "soh-kwi",
@@ -954,19 +623,8 @@
         "ar": "الشويخ",
         "en": "Shuwaikh"
       },
-      "usd": 690,
-      "change_pct": 0.5,
       "days": 5,
-      "series": [
-        723,
-        713,
-        707,
-        703,
-        695,
-        692,
-        687,
-        690
-      ]
+      "calibration": null
     },
     {
       "id": "jea-bah",
@@ -980,19 +638,8 @@
         "ar": "خليفة بن سلمان",
         "en": "Khalifa Bin Salman"
       },
-      "usd": 480,
-      "change_pct": 0.0,
       "days": 2,
-      "series": [
-        461,
-        464,
-        470,
-        471,
-        476,
-        477,
-        480,
-        480
-      ]
+      "calibration": null
     },
     {
       "id": "lax-jea",
@@ -1006,24 +653,13 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 3150,
-      "change_pct": -1.8,
       "days": 32,
-      "series": [
-        3208,
-        3192,
-        3218,
-        3185,
-        3205,
-        3195,
-        3208,
-        3150
-      ],
       "via": {
         "slug": "singapore",
         "ar": "سنغافورة",
         "en": "Singapore"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "nyc-jea",
@@ -1037,24 +673,13 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 2890,
-      "change_pct": -0.4,
       "days": 28,
-      "series": [
-        3057,
-        3014,
-        2987,
-        2969,
-        2937,
-        2925,
-        2902,
-        2890
-      ],
       "via": {
         "slug": "algeciras",
         "ar": "الجزيرة الخضراء",
         "en": "Algeciras"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "ssz-jea",
@@ -1068,24 +693,13 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 3420,
-      "change_pct": 1.1,
       "days": 34,
-      "series": [
-        3251,
-        3273,
-        3309,
-        3323,
-        3353,
-        3363,
-        3383,
-        3420
-      ],
       "via": {
         "slug": "tanger-med",
         "ar": "طنجة المتوسط",
         "en": "Tanger Med"
-      }
+      },
+      "calibration": null
     },
     {
       "id": "dur-jea",
@@ -1099,19 +713,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1870,
-      "change_pct": 0.7,
       "days": 16,
-      "series": [
-        1857,
-        1848,
-        1863,
-        1844,
-        1855,
-        1850,
-        1857,
-        1870
-      ]
+      "calibration": null
     },
     {
       "id": "mba-jea",
@@ -1125,19 +728,8 @@
         "ar": "جبل علي",
         "en": "Jebel Ali"
       },
-      "usd": 1320,
-      "change_pct": -0.3,
       "days": 11,
-      "series": [
-        1395,
-        1375,
-        1363,
-        1355,
-        1340,
-        1335,
-        1324,
-        1320
-      ]
+      "calibration": null
     }
   ]
 }

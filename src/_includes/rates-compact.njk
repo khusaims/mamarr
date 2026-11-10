@@ -1,5 +1,4 @@
 {%- set t = i18n[lang] -%}
-{% if rates.sample %}<p class="sample-banner">{{ t.rates.sampleNotice }}</p>{% endif %}
 <table class="rates-table">
   <thead>
     <tr>
@@ -12,13 +11,14 @@
   </thead>
   <tbody>
     {% for l in rates.lanes | head(6) %}
-    {%- set dirClass = "up" if l.change_pct > 0 else ("down" if l.change_pct < 0 else "flat") -%}
+    {%- set e = l | estimate(rates.indices) -%}
+    {%- set dirClass = "flat" if not e else ("up" if e.change_pct > 0 else ("down" if e.change_pct < 0 else "flat")) -%}
     <tr>
       <td class="lane">{{ l.from[lang] }} <span class="lane-arrow" aria-hidden="true">{{ "←" if lang == "ar" else "→" }}</span> {{ l.to[lang] }}</td>
       <td class="num">{{ l.days | num(lang) }}<small> {{ t.rates.daysUnit }}</small></td>
-      <td class="num">{{ l.usd | num(lang) }}</td>
-      <td><span class="chg {{ dirClass }}">{{ l.change_pct | pct(lang) }}</span></td>
-      <td class="trend"><span class="spark-{{ dirClass }}">{{ l.series | sparkline | safe }}</span></td>
+      <td class="num">{% if e %}{{ e.usd | num(lang) }}{% else %}<span class="uncal">{{ t.rates.uncalibrated }}</span>{% endif %}</td>
+      <td>{% if e %}<span class="chg {{ dirClass }}">{{ e.change_pct | pct(lang) }}</span>{% else %}<span class="chg flat">—</span>{% endif %}</td>
+      <td class="trend">{% if e %}<span class="spark-{{ dirClass }}">{{ e.series | sparkline | safe }}</span>{% endif %}</td>
     </tr>
     {% endfor %}
   </tbody>

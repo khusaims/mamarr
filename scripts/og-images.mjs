@@ -105,6 +105,8 @@ async function collect() {
       : "Gulf and Red Sea logistics, for the people who ship through it" });
     jobs.push({ slug: `${lang}-rates`, lang, kind: lang === "ar" ? "بيانات" : "Data",
       title: lang === "ar" ? "أسعار الشحن للخطوط الخليجية" : "Freight rates on Gulf lanes" });
+    jobs.push({ slug: `${lang}-method`, lang, kind: lang === "ar" ? "منهجية" : "Methodology",
+      title: lang === "ar" ? "كيف نحسب تقديرات أسعار الخطوط" : "How lane rate estimates are calculated" });
     jobs.push({ slug: `${lang}-advisories`, lang, kind: lang === "ar" ? "إشعارات" : "Advisories",
       title: lang === "ar" ? "إشعارات الناقلين: الحاويات الفارغة" : "Carrier advisories: empty containers" });
     jobs.push({ slug: `${lang}-freetime`, lang, kind: lang === "ar" ? "مرجع" : "Reference",

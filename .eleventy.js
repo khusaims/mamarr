@@ -125,6 +125,31 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("lanesFor", (lanes, slug, max) =>
     (lanes || []).filter((l) => l.from.slug === slug || l.to.slug === slug).slice(0, max || 6));
 
+  // The estimate for a lane: its calibration ratio against the latest value of
+  // its reference index. Null when the lane has never been calibrated, because a
+  // lane with no quote behind it gets no number — an empty cell is the honest cell.
+  eleventyConfig.addFilter("estimate", function (lane, indices) {
+    const c = lane && lane.calibration;
+    if (!c || typeof c.ratio !== "number") return null;
+    const ix = (indices || []).find((i) => i.id === (c.index || "wci"));
+    if (!ix || typeof ix.value !== "number") return null;
+    const days = c.calibrated
+      ? Math.round((Date.now() - new Date(c.calibrated).getTime()) / 86400000)
+      : null;
+    return {
+      usd: Math.round(ix.value * c.ratio),
+      change_pct: ix.change_pct ?? 0,
+      series: (ix.series || []).map((v) => Math.round(v * c.ratio)),
+      index: ix,
+      ratio: c.ratio,
+      quotes: c.quotes || 0,
+      calibrated: c.calibrated || null,
+      ageDays: days,
+      // النسب تنجرف: الثقة تضعف بالعمر، والقارئ يرى ذلك بدل أن يُخبَّأ عنه
+      confidence: days === null ? "unknown" : days <= 90 ? "fresh" : days <= 180 ? "aging" : "stale",
+    };
+  });
+
   // One port record by its slug
   eleventyConfig.addFilter("portBySlug", (list, slug) =>
     (list || []).find((p) => p.slug === slug) || null);

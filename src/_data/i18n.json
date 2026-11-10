@@ -13,7 +13,8 @@
       "events": "المعارض",
       "search": "بحث",
       "freetime": "الأيام المجانية",
-      "advisories": "إشعارات الناقلين"
+      "advisories": "إشعارات الناقلين",
+      "method": "المنهجية"
     },
     "home": {
       "heroTitle": "ما يعنيه كل تغيير في الممرات البحرية لمن يشحن من الخليج وإليه",
@@ -119,7 +120,23 @@
       "noLanes": "لا خطوط مطابقة. جرّب وجهة أخرى أو امسح البحث.",
       "lanesFound": "{n} خط",
       "laneNote": "الأسعار للسوق الفوري لحاوية ٤٠ قدمًا من ميناء إلى ميناء، ولا تشمل الرسوم المحلية ولا الأرضيات ولا التخليص. زمن العبور تقريبي لخدمة نظيفة.",
-      "attributionTitle": "إسناد البيانات"
+      "attributionTitle": "إسناد البيانات",
+      "uncalibrated": "لم يُعاير بعد",
+      "uncalibratedCta": "أرسل عرضًا لهذا الخط",
+      "calibratedOn": "عُوير",
+      "confFresh": "معايرة حديثة",
+      "confAging": "تحتاج تحديثًا",
+      "confStale": "قديمة — اقرأها بحذر",
+      "estimateLabel": "تقدير",
+      "howTitle": "من أين يأتي هذا الرقم؟",
+      "howLead": "التقدير = آخر قيمة للمؤشر العالمي × نسبة هذا الخط من المؤشر، والنسبة مبنية على عروض أسعار حقيقية أرسلها من يشحن. يتحرك وحده كل أسبوع مع المؤشر.",
+      "howLink": "المنهجية كاملة",
+      "sumCalibrated": "خطوط مُعايرة",
+      "noneCalibrated": "لا خط مُعايرًا بعد. أول عرض سعر يصلنا يُضيء خطه، ويبقى محدَّثًا أسبوعيًا بعدها.",
+      "quote1": "عرض واحد",
+      "quote2": "عرضان",
+      "quoteFew": "{n} عروض",
+      "quoteMany": "{n} عرضًا"
     },
     "ports": {
       "title": "الموانئ",
@@ -395,7 +412,8 @@
       "events": "Events",
       "search": "Search",
       "freetime": "Free time",
-      "advisories": "Advisories"
+      "advisories": "Advisories",
+      "method": "Methodology"
     },
     "home": {
       "heroTitle": "What every shift in the sea lanes means for the people shipping to and from the Gulf",
@@ -501,7 +519,23 @@
       "noLanes": "No matching lanes. Try another destination or clear the search.",
       "lanesFound": "{n} lanes",
       "laneNote": "Spot rates for a 40-foot container, port to port. They exclude local charges, storage and clearance. Transit time is indicative for a clean sailing.",
-      "attributionTitle": "Data attribution"
+      "attributionTitle": "Data attribution",
+      "uncalibrated": "Not calibrated yet",
+      "uncalibratedCta": "Send a quote for this lane",
+      "calibratedOn": "Calibrated",
+      "confFresh": "Recently calibrated",
+      "confAging": "Due for recalibration",
+      "confStale": "Old — read with care",
+      "estimateLabel": "Estimate",
+      "howTitle": "Where does this number come from?",
+      "howLead": "The estimate is the latest value of a global index multiplied by this lane's ratio to that index, and the ratio comes from real quotes sent by people who ship. It moves on its own each week with the index.",
+      "howLink": "Full methodology",
+      "sumCalibrated": "Calibrated lanes",
+      "noneCalibrated": "No lane is calibrated yet. The first quote we receive lights up its lane, and it stays current weekly from then on.",
+      "quote1": "1 quote",
+      "quote2": "2 quotes",
+      "quoteFew": "{n} quotes",
+      "quoteMany": "{n} quotes"
     },
     "ports": {
       "title": "Ports",
