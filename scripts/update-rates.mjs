@@ -58,6 +58,33 @@ const INDICES = [
     short: { ar: "BDI", en: "BDI" },
     unit: { ar: "نقطة", en: "points" },
     cadence: { ar: "يومي — أيام عمل لندن", en: "Daily — London business days" }
+  },
+  // المؤشران التاليان رموزهما تخمين: لا نعرف إن كان المزوّد يحملهما.
+  // إن لم ينجح أي رمز، لا يُكتب شيء ولا يظهر شيء — وهذا السلوك المقصود.
+  {
+    id: "fbx",
+    codes: ["FREIGHTOS_BALTIC_INDEX", "FBX_INDEX", "FBX", "FREIGHTOS_BALTIC_GLOBAL_USD"],
+    name: { ar: "مؤشر فريتوس بالتيك", en: "Freightos Baltic Index" },
+    short: { ar: "FBX", en: "FBX" },
+    unit: { ar: "دولار / حاوية ٤٠ قدمًا", en: "USD / 40ft container" },
+    cadence: { ar: "يومي — بمتوسط أسبوعي", en: "Daily — weekly average" },
+    attribution: {
+      ar: "مؤشر فريتوس بالتيك، بالتعاون مع بورصة البلطيق",
+      en: "Freightos Baltic Index, with the Baltic Exchange"
+    }
+  },
+  {
+    id: "xsi",
+    codes: ["XENETA_SHIPPING_INDEX", "XSI_INDEX", "XSI_C", "XSI"],
+    name: { ar: "مؤشر زينيتا للشحن", en: "Xeneta Shipping Index" },
+    short: { ar: "XSI", en: "XSI" },
+    unit: { ar: "دولار / حاوية", en: "USD / container" },
+    cadence: { ar: "شهري — فوري وتعاقدي", en: "Monthly — spot and contract" },
+    // زينيتا تسمح للجميع باستخدام بيانات XSI-C مقابل إسناد صريح. الإسناد شرط لا تزيين.
+    attribution: {
+      ar: "البيانات منسوبة إلى مؤشر زينيتا للشحن (XSI®-C)",
+      en: "Data accredited to the Xeneta Shipping Index (XSI®-C)"
+    }
   }
 ];
 
@@ -174,6 +201,7 @@ async function main() {
     entry.unit ??= spec.unit;
     entry.cadence ??= spec.cadence;
     entry.series ??= [];
+    if (spec.attribution) entry.attribution = spec.attribution;
 
     const prev = entry.series.length ? entry.series[entry.series.length - 1] : null;
     const sameDay = entry.published === result.date;

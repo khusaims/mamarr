@@ -1,7 +1,7 @@
 {%- set t = i18n[lang] -%}
 {% if rates.indices_sample %}<p class="sample-banner">{{ t.rates.indicesSampleNotice }}</p>{% endif %}
 <ul class="index-cards">
-  {% for ix in rates.indices %}
+  {% for ix in rates.indices %}{% if ix.value %}
   {%- set dirClass = "up" if ix.change_pct > 0 else ("down" if ix.change_pct < 0 else "flat") -%}
   <li class="index-card">
     <p class="index-short">{{ ix.short[lang] }}</p>
@@ -10,6 +10,10 @@
     <p class="index-meta">{{ ix.unit[lang] }} · {{ ix.cadence[lang] }}</p>
     <span class="spark-{{ dirClass }}">{{ ix.series | sparkline(160, 34) | safe }}</span>
   </li>
-  {% endfor %}
+  {% endif %}{% endfor %}
 </ul>
 <p class="rates-note">{{ t.rates.updated }}: <time datetime="{{ rates.indices_updated }}">{{ rates.indices_updated | dateHuman(lang) }}</time></p>
+{%- set credited = rates.indices | selectattr("attribution") | list %}
+{% if credited | length %}
+<p class="rates-note attribution">{{ t.rates.attributionTitle }}: {% for ix in credited %}{{ ix.attribution[lang] }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+{% endif %}

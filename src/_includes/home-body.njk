@@ -18,7 +18,7 @@
       <aside class="hero-panel" aria-label="{{ t.home.liveTitle }}">
         <p class="hero-panel-head">{{ t.home.liveTitle }}</p>
         <ul class="live-list">
-          {% for ix in rates.indices %}
+          {% for ix in rates.indices | head(3) %}
           {%- set dirClass = "up" if ix.change_pct > 0 else ("down" if ix.change_pct < 0 else "flat") %}
           <li>
             <span class="live-code">{{ ix.short[lang] }}</span>
@@ -119,8 +119,12 @@
       <h2>{{ t.home.ratesTitle }}</h2>
       <a href="{{ ('/' + lang + '/rates/') | rel(page.url) }}">{{ t.home.ratesAll }}</a>
     </div>
-    <p class="section-lead">{{ t.home.ratesLead }}</p>
-    {% include "rates-compact.njk" %}
+    <p class="section-lead">{{ t.home.ratesLeadPending }}</p>
+    <aside class="contribute-cta">
+      <h3>{{ t.contribute.ctaTitle }}</h3>
+      <p>{{ t.contribute.ctaText }}</p>
+      <p><a class="btn-primary" href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ t.contribute.ctaBtn }}</a></p>
+    </aside>
   </div>
 </section>
 
@@ -160,12 +164,6 @@
       </li>
       {% endfor %}
     </ul>
-
-    <aside class="contribute-cta">
-      <h3>{{ t.contribute.ctaTitle }}</h3>
-      <p>{{ t.contribute.ctaText }}</p>
-      <p><a class="btn-primary" href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ t.contribute.ctaBtn }}</a></p>
-    </aside>
   </div>
 </section>
 

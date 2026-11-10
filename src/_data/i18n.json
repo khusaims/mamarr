@@ -48,7 +48,8 @@
       "ftBandKicker": "جديد",
       "ftBandTitle": "{min} أيام مجانية في ميناء، {max} في ميناء على بُعد يومين",
       "ftBandBody": "ساعة الناقل وساعة المحطة تعملان معًا، ودفع إحداهما لا يُعفيك من الأخرى. الجدول يجمع الاثنتين لستة موانئ، بمصدر لكل رقم.",
-      "ftBandCta": "افتح الجدول"
+      "ftBandCta": "افتح الجدول",
+      "ratesLeadPending": "المؤشرات أعلاه حقيقية ومنشورة بمصادرها. أما أسعار الخطوط فتُبنى من عروض يرسلها من يشحن فعلًا — لأن بيانات الخطوط المشتراة مرخّصة للاستعمال الداخلي لا للنشر."
     },
     "corridor": {
       "caption": "الممر: شنغهاي ← كولومبو ← صلالة ← مضيق هرمز ← صحار ← جبل علي. الأرقام على الخط هي الأيام التقريبية بين كل محطتين لخدمة مباشرة.",
@@ -117,7 +118,8 @@
       "sumFaller": "أكبر انخفاض",
       "noLanes": "لا خطوط مطابقة. جرّب وجهة أخرى أو امسح البحث.",
       "lanesFound": "{n} خط",
-      "laneNote": "الأسعار للسوق الفوري لحاوية ٤٠ قدمًا من ميناء إلى ميناء، ولا تشمل الرسوم المحلية ولا الأرضيات ولا التخليص. زمن العبور تقريبي لخدمة نظيفة."
+      "laneNote": "الأسعار للسوق الفوري لحاوية ٤٠ قدمًا من ميناء إلى ميناء، ولا تشمل الرسوم المحلية ولا الأرضيات ولا التخليص. زمن العبور تقريبي لخدمة نظيفة.",
+      "attributionTitle": "إسناد البيانات"
     },
     "ports": {
       "title": "الموانئ",
@@ -428,7 +430,8 @@
       "ftBandKicker": "New",
       "ftBandTitle": "{min} free days at one port, {max} at another two days away",
       "ftBandBody": "The carrier clock and the terminal clock run together, and paying one does not settle the other. The table holds both for six ports, with a source for every figure.",
-      "ftBandCta": "Open the table"
+      "ftBandCta": "Open the table",
+      "ratesLeadPending": "The indices above are real and carry their sources. Lane rates are being built from quotes sent by people who actually ship, because bought lane data is licensed for internal use, not for publication."
     },
     "corridor": {
       "caption": "The corridor: Shanghai → Colombo → Salalah → Strait of Hormuz → Sohar → Jebel Ali. Numbers on the line are approximate days between calls on a direct service.",
@@ -497,7 +500,8 @@
       "sumFaller": "Biggest fall",
       "noLanes": "No matching lanes. Try another destination or clear the search.",
       "lanesFound": "{n} lanes",
-      "laneNote": "Spot rates for a 40-foot container, port to port. They exclude local charges, storage and clearance. Transit time is indicative for a clean sailing."
+      "laneNote": "Spot rates for a 40-foot container, port to port. They exclude local charges, storage and clearance. Transit time is indicative for a clean sailing.",
+      "attributionTitle": "Data attribution"
     },
     "ports": {
       "title": "Ports",
