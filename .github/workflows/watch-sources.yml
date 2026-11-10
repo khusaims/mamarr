@@ -1,0 +1,48 @@
+name: مراقبة المصادر
+
+on:
+  schedule:
+    # كل اثنين 06:00 بتوقيت UTC — صباح الثلاثاء مبكرًا بتوقيت مسقط
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: watch-sources
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: افحص المصادر وافتح تذكرة عند التغيّر
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/watch-sources.mjs
+
+      - name: احفظ بصمة الصفحات
+        run: |
+          if [ -z "$(git status --porcelain .watch-state.json)" ]; then
+            echo "لا تغيير في البصمات."
+            exit 0
+          fi
+          git config user.name "mamarr-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add .watch-state.json
+          git commit -m "تحديث بصمات المصادر"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin main && exit 0
+            echo "فشل الدفع، محاولة $i"
+            sleep 5
+          done
+          echo "تعذّر حفظ البصمات — لا يؤثر على نتيجة الفحص."
+          exit 0
