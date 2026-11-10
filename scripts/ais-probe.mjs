@@ -65,6 +65,10 @@ let frames = 0;
 const firstReplies = [];
 
 const socket = new WebSocket("wss://stream.aisstream.io/v0/stream");
+// الخدمة ترسل إطارات ثنائية لا نصّية. بدون هذا السطر يصل كل إطار ككائن
+// غير قابل للتحليل، فيبدو الأمر كأن لا بيانات — وهو ليس كذلك.
+socket.binaryType = "arraybuffer";
+const decoder = new TextDecoder();
 let settled = false;
 
 const timer = setTimeout(() => {
@@ -78,12 +82,16 @@ socket.addEventListener("open", () => {
 
 socket.addEventListener("message", (event) => {
   frames++;
-  if (firstReplies.length < 3) {
-    const raw = typeof event.data === "string" ? event.data : "[binary]";
-    firstReplies.push(raw.slice(0, 300));
+  let text;
+  try {
+    text = typeof event.data === "string" ? event.data : decoder.decode(event.data);
+  } catch {
+    return;
   }
+  if (firstReplies.length < 3) firstReplies.push(text.slice(0, 300));
+
   let msg;
-  try { msg = JSON.parse(event.data); } catch { return; }
+  try { msg = JSON.parse(text); } catch { return; }
 
   if (msg.error) {
     console.error(`رفض من الخدمة: ${msg.error}`);
