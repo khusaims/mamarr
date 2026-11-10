@@ -1,0 +1,104 @@
+{%- set t = i18n[lang] -%}
+{%- set jebel = advisories.dropoff | sharing("place.en", "UAE — Jebel Ali") -%}
+<div class="wrap">
+  <header class="page-head">
+    <h1>{{ t.advisories.title }}</h1>
+    <p>{{ t.advisories.lead }}</p>
+  </header>
+
+  {% for j in jebel %}
+  <p class="finding">{{ t.advisories.finding | replace("{jebel}", j.d20 | num(lang)) }}</p>
+  {% endfor %}
+
+  <section class="changelog">
+    <h2>{{ t.advisories.whatChanged }}</h2>
+    <p class="section-lead">{{ t.advisories.whatChangedLead }}</p>
+    <ol class="log">
+      {%- for c in advisories.changelog %}
+      <li>
+        <time datetime="{{ c.date }}">{{ c.date | dateHuman(lang) }}</time>
+        <p>{{ c.text[lang] }}</p>
+      </li>
+      {%- endfor %}
+    </ol>
+  </section>
+
+  <section class="advisory-now">
+    <h2>{{ t.advisories.current }}</h2>
+
+    <h3>{{ t.advisories.dropoff }}</h3>
+    <p class="unit-note muted">{{ t.advisories.unit }}</p>
+    <div class="table-scroll">
+      <table class="freetime-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t.advisories.place }}</th>
+            <th scope="col">{{ t.advisories.c20 }}</th>
+            <th scope="col">{{ t.advisories.c40 }}</th>
+            <th scope="col">{{ t.advisories.reefer }}</th>
+            <th scope="col">{{ t.advisories.restrictions }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for r in advisories.dropoff %}
+          <tr>
+            <th scope="row">{{ r.place[lang] }}{% if r.effective %}<span class="kind">{{ t.advisories.effective }} {{ r.effective | dateHuman(lang) }}</span>{% endif %}</th>
+            <td class="money{% if r.d20 == 0 %} is-free{% endif %}">{% if r.d20 == 0 %}{{ t.advisories.free }}{% else %}{{ r.d20 | num(lang) }}{% endif %}</td>
+            <td class="money{% if r.d40 == 0 %} is-free{% endif %}">{% if r.d40 == 0 %}{{ t.advisories.free }}{% else %}{{ r.d40 | num(lang) }}{% endif %}</td>
+            <td class="money{% if r.reefer == 0 %} is-free{% endif %}">{% if r.reefer == 0 %}{{ t.advisories.free }}{% else %}{{ r.reefer | num(lang) }}{% endif %}</td>
+            <td class="restrict">{% if r.note %}{{ r.note[lang] }}{% else %}—{% endif %}</td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <h3>{{ t.advisories.pickup }}</h3>
+    <p class="unit-note muted">{{ t.advisories.unit }}</p>
+    <div class="table-scroll">
+      <table class="freetime-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t.advisories.place }}</th>
+            <th scope="col">{{ t.advisories.c20 }}</th>
+            <th scope="col">{{ t.advisories.c40 }}</th>
+            <th scope="col">{{ t.advisories.reefer }}</th>
+            <th scope="col">{{ t.advisories.restrictions }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for r in advisories.pickup %}
+          <tr>
+            <th scope="row">{{ r.place[lang] }}{% if r.effective %}<span class="kind">{{ t.advisories.effective }} {{ r.effective | dateHuman(lang) }}</span>{% endif %}</th>
+            <td class="money{% if r.d20 == 0 %} is-free{% endif %}">{% if r.d20 == 0 %}{{ t.advisories.free }}{% else %}{{ r.d20 | num(lang) }}{% endif %}</td>
+            <td class="money{% if r.d40 == 0 %} is-free{% endif %}">{% if r.d40 == 0 %}{{ t.advisories.free }}{% else %}{{ r.d40 | num(lang) }}{% endif %}</td>
+            <td class="money{% if r.reefer == 0 %} is-free{% endif %}">{% if r.reefer == 0 %}{{ t.advisories.free }}{% else %}{{ r.reefer | num(lang) }}{% endif %}</td>
+            <td class="restrict">{% if r.note %}{{ r.note[lang] }}{% else %}—{% endif %}</td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <h3>{{ t.advisories.depots }}</h3>
+    <ul class="depot-list">
+      {%- for d in advisories.depots %}
+      <li><strong>{{ d.country[lang] }}</strong> — {{ d.depot[lang] }}</li>
+      {%- endfor %}
+    </ul>
+  </section>
+
+  <p class="muted caveat">
+    {{ t.advisories.carrierNote | replace("{carrier}", advisories.carrier.label[lang]) }}
+    {{ t.advisories.sourceLine }}:
+    <a href="{{ advisories.carrier.source }}" rel="nofollow noopener">{{ advisories.carrier.sourceName }}</a> ·
+    <a href="{{ advisories.carrier.latest }}" rel="nofollow noopener">{{ advisories.carrier.latestName }}</a> ·
+    {{ t.advisories.checked }} <time datetime="{{ advisories.asOf }}">{{ advisories.asOf | dateHuman(lang) }}</time>
+  </p>
+
+  <section class="callout ask-box">
+    <h2>{{ t.advisories.ask }}</h2>
+    <p>{{ t.advisories.askBody }}</p>
+    <p><a class="btn-primary" href="{{ ('/' + lang + '/contribute/') | rel(page.url) }}">{{ t.advisories.askCta }}</a></p>
+  </section>
+</div>

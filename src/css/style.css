@@ -58,7 +58,7 @@ table { border-collapse: collapse; width: 100%; }
 .brand-mark { color: var(--buoy); align-self: center; }
 .brand-ar { font-size: 1.6rem; font-weight: 700; line-height: 1; }
 .brand-en { font-size: .95rem; color: var(--muted); font-weight: 500; }
-.nav { display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; align-items: center; }
+.nav { display: flex; flex-wrap: wrap; gap: .25rem clamp(.7rem, .2rem + .9vw, 1.3rem); align-items: center; font-size: .95rem; }
 .nav a { color: var(--ink); text-decoration: none; font-weight: 500; padding: .35rem 0; border-bottom: 2px solid transparent; }
 .nav a:hover { border-bottom-color: var(--sand); }
 .nav a[aria-current="page"] { border-bottom-color: var(--buoy); }
@@ -527,3 +527,39 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
 
 .section-alt { background: var(--white); }
 .section-alt + .section { border-top: 0; }
+
+/* Carrier advisories */
+.log { list-style: none; margin: 0 0 2.5rem; padding: 0; position: relative; }
+.log::before { content: ""; position: absolute; inset-block: .55rem; inset-inline-start: 5.5rem; width: 1px; background: var(--sand); }
+@media (max-width: 719px) { .log::before { display: none; } }
+.log li { position: relative; padding: 0 0 1.1rem; }
+.log time { display: block; color: var(--muted); font-size: .88rem; }
+.log p { margin: .15rem 0 0; max-width: 72ch; }
+@media (min-width: 720px) {
+  .log li { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1.75rem; align-items: start; }
+  .log time { text-align: end; padding-top: .1rem; }
+  .log p { margin: 0; }
+  .log li::before {
+    content: ""; position: absolute; inset-inline-start: 5.5rem; top: .6rem;
+    width: 9px; height: 9px; border-radius: 50%; background: var(--paper);
+    border: 2px solid var(--buoy); transform: translateX(-4px);
+  }
+  html[dir="rtl"] .log li::before { transform: translateX(4px); }
+  .log li:first-child::before { background: var(--buoy); }
+}
+.advisory-now h3 { margin: 2rem 0 .6rem; font-size: 1.1rem; }
+.freetime-table .money { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; color: var(--ink); }
+.freetime-table .money.is-free { color: var(--teal-2); font-weight: 500; }
+.freetime-table .restrict { font-size: .9rem; color: var(--muted); max-width: 32ch; }
+.freetime-table tbody th .kind { display: block; color: var(--muted); font-weight: 400; font-size: .82rem; }
+.depot-list { list-style: none; padding: 0; margin: .5rem 0 0; display: flex; gap: 2rem; flex-wrap: wrap; }
+.depot-list li { color: var(--text); }
+
+/* Latest advisory on the home page */
+.hero-ticker { margin: 1.75rem 0 0; border-top: 1px solid rgba(233,238,240,.14); padding-top: 1rem; }
+.hero-ticker-head { margin: 0 0 .6rem; font-size: .82rem; font-weight: 600; color: #8fd0d8; }
+.hero-ticker ul { list-style: none; margin: 0; padding: 0; }
+.hero-ticker li { padding: .45rem 0; font-size: .95rem; color: #cfd9de; line-height: 1.6; }
+.hero-ticker .when { color: #8fd0d8; font-size: .82rem; }
+.hero-ticker .more { display: inline-block; margin-top: .5rem; color: #8fd0d8; font-size: .9rem; }
+.unit-note { font-size: .88rem; margin: -.3rem 0 .6rem; }

@@ -28,6 +28,19 @@
           {% endfor %}
         </ul>
         <p class="hero-panel-foot">{{ t.home.liveUpdated }} <time datetime="{{ rates.indices_updated }}">{{ rates.indices_updated | dateHuman(lang) }}</time></p>
+
+        <div class="hero-ticker">
+          <p class="hero-ticker-head">{{ t.advisories.homeTitle }}</p>
+          <ul>
+            {%- for c in advisories.changelog | head(2) %}
+            <li>
+              <span class="when" data-advisory-date="{{ c.date }}">{{ c.date | dateHuman(lang) }}</span><br>
+              {{ c.short[lang] }}
+            </li>
+            {%- endfor %}
+          </ul>
+          <a class="more" href="{{ ('/' + lang + '/advisories/') | rel(page.url) }}">{{ t.advisories.homeAll }}</a>
+        </div>
       </aside>
     </div>
 
@@ -155,6 +168,31 @@
     </aside>
   </div>
 </section>
+
+<script>
+// Advisory dates are rendered at build time, then relabelled here, so a page
+// built last week never claims an advisory is newer than it is.
+(function () {
+  var nodes = document.querySelectorAll("[data-advisory-date]");
+  if (!nodes.length) return;
+  try {
+    var LANG = {{ lang | dump | safe }};
+    var A = {{ i18n[lang].advisories | dump | safe }};
+    var now = new Date(); now.setHours(0, 0, 0, 0);
+    Array.prototype.forEach.call(nodes, function (el) {
+      var d = new Date(el.getAttribute("data-advisory-date")); d.setHours(0, 0, 0, 0);
+      var days = Math.round((now - d) / 86400000);
+      if (days < 0) return;
+      var num = days.toLocaleString(LANG === "ar" ? "ar-EG" : "en-US");
+      el.textContent = days === 0 ? A.agoToday
+        : days === 1 ? A.agoOne
+        : days === 2 ? A.agoTwo
+        : days <= 10 ? A.agoFew.replace("{n}", num)
+        : A.ago.replace("{n}", num);
+    });
+  } catch (e) {}
+})();
+</script>
 
 <script id="home-events" type="application/json">{{ events.events | dump | safe }}</script>
 <script>

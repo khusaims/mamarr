@@ -12,7 +12,8 @@
       "glossary": "المعجم اللوجستي",
       "events": "المعارض",
       "search": "بحث",
-      "freetime": "الأيام المجانية"
+      "freetime": "الأيام المجانية",
+      "advisories": "إشعارات الناقلين"
     },
     "home": {
       "heroTitle": "ما يعنيه كل تغيير في الممرات البحرية لمن يشحن من الخليج وإليه",
@@ -343,6 +344,39 @@
       "terminalByPort": "ساعة المحطة في كل ميناء",
       "sourcesHeading": "المصادر",
       "allVerified": "كل الأرقام أعلاه جرى التحقق منها في {date}، وما خالف هذا التاريخ مذكور بجانبه."
+    },
+    "advisories": {
+      "title": "إشعارات الناقلين: الحاويات الفارغة",
+      "short": "إشعارات الناقلين",
+      "lead": "أين تُعاد الحاوية الفارغة، وبكم، ومن يقبلها اليوم. الأرقام من إشعارات منشورة، وتتغير بإشعار آخر — لذا كل سطر هنا مؤرَّخ.",
+      "finding": "إعادة حاوية فارغة في جبل علي تكلّف {jebel} دولار، وفي صحار وصلالة مجانية. الفرق ليس في المسافة بل في إشعار صدر هذا العام.",
+      "whatChanged": "ما الذي تغيّر",
+      "whatChangedLead": "السجل من أول إشعار بعد إغلاق هرمز حتى اليوم. هذا التسلسل هو ما لا تجده مجموعًا في مكان واحد.",
+      "current": "الوضع الحالي",
+      "dropoff": "رسوم إعادة الفارغة",
+      "pickup": "رسوم استلام الفارغة",
+      "place": "الموقع",
+      "c20": "٢٠ قدمًا",
+      "c40": "٤٠ قدمًا",
+      "reefer": "مبرّدة",
+      "restrictions": "قيود",
+      "effective": "يسري من",
+      "free": "مجانًا",
+      "depots": "المستودعات المعتمدة لإعادة الفوارغ",
+      "carrierNote": "كل ما في هذه الصفحة من إشعارات {carrier}. كل ناقل يصدر إشعاراته الخاصة، وقد تختلف أرقامه كثيرًا. تأكّد من إشعار ناقلك أنت قبل أن تبني عليه قرارًا، وراجع أمر التسليم: الموقع المذكور فيه قد يتوقف عن قبول الفوارغ قبل وصولك إليه.",
+      "sourceLine": "المصدر",
+      "checked": "تاريخ التحقق",
+      "ask": "ناقلك أصدر إشعارًا مختلفًا؟",
+      "askBody": "أرسل ما وصلك — الناقل والموقع والرسم وتاريخ السريان — وسنضيفه مجمّعًا بلا اسمك ولا اسم شركتك. هكذا تصير الصفحة أوسع من ناقل واحد.",
+      "askCta": "أرسل إشعارك",
+      "homeTitle": "آخر ما تغيّر في إشعارات الناقلين",
+      "homeAll": "كل الإشعارات",
+      "ago": "منذ {n} يومًا",
+      "agoFew": "منذ {n} أيام",
+      "agoOne": "أمس",
+      "agoToday": "اليوم",
+      "agoTwo": "قبل يومين",
+      "unit": "بالدولار الأمريكي لكل حاوية. «مجانًا» تعني بلا رسم إعادة، لا بلا شروط."
     }
   },
   "en": {
@@ -358,7 +392,8 @@
       "glossary": "Glossary",
       "events": "Events",
       "search": "Search",
-      "freetime": "Free time"
+      "freetime": "Free time",
+      "advisories": "Advisories"
     },
     "home": {
       "heroTitle": "What every shift in the sea lanes means for the people shipping to and from the Gulf",
@@ -689,6 +724,39 @@
       "terminalByPort": "Terminal clock at each port",
       "sourcesHeading": "Sources",
       "allVerified": "Every figure above was checked on {date}; anything checked on another date says so beside it."
+    },
+    "advisories": {
+      "title": "Carrier advisories: empty containers",
+      "short": "Carrier advisories",
+      "lead": "Where an empty container goes back, what it costs, and who is accepting today. The figures come from published advisories and change by another advisory — so every line here carries its date.",
+      "finding": "Returning an empty at Jebel Ali costs USD {jebel}; at Sohar and Salalah it is free. The difference is not distance — it is an advisory issued this year.",
+      "whatChanged": "What changed",
+      "whatChangedLead": "The record from the first advisory after the Hormuz closure to today. This sequence is what you will not find gathered anywhere else.",
+      "current": "Where it stands now",
+      "dropoff": "Drop-off charges",
+      "pickup": "Pick-up charges",
+      "place": "Location",
+      "c20": "20ft",
+      "c40": "40ft",
+      "reefer": "Reefer",
+      "restrictions": "Restrictions",
+      "effective": "Effective",
+      "free": "Free",
+      "depots": "Designated empty-return depots",
+      "carrierNote": "Everything on this page comes from {carrier} advisories. Every carrier issues its own, and the figures can differ widely. Check your own carrier's advisory before acting, and read your delivery order: the location it names can stop accepting empties before you get there.",
+      "sourceLine": "Source",
+      "checked": "Checked",
+      "ask": "Did your carrier issue a different advisory?",
+      "askBody": "Send what you received — carrier, location, charge and effective date — and we will add it in aggregate, without your name or your company's. That is how this page grows past one carrier.",
+      "askCta": "Send your advisory",
+      "homeTitle": "Latest change in carrier advisories",
+      "homeAll": "All advisories",
+      "ago": "{n} days ago",
+      "agoFew": "{n} days ago",
+      "agoOne": "Yesterday",
+      "agoToday": "Today",
+      "agoTwo": "Two days ago",
+      "unit": "USD per container. “Free” means no charge to return it, not no conditions."
     }
   }
 }

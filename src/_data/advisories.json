@@ -1,0 +1,258 @@
+{
+  "_readme": "إشعارات الناقلين بشأن إعادة الحاويات الفارغة واستلامها في الخليج. المصدر الحالي ناقل واحد (ميرسك) — وهذا مذكور صراحةً في الصفحة. القيمة صفر تعني مجانًا، والرقم بالدولار لكل حاوية. changelog هو الأصل الحقيقي لهذه الصفحة: سجل مؤرخ لما تغيّر، أحدثه أولًا. لكل سطر text (النص الكامل للصفحة) و short (سطر قصير يظهر في الواجهة الأولى). عند كل مراجعة: حدّث asOf، وأضف سطرًا إلى changelog إن تغيّر شيء، ولا تحذف السطور القديمة — التسلسل هو ما لا يملكه غيرنا. راجعها كل أسبوعين على الأقل، فهذه الأرقام تتغير بإشعار.",
+  "asOf": "2026-11-10",
+  "carrier": {
+    "name": "Maersk",
+    "label": {
+      "ar": "ميرسك",
+      "en": "Maersk"
+    },
+    "source": "https://www.maersk.com/news/articles/2026/03/17/hormuz-closure-empty-returns-suspension-update-march",
+    "sourceName": "Maersk Customer Advisory — Hormuz empty returns",
+    "latest": "https://www.maersk.com/news/articles/2026/09/11/middle-east-operational-update-46",
+    "latestName": "Middle East Operational Update 46"
+  },
+  "depots": [
+    {
+      "country": {
+        "ar": "عُمان",
+        "en": "Oman"
+      },
+      "depot": {
+        "ar": "صلالة",
+        "en": "Salalah"
+      }
+    },
+    {
+      "country": {
+        "ar": "السعودية",
+        "en": "Saudi Arabia"
+      },
+      "depot": {
+        "ar": "جدة",
+        "en": "Jeddah"
+      }
+    }
+  ],
+  "dropoff": [
+    {
+      "place": {
+        "ar": "عُمان — صحار وصلالة",
+        "en": "Oman — Sohar and Salalah"
+      },
+      "d20": 0,
+      "d40": 0,
+      "reefer": 0,
+      "note": {
+        "ar": "صحار تقبل الفوارغ فقط لمن فُرّغت بضاعته في صحار نفسها.",
+        "en": "Sohar accepts empties only from customers whose cargo was discharged at Sohar itself."
+      }
+    },
+    {
+      "place": {
+        "ar": "السعودية — جدة",
+        "en": "Saudi Arabia — Jeddah"
+      },
+      "d20": 0,
+      "d40": 0,
+      "reefer": 0
+    },
+    {
+      "place": {
+        "ar": "السعودية — الدمام والجبيل",
+        "en": "Saudi Arabia — Dammam and Jubail"
+      },
+      "d20": 0,
+      "d40": 0,
+      "reefer": 0,
+      "effective": "2026-09-17"
+    },
+    {
+      "place": {
+        "ar": "الأردن — العقبة",
+        "en": "Jordan — Aqaba"
+      },
+      "d20": 0,
+      "d40": 0,
+      "reefer": 0,
+      "note": {
+        "ar": "تُقبل فقط لمن فُرّغت بضاعته في العراق أو العقبة.",
+        "en": "Accepted only from customers whose cargo was discharged in Iraq or Aqaba."
+      }
+    },
+    {
+      "place": {
+        "ar": "البحرين",
+        "en": "Bahrain"
+      },
+      "d20": 0,
+      "d40": 0,
+      "reefer": 1250
+    },
+    {
+      "place": {
+        "ar": "قطر",
+        "en": "Qatar"
+      },
+      "d20": 600,
+      "d40": 0,
+      "reefer": 1200,
+      "effective": "2026-06-27"
+    },
+    {
+      "place": {
+        "ar": "الكويت",
+        "en": "Kuwait"
+      },
+      "d20": 400,
+      "d40": 800,
+      "reefer": 800
+    },
+    {
+      "place": {
+        "ar": "الإمارات — أبوظبي",
+        "en": "UAE — Abu Dhabi"
+      },
+      "d20": 600,
+      "d40": 1200,
+      "reefer": 1200
+    },
+    {
+      "place": {
+        "ar": "الإمارات — جبل علي",
+        "en": "UAE — Jebel Ali"
+      },
+      "d20": 1000,
+      "d40": 1200,
+      "reefer": 1200,
+      "effective": "2026-07-17"
+    },
+    {
+      "place": {
+        "ar": "الإمارات — ميناء ساجة البري",
+        "en": "UAE — SAJAA Dry Port"
+      },
+      "d20": 1000,
+      "d40": 1200,
+      "reefer": 1200,
+      "effective": "2026-11-06",
+      "note": {
+        "ar": "الشحنات المخلّصة في ساجة يجب أن تعيد فوارغها إلى ساجة.",
+        "en": "Shipments cleared at SAJAA must return their empties to SAJAA."
+      }
+    },
+    {
+      "place": {
+        "ar": "الإمارات — عجمان",
+        "en": "UAE — Ajman"
+      },
+      "d20": 2055,
+      "d40": 2175,
+      "reefer": 2175
+    }
+  ],
+  "pickup": [
+    {
+      "place": {
+        "ar": "الإمارات — جبل علي",
+        "en": "UAE — Jebel Ali"
+      },
+      "d20": 0,
+      "d40": 300,
+      "reefer": 300
+    },
+    {
+      "place": {
+        "ar": "السعودية — الدمام والجبيل",
+        "en": "Saudi Arabia — Dammam and Jubail"
+      },
+      "d20": 0,
+      "d40": 0,
+      "reefer": 0,
+      "effective": "2026-09-10",
+      "note": {
+        "ar": "من ١٠ سبتمبر للأسواق غير المنظَّمة، ومن ٢٠ سبتمبر للأسواق المنظَّمة.",
+        "en": "From 10 September for non-regulated markets, and from 20 September for regulated markets."
+      }
+    }
+  ],
+  "changelog": [
+    {
+      "date": "2026-11-06",
+      "text": {
+        "ar": "ميناء ساجة البري يدخل قائمة الرسوم: ١٬٠٠٠ دولار للحاوية ٢٠ قدمًا و١٬٢٠٠ لـ٤٠ قدمًا، مع إلزام الشحنات المخلّصة فيه بإعادة فوارغها إليه.",
+        "en": "SAJAA Dry Port joins the charged list at USD 1,000 per 20ft and USD 1,200 per 40ft, with shipments cleared there required to return their empties there."
+      },
+      "short": {
+        "ar": "ساجة البري يدخل قائمة الرسوم",
+        "en": "SAJAA Dry Port joins the charged list"
+      }
+    },
+    {
+      "date": "2026-09-20",
+      "text": {
+        "ar": "استلام الفوارغ في الدمام والجبيل يصبح مجانيًا للأسواق المنظَّمة، بعد عشرة أيام من سريانه على غير المنظَّمة.",
+        "en": "Empty pick-up at Dammam and Jubail becomes free for regulated markets, ten days after it took effect for non-regulated ones."
+      },
+      "short": {
+        "ar": "استلام الفوارغ مجاني في الدمام والجبيل",
+        "en": "Empty pick-up free at Dammam and Jubail"
+      }
+    },
+    {
+      "date": "2026-09-17",
+      "text": {
+        "ar": "إعادة الفوارغ في الدمام والجبيل تصبح مجانية بكل المقاسات.",
+        "en": "Empty drop-off at Dammam and Jubail becomes free in all sizes."
+      },
+      "short": {
+        "ar": "إعادة الفوارغ مجانية في الدمام والجبيل",
+        "en": "Empty drop-off free at Dammam and Jubail"
+      }
+    },
+    {
+      "date": "2026-07-17",
+      "text": {
+        "ar": "جبل علي يرفع رسم الإعادة من ٦٠٠ دولار إلى ١٬٠٠٠ للحاوية ٢٠ قدمًا، ومن ٦٠٠ إلى ١٬٢٠٠ لـ٤٠ قدمًا — أكبر قفزة في السنة.",
+        "en": "Jebel Ali raises the drop-off charge from USD 600 to 1,000 per 20ft and from 600 to 1,200 per 40ft — the year's largest jump."
+      },
+      "short": {
+        "ar": "جبل علي يرفع رسم الإعادة إلى ١٬٠٠٠ دولار",
+        "en": "Jebel Ali raises drop-off to USD 1,000"
+      }
+    },
+    {
+      "date": "2026-06-27",
+      "text": {
+        "ar": "قطر تُسعّر الإعادة: ٦٠٠ دولار للحاوية ٢٠ قدمًا، بينما تبقى ٤٠ قدمًا مجانية.",
+        "en": "Qatar prices drop-off at USD 600 per 20ft, while 40ft stays free."
+      },
+      "short": {
+        "ar": "قطر تُسعّر إعادة الحاوية ٢٠ قدمًا",
+        "en": "Qatar prices 20ft drop-off"
+      }
+    },
+    {
+      "date": "2026-04-06",
+      "text": {
+        "ar": "استحداث رسم استلام الفوارغ من المواقع غير المفضَّلة.",
+        "en": "An empty pick-up charge is introduced at non-preferred locations."
+      },
+      "short": {
+        "ar": "رسم جديد لاستلام الفوارغ",
+        "en": "A new empty pick-up charge"
+      }
+    },
+    {
+      "date": "2026-03-17",
+      "text": {
+        "ar": "تعليق إعادة الفوارغ في مواقعها المعتادة بعد إغلاق مضيق هرمز، وتسمية صلالة وجدة مستودعَين معتمدَين.",
+        "en": "Empty returns are suspended at their usual locations after the Strait of Hormuz closure, and Salalah and Jeddah are named designated depots."
+      },
+      "short": {
+        "ar": "تعليق إعادة الفوارغ بعد إغلاق هرمز",
+        "en": "Empty returns suspended after the Hormuz closure"
+      }
+    }
+  ]
+}
