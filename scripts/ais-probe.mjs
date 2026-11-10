@@ -22,9 +22,11 @@ if (!KEY) {
 }
 
 // صندوقان يغطيان موانئنا: بحر العرب وخليج عُمان، ثم الخليج العربي.
+// الترتيب الذي تتوقّعه الخدمة: الركن الشمالي الغربي أولًا ثم الجنوبي الشرقي،
+// أي خطّ العرض الأعلى أولًا. عكسه يُقبل بلا خطأ ويُعيد لا شيء.
 const BOXES = [
-  [[16.0, 53.0], [27.0, 60.5]],
-  [[24.0, 47.0], [31.0, 57.0]],
+  [[27.0, 53.0], [16.0, 60.5]],
+  [[31.0, 47.0], [24.0, 57.0]],
 ];
 
 // الموانئ التي نقيس عندها. إحداثيات تقريبية للموقع، كافية لقياس الجوار.
@@ -58,6 +60,9 @@ function haversineKm(aLat, aLon, bLat, bLon) {
 const vessels = new Map(); // mmsi → { lat, lon, sog, name, type }
 const messageTypes = new Map();
 let frames = 0;
+// أول ردود الخدمة، نصًّا. حين يعود المِجسّ بصفر نحتاج أن نعرف
+// أرفضت المفتاح أم قبلته ولم ترَ شيئًا — والفرق بينهما كل شيء.
+const firstReplies = [];
 
 const socket = new WebSocket("wss://stream.aisstream.io/v0/stream");
 let settled = false;
@@ -73,6 +78,10 @@ socket.addEventListener("open", () => {
 
 socket.addEventListener("message", (event) => {
   frames++;
+  if (firstReplies.length < 3) {
+    const raw = typeof event.data === "string" ? event.data : "[binary]";
+    firstReplies.push(raw.slice(0, 300));
+  }
   let msg;
   try { msg = JSON.parse(event.data); } catch { return; }
 
@@ -140,7 +149,17 @@ function report() {
   say();
 
   if (!positioned.length) {
-    say(`> لم تُستلم مواقع. إمّا أن المفتاح مرفوض، أو أن الصندوقين خارج تغطية الشبكة.`);
+    say(`> لم تُستلم مواقع.`);
+    say();
+    if (firstReplies.length) {
+      say(`أول ما ردّت به الخدمة — منه يُعرف السبب:`);
+      say();
+      say("```");
+      firstReplies.forEach((r) => say(r));
+      say("```");
+    } else {
+      say(`ولم تردّ الخدمة بشيء إطلاقًا: الاتصال فُتح وبقي صامتًا.`);
+    }
     flush(lines);
     return;
   }
