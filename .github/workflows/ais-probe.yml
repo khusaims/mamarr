@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: "22"
 
+      - name: تثبيت الحزم
+        run: npm ci
+
       - name: القياس
         env:
           AISSTREAM_KEY: ${{ secrets.AISSTREAM_KEY }}

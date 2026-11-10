@@ -13,6 +13,8 @@
  * يحتاج: AISSTREAM_KEY  (مفتاح مجاني من aisstream.io)
  */
 
+import WebSocket from "ws";
+
 const KEY = process.env.AISSTREAM_KEY;
 const SECONDS = Number(process.env.PROBE_SECONDS || 90);
 
@@ -64,10 +66,12 @@ let frames = 0;
 // أرفضت المفتاح أم قبلته ولم ترَ شيئًا — والفرق بينهما كل شيء.
 const firstReplies = [];
 
-const socket = new WebSocket("wss://stream.aisstream.io/v0/stream");
-// الخدمة ترسل إطارات ثنائية لا نصّية. بدون هذا السطر يصل كل إطار ككائن
-// غير قابل للتحليل، فيبدو الأمر كأن لا بيانات — وهو ليس كذلك.
-socket.binaryType = "arraybuffer";
+// حزمة ws لا WebSocket المدمج في Node: الخدمة تضغط الإطارات بامتداد
+// permessage-deflate، والمدمج لا يتفاوض عليه. رسالة التأكيد تصل غير
+// مضغوطة فتُقرأ، ثم يبدأ الضغط فيصير كل إطار بعدها رُكامًا صامتًا.
+const socket = new WebSocket("wss://stream.aisstream.io/v0/stream", {
+  perMessageDeflate: true,
+});
 const decoder = new TextDecoder();
 let settled = false;
 
@@ -75,16 +79,16 @@ const timer = setTimeout(() => {
   try { socket.close(); } catch {}
 }, SECONDS * 1000);
 
-socket.addEventListener("open", () => {
+socket.on("open", () => {
   console.log(`متصل. أجمع ${SECONDS} ثانية…`);
   socket.send(JSON.stringify({ APIKey: KEY, BoundingBoxes: BOXES }));
 });
 
-socket.addEventListener("message", (event) => {
+socket.on("message", (data) => {
   frames++;
   let text;
   try {
-    text = typeof event.data === "string" ? event.data : decoder.decode(event.data);
+    text = typeof data === "string" ? data : decoder.decode(data);
   } catch {
     return;
   }
@@ -126,7 +130,7 @@ socket.addEventListener("message", (event) => {
   vessels.set(mmsi, existing);
 });
 
-socket.addEventListener("error", () => {
+socket.on("error", () => {
   if (!settled) {
     settled = true;
     clearTimeout(timer);
@@ -135,7 +139,7 @@ socket.addEventListener("error", () => {
   }
 });
 
-socket.addEventListener("close", () => {
+socket.on("close", () => {
   if (settled) return;
   settled = true;
   clearTimeout(timer);
