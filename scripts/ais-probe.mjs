@@ -16,7 +16,7 @@
 import WebSocket from "ws";
 
 const KEY = process.env.AISSTREAM_KEY;
-const SECONDS = Number(process.env.PROBE_SECONDS || 90);
+const SECONDS = Number(process.env.PROBE_SECONDS || 300);
 
 if (!KEY) {
   console.error("AISSTREAM_KEY غير موجود. أضفه في Settings → Secrets → Actions.");
@@ -112,6 +112,13 @@ socket.on("message", (data) => {
 
   const existing = vessels.get(mmsi) || {};
 
+  // كل رسالة أيًّا كان نوعها تحمل موقعًا في MetaData بحروف صغيرة. قراءته
+  // من PositionReport وحدها تُهدر كل سفينة عُرفت من رسالة ثابتة.
+  if (Number.isFinite(meta.latitude) && Number.isFinite(meta.longitude)) {
+    existing.lat = meta.latitude;
+    existing.lon = meta.longitude;
+  }
+
   if (kind === "PositionReport") {
     const r = msg.Message?.PositionReport;
     if (r && Number.isFinite(r.Latitude) && Number.isFinite(r.Longitude)) {
@@ -158,6 +165,7 @@ function report() {
   say(`- رسائل مستلمة: **${frames}**`);
   say(`- سفن مميّزة (MMSI): **${vessels.size}**`);
   say(`- منها بموقع صالح: **${positioned.length}**`);
+  say(`- معدّل الوصول: **${(frames / (SECONDS / 60)).toFixed(1)}** رسالة في الدقيقة`);
   say();
 
   if (!positioned.length) {

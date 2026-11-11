@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       seconds:
-        description: "طول نافذة القياس بالثواني"
+        description: "طول نافذة القياس بالثواني (٣٠٠ = خمس دقائق)"
         required: false
-        default: "90"
+        default: "300"
 
 permissions:
   contents: read
