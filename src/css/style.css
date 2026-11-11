@@ -658,7 +658,9 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
   /* البطاقات التي تتجاوز حافّة اللوحة أو تتزاحم عند هذا الحجم تُقلب يدويًا */
   .port[data-slug="sultan-qaboos"] .label { text-anchor: end; transform: translateX(-22px); }
   .port[data-slug="jebel-ali"] .label { transform: translateY(-14px); }
-  .strait text { text-anchor: end; transform: translateX(-16px); }
+  /* قلبُ المحاذاة يجعل النصّ يمتدّ يسارًا فوق نقطة بندر عباس تمامًا،
+     فيُرفع عنها */
+  .strait text { text-anchor: end; transform: translate(-16px, -22px); }
   .chain { stroke-width: 2.6; }
   .pulse { stroke-width: 3.6; stroke-dasharray: 34 1400; }
 }
