@@ -11,6 +11,12 @@
   --sand: #d9cdb6;
   --sand-2: #ece5d6;
   --buoy: #f2641b;
+  /* مشتقّة يدويًا من المتغيّرات أعلاه. لا تستعمل color-mix() هنا:
+     المتصفّح الذي لا يدعمها يُسقط التصريح كله، وSVG بلا fill أسود —
+     فتصير الخريطة مستطيلًا أسود بدل أن تتدهور بلطف. */
+  --sea: #eaf2f3;
+  --coast: #9c9e92;
+  --buoy-glow: rgba(242, 100, 27, .7);
   --teal: #1e7b86;
   --teal-2: #155d66;
   --max: 1120px;
@@ -599,7 +605,7 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
 /* النبضة الجارية: شرطة قصيرة تزحف فوق السلسلة نفسها */
 .pulse { fill: none; stroke: var(--buoy); stroke-width: 2.4; stroke-linecap: round;
          stroke-linejoin: round; stroke-dasharray: 26 1400; stroke-dashoffset: 0;
-         filter: drop-shadow(0 0 5px color-mix(in srgb, var(--buoy) 70%, transparent)); }
+         filter: drop-shadow(0 0 5px var(--buoy-glow)); }
 .pulse-redsea    { animation: chain-run 7s linear infinite; }
 .pulse-gulfnorth { animation: chain-run 6s linear 1.1s infinite; }
 .pulse-gulfsouth { animation: chain-run 5s linear 2.8s infinite; }
@@ -666,8 +672,8 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
 }
 
 /* اليابسة: خلفية الخريطة الحقيقية، خافتة حتى تبقى الموانئ هي البطل */
-.sea-wash { fill: color-mix(in srgb, var(--teal) 9%, var(--white)); }
-.land { fill: var(--sand); fill-opacity: .92; stroke: color-mix(in srgb, var(--sand) 70%, var(--ink));
+.sea-wash { fill: var(--sea); }
+.land { fill: var(--sand); fill-opacity: .92; stroke: var(--coast);
         stroke-width: .7; stroke-opacity: .55; }
 /* الاتجاه ثابت داخل الخريطة: الجغرافيا لا تنعكس مع لغة الصفحة */
 .regionmap svg { direction: ltr; }
