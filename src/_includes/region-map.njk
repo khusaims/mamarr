@@ -1,0 +1,106 @@
+{%- set t = i18n[lang] -%}
+{%- set map = ports.ports | regionMap(mapframe) -%}
+{%- if map %}
+{#- مواضع البطاقات مضبوطة يدويًا: الموانئ المتجاورة تتزاحم وسمها، فلا يُسمّى إلا
+    ما يتباعد بما يكفي. البقية تُعرف باللمس أو المؤشّر. -#}
+{%- set keyPorts = ["sohar", "sultan-qaboos", "duqm", "salalah", "jebel-ali"] -%}
+{%- set labels = {
+  "port-said":     { dx: 11,  dy: 4,   anchor: "start",  ar: "بورسعيد",   en: "Port Said" },
+  "aqaba":         { dx: 11,  dy: 4,   anchor: "start",  ar: "العقبة",     en: "Aqaba" },
+  "jeddah":        { dx: 11,  dy: 4,   anchor: "start",  ar: "جدة",        en: "Jeddah" },
+  "dammam":        { dx: -11, dy: 4,   anchor: "end",    ar: "الدمام",     en: "Dammam" },
+  "hamad-port":    { dx: 0,   dy: 22,  anchor: "middle", ar: "حمد",        en: "Hamad" },
+  "jebel-ali":     { dx: 0,   dy: -15, anchor: "middle", ar: "جبل علي",    en: "Jebel Ali" },
+  "sohar":         { dx: 10,  dy: -9,  anchor: "start",  ar: "صحار",       en: "Sohar" },
+  "sultan-qaboos": { dx: 10,  dy: 15,  anchor: "start",  ar: "مسقط",       en: "Muscat" },
+  "duqm":          { dx: -11, dy: 4,   anchor: "end",    ar: "الدقم",      en: "Duqm" },
+  "salalah":       { dx: 11,  dy: 4,   anchor: "start",  ar: "صلالة",      en: "Salalah" }
+} -%}
+<section class="section section-map">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>{{ t.map.title }}</h2>
+      <p>{{ t.map.lead }}</p>
+    </div>
+
+    <figure class="regionmap" aria-labelledby="map-caption">
+      <svg viewBox="0 0 {{ map.width }} {{ map.height }}" role="img"
+           aria-label="{{ t.map.alt }}" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="mapglow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="var(--teal)" stop-opacity=".28"/>
+            <stop offset="100%" stop-color="var(--teal)" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        {#- طبقة البحر: بلا تباين واضح يقرأ الناظر الخريطة لطخةً بيجاء -#}
+        <rect class="sea-wash" x="0" y="0" width="{{ map.width }}" height="{{ map.height }}" aria-hidden="true"/>
+
+        {#- الساحل الحقيقي من Natural Earth، مُسقَط بالإطار نفسه كالموانئ -#}
+        {%- if coastline.d %}
+        <path class="land" d="{{ coastline.d }}" aria-hidden="true"/>
+        {%- endif %}
+
+        {#- شبكة خطوط الطول والعرض: مرجع بصري خافت لا زينة -#}
+        <g class="graticule" aria-hidden="true">
+          {%- for i in range(1, 7) %}
+          <line x1="{{ (map.width / 7 * i) | round(1) }}" y1="0"
+                x2="{{ (map.width / 7 * i) | round(1) }}" y2="{{ map.height }}"/>
+          {%- endfor %}
+          {%- for i in range(1, 5) %}
+          <line x1="0" y1="{{ (map.height / 5 * i) | round(1) }}"
+                x2="{{ map.width }}" y2="{{ (map.height / 5 * i) | round(1) }}"/>
+          {%- endfor %}
+        </g>
+
+        {#- السلاسل الساحلية. كل سلسلة تُرسم مرتين: خطّ ثابت، ونبضة تجري فوقه -#}
+        <g class="chains" aria-hidden="true">
+          {%- for key, pts in map.chains %}{% if pts %}
+          <polyline class="chain chain-{{ key }}" points="{{ pts }}"/>
+          <polyline class="pulse pulse-{{ key }}" points="{{ pts }}"/>
+          {%- endif %}{% endfor %}
+        </g>
+
+        {#- مضيق هرمز: الفجوة المقصودة بين حوضين. منقّط لأنه ليس سلسلة موانئ -#}
+        {%- set ja = map.byId["jebel-ali"] -%}
+        {%- set kf = map.byId["khor-fakkan"] -%}
+        {%- if ja and kf %}
+        <g class="strait" aria-hidden="true">
+          {#- نقطة التحكّم مدفوعة شمالًا وشرقًا ليدور القوس حول رأس مسندم
+              بدل أن يقطعه، كما تفعل السفن فعلًا -#}
+          <path d="M {{ ja.x }} {{ ja.y }} Q {{ (kf.x + 45) }} {{ (kf.y - 98) }} {{ kf.x }} {{ kf.y }}"/>
+          <text x="{{ (kf.x + 20) }}" y="{{ (kf.y - 58) }}">{{ t.map.strait }}</text>
+        </g>
+        {%- endif %}
+
+        {#- الموانئ. الترتيب من الغرب إلى الشرق يجعل الظهور يبدو مسحًا للإقليم -#}
+        <g class="ports">
+          {%- for p in map.points %}
+          {%- set lb = labels[p.slug] %}
+          <g data-slug="{{ p.slug }}" class="port{% if p.home %} is-home{% endif %}{% if lb %} is-named{% endif %}{% if p.slug in keyPorts %} is-key{% endif %}"
+             style="--i: {{ p.order }}" tabindex="0" role="listitem"
+             aria-label="{{ p.name[lang] }} — {{ p.country[lang] }}{% if p.locode %} ({{ p.locode }}){% endif %}">
+            <title>{{ p.name[lang] }} — {{ p.country[lang] }}{% if p.locode %} · {{ p.locode }}{% endif %}</title>
+            {%- if p.home %}
+            <circle class="halo" cx="{{ p.x }}" cy="{{ p.y }}" r="5"/>
+            {%- endif %}
+            <circle class="hit" cx="{{ p.x }}" cy="{{ p.y }}" r="15"/>
+            <circle class="dot" cx="{{ p.x }}" cy="{{ p.y }}" r="{% if p.home %}5{% else %}3.6{% endif %}"/>
+            {%- if lb %}
+            <text class="label" x="{{ p.x + lb.dx }}" y="{{ p.y + lb.dy }}" text-anchor="{{ lb.anchor }}">{{ lb[lang] }}</text>
+            {%- else %}
+            <text class="label label-hover" x="{{ p.x + 10 }}" y="{{ p.y - 10 }}" text-anchor="start">{{ p.name[lang] | shortName(lang) }}</text>
+            {%- endif %}
+          </g>
+          {%- endfor %}
+        </g>
+      </svg>
+
+      <figcaption class="map-caption" id="map-caption">
+        {{ t.map.caption }}
+        <a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}">{{ t.map.cta }}</a>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+{%- endif %}

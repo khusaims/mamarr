@@ -128,6 +128,69 @@ module.exports = function (eleventyConfig) {
   // The estimate for a lane: its calibration ratio against the latest value of
   // its reference index. Null when the lane has never been calibrated, because a
   // lane with no quote behind it gets no number — an empty cell is the honest cell.
+  // اسم مختصر للخريطة: "ميناء صحار" ضيّق على بطاقة، و"صحار" يكفي
+  eleventyConfig.addFilter("shortName", (name, lang) => {
+    if (typeof name !== "string") return name;
+    return name
+      .replace(/^ميناء\s+/, "")
+      .replace(/^Port of\s+/i, "")
+      .replace(/^(.*?)\s+Port$/i, "$1")
+      .trim();
+  });
+
+  // خريطة الإقليم: تُسقط إحداثيات الموانئ الحقيقية على لوحة SVG.
+  // إسقاط مستطيل بسيط مع تصحيح جيب التمام لخط العرض، وإلا بدا الإقليم ممطوطًا عرضًا.
+  // لا شيء هنا مرسوم باليد: كل نقطة محسوبة من ports.json وقت البناء.
+  eleventyConfig.addFilter("regionMap", function (ports, frame) {
+    if (!frame) return null;
+    const [lo0, lo1] = frame.lon;
+    const [la0, la1] = frame.lat;
+    const WIDTH = frame.width;
+    const height = frame.height;
+
+    const inWindow = (ports || []).filter((p) => {
+      if (!Array.isArray(p.coords)) return false;
+      const [la, lo] = p.coords;
+      return lo >= lo0 && lo <= lo1 && la >= la0 && la <= la1;
+    });
+    if (inWindow.length < 2) return null;
+
+    const round = (n) => Math.round(n * 10) / 10;
+    const byId = {};
+    const points = inWindow.map((p) => {
+      const [la, lo] = p.coords;
+      const node = {
+        slug: p.slug,
+        locode: p.locode || null,
+        name: p.name,
+        country: p.country,
+        x: round(((lo - lo0) / (lo1 - lo0)) * WIDTH),
+        y: round(((la1 - la) / (la1 - la0)) * height),
+        home: p.country.en === "Oman",
+      };
+      byId[p.slug] = node;
+      return node;
+    });
+    // ترتيب الظهور من الغرب إلى الشرق، فيبدو الكشف كمسح للإقليم
+    points.sort((a, b) => a.x - b.x).forEach((p, i) => { p.order = i; });
+
+    // سلاسل ساحلية: كل واحدة تلزم حوضًا واحدًا فلا يعبر خطّ يابسةً.
+    // الفجوة بين جبل علي وخورفكان متروكة عمدًا — تلك هي مضيق هرمز.
+    const CHAINS = {
+      redsea: ["port-said", "ain-sokhna", "king-abdullah-port", "jeddah"],
+      gulfnorth: ["umm-qasr", "shuwaikh", "jubail", "dammam", "khalifa-bin-salman"],
+      gulfsouth: ["hamad-port", "khalifa-port", "jebel-ali"],
+      oman: ["khor-fakkan", "fujairah", "sohar", "sultan-qaboos", "duqm", "salalah"],
+    };
+    const chains = {};
+    for (const [key, slugs] of Object.entries(CHAINS)) {
+      const nodes = slugs.map((s) => byId[s]).filter(Boolean);
+      chains[key] = nodes.length > 1 ? nodes.map((n) => `${n.x},${n.y}`).join(" ") : null;
+    }
+
+    return { width: WIDTH, height, points, chains, byId };
+  });
+
   eleventyConfig.addFilter("estimate", function (lane, indices) {
     const c = lane && lane.calibration;
     if (!c || typeof c.ratio !== "number") return null;

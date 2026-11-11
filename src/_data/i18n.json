@@ -425,6 +425,14 @@
         "many": "{n} زوجًا",
         "none": "لا أزواج مطابقة. جرّب اسم ميناء آخر."
       }
+    },
+    "map": {
+      "title": "أين تقع هذه الموانئ",
+      "lead": "كل نقطة مرسومة من إحداثيتها الحقيقية في قائمة UN/LOCODE، لا من رسم تقريبي.",
+      "alt": "خريطة الخليج والبحر الأحمر تُظهر عشرين ميناءً في مواقعها الحقيقية، موصولة بسلاسل ساحلية.",
+      "strait": "مضيق هرمز",
+      "caption": "السلاسل تتبع السواحل، والفجوات فيها مقصودة لا ناقصة: أكبرها مضيق هرمز بين جبل علي وخورفكان، وأخرى عند شبه جزيرة قطر.",
+      "cta": "كل الموانئ ←"
     }
   },
   "en": {
@@ -853,6 +861,14 @@
         "many": "{n} pairs",
         "none": "No matching pairs. Try another port name."
       }
+    },
+    "map": {
+      "title": "Where these ports actually are",
+      "lead": "Every point is plotted from its real UN/LOCODE coordinate, not sketched by hand.",
+      "alt": "A map of the Gulf and Red Sea showing twenty ports in their true positions, joined by coastal chains.",
+      "strait": "Strait of Hormuz",
+      "caption": "The chains follow the coasts, and the gaps in them are deliberate rather than missing: the largest is the Strait of Hormuz between Jebel Ali and Khor Fakkan, another sits at the Qatar peninsula.",
+      "cta": "All ports →"
     }
   }
 }
