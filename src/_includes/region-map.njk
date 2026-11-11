@@ -69,9 +69,15 @@
           {%- for key, pts in map.chains %}{% if pts %}
           <polyline points="{{ pts }}" fill="none" stroke="{{ C.chain }}"
                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline class="pulse pulse-{{ key }}" points="{{ pts }}" fill="none"
+          {%- set dur = {"redsea": 7, "gulfnorth": 6, "gulfsouth": 5, "oman": 8} -%}
+          {%- set delay = {"redsea": 0, "gulfnorth": 1.1, "gulfsouth": 2.8, "oman": 2.3} -%}
+          <polyline class="pulse" points="{{ pts }}" fill="none"
                     stroke="{{ C.pulse }}" stroke-width="2.6" stroke-linecap="round"
-                    stroke-linejoin="round" stroke-dasharray="26 1400"/>
+                    stroke-linejoin="round" stroke-dasharray="26 1400" stroke-opacity="0">
+            <set attributeName="stroke-opacity" to="0.95" begin="{{ delay[key] }}s"/>
+            <animate attributeName="stroke-dashoffset" from="1426" to="0"
+                     dur="{{ dur[key] }}s" begin="{{ delay[key] }}s" repeatCount="indefinite"/>
+          </polyline>
           {%- endif %}{% endfor %}
 
           {#- مضيق هرمز: الفجوة المقصودة، منقّطة لأنها ليست سلسلة موانئ -#}
@@ -80,7 +86,10 @@
           {%- if ja and kf %}
           <path class="strait-arc" fill="none" stroke="{{ C.pulse }}" stroke-width="1.5"
                 stroke-opacity="0.55" stroke-dasharray="4 5"
-                d="M {{ ja.x }} {{ ja.y }} Q {{ (kf.x + 45) }} {{ (kf.y - 98) }} {{ kf.x }} {{ kf.y }}"/>
+                d="M {{ ja.x }} {{ ja.y }} Q {{ (kf.x + 45) }} {{ (kf.y - 98) }} {{ kf.x }} {{ kf.y }}">
+            <animate attributeName="stroke-dashoffset" from="0" to="-18"
+                     dur="2.2s" repeatCount="indefinite"/>
+          </path>
           <text class="strait-label" x="{{ (kf.x + 20) }}" y="{{ (kf.y - 58) }}"
                 fill="{{ C.strait }}" font-size="12.5" font-weight="600"
                 stroke="{{ C.halo }}" stroke-width="3.5" stroke-linejoin="round"
@@ -88,8 +97,8 @@
           {%- endif %}
 
           {#- خطوط تُرسم عند اختيار ميناء: أقرب جيرانه برًّا -#}
-          <g id="map-links" fill="none" stroke="{{ C.ink }}" stroke-width="1.4"
-             stroke-opacity="0.5" stroke-dasharray="5 4"></g>
+          <g id="map-links" fill="none" stroke="{{ C.ink }}" stroke-width="1.5"
+             stroke-opacity="0.55" stroke-dasharray="5 4" stroke-linecap="round"></g>
 
           <g class="ports">
             {%- for p in map.points %}
@@ -111,15 +120,24 @@
               <title>{{ p.name[lang] }} — {{ p.country[lang] }}{% if p.locode %} · {{ p.locode }}{% endif %}</title>
               {%- if p.home %}
               <circle class="halo" cx="{{ p.x }}" cy="{{ p.y }}" r="5"
-                      fill="none" stroke="{{ C.home }}" stroke-width="1.4"/>
+                      fill="none" stroke="{{ C.home }}" stroke-width="1.4" opacity="0">
+                <animate attributeName="r" values="3;14" dur="3.4s"
+                         begin="{{ (p.order * 0.055 + 0.7) | round(2) }}s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.75;0" dur="3.4s"
+                         begin="{{ (p.order * 0.055 + 0.7) | round(2) }}s" repeatCount="indefinite"/>
+              </circle>
               {%- endif %}
               <circle class="sel-ring" cx="{{ p.x }}" cy="{{ p.y }}" r="11"
                       fill="none" stroke="{{ C.pulse }}" stroke-width="2" opacity="0"/>
               <circle class="hit" cx="{{ p.x }}" cy="{{ p.y }}" r="16" fill="transparent"/>
+              {%- set t0 = (p.order * 0.055 / 2.4) -%}
               <circle class="dot" cx="{{ p.x }}" cy="{{ p.y }}"
                       r="{% if p.home %}5{% else %}3.6{% endif %}"
                       fill="{% if p.home %}{{ C.home }}{% else %}{{ C.dot }}{% endif %}"
-                      stroke="{{ C.ring }}" stroke-width="1.4"/>
+                      stroke="{{ C.ring }}" stroke-width="1.4" opacity="1">
+                <animate attributeName="opacity" values="0;0;1" dur="2.4s"
+                         keyTimes="0;{{ t0 | round(3) }};{{ (t0 + 0.14) | round(3) }}" fill="freeze"/>
+              </circle>
               {%- if lb %}
               <text class="label" x="{{ p.x + lb.dx }}" y="{{ p.y + lb.dy }}"
                     text-anchor="{{ lb.anchor }}"
@@ -159,12 +177,18 @@
 
   <script>
   (function () {
-    var svgNS = "http://www.w3.org/2000/svg";
-    var ports = Array.prototype.slice.call(document.querySelectorAll(".section-map .port"));
+    var SVGNS = "http://www.w3.org/2000/svg";
+    var root = document.querySelector(".section-map");
+    if (!root) return;
+    var ports = [].slice.call(root.querySelectorAll(".port"));
     var links = document.getElementById("map-links");
     var hint = document.getElementById("map-hint");
     var card = document.getElementById("map-card");
-    if (!ports.length || !card) return;
+    if (!ports.length || !card || !links) return;
+
+    // لا dataset ولا classList على عناصر SVG: محرّكات قديمة لا تعرّفهما،
+    // فيتعطّل السكربت من أول سطر وتبدو الخريطة صورة ساكنة.
+    function attr(el, name) { return el.getAttribute(name) || ""; }
 
     var el = {
       code: document.getElementById("mc-code"),
@@ -176,79 +200,109 @@
       link: document.getElementById("mc-link")
     };
     var freeLabel = {{ t.map.freeDays | dump | safe }};
+    var kmLabel = {{ t.distances.km | dump | safe }};
     var current = null;
+
+    // من يطلب تقليل الحركة: تُنزع حركة SVG نفسها، فلا CSS يحكمها
+    try {
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var anims = [].slice.call(root.querySelectorAll("animate, set"));
+        for (var i = 0; i < anims.length; i++) anims[i].parentNode.removeChild(anims[i]);
+        var pulses = [].slice.call(root.querySelectorAll(".pulse"));
+        for (var j = 0; j < pulses.length; j++) pulses[j].setAttribute("stroke-opacity", "0");
+      }
+    } catch (e) {}
+
+    function label(g) { return g.querySelector(".label-hover"); }
+    function ring(g) { return g.querySelector(".sel-ring"); }
+    function dot(g) { return g.querySelector(".dot"); }
 
     function clearLinks() { while (links.firstChild) links.removeChild(links.firstChild); }
 
+    function reset() {
+      for (var i = 0; i < ports.length; i++) {
+        var r = ring(ports[i]);
+        if (r) r.setAttribute("opacity", "0");
+        var d = dot(ports[i]);
+        if (d) d.setAttribute("stroke-width", "1.4");
+        var l = label(ports[i]);
+        if (l) l.setAttribute("opacity", "0");
+      }
+      clearLinks();
+    }
+
     function select(g) {
       if (current === g) { deselect(); return; }
-      ports.forEach(function (p) {
-        p.classList.remove("is-on");
-        var r = p.querySelector(".sel-ring");
-        if (r) r.setAttribute("opacity", "0");
-      });
-      clearLinks();
-
-      g.classList.add("is-on");
-      var ring = g.querySelector(".sel-ring");
-      if (ring) ring.setAttribute("opacity", "1");
+      reset();
+      var r = ring(g); if (r) r.setAttribute("opacity", "1");
+      var d = dot(g); if (d) d.setAttribute("stroke-width", "2.6");
+      var l = label(g); if (l) l.setAttribute("opacity", "1");
       current = g;
 
-      el.code.textContent = g.dataset.locode || "";
-      el.name.textContent = g.dataset.name;
-      el.country.textContent = g.dataset.country;
-      el.link.setAttribute("href", g.dataset.href);
+      el.code.textContent = attr(g, "data-locode");
+      el.name.textContent = attr(g, "data-name");
+      el.country.textContent = attr(g, "data-country");
+      el.link.setAttribute("href", attr(g, "data-href"));
 
-      if (g.dataset.free) {
-        el.free.textContent = freeLabel.replace("{n}", g.dataset.free);
-        el.free.hidden = false;
-      } else { el.free.hidden = true; }
+      var free = attr(g, "data-free");
+      if (free) { el.free.textContent = freeLabel.replace("{n}", free); el.free.removeAttribute("hidden"); }
+      else { el.free.setAttribute("hidden", "hidden"); }
 
       while (el.near.firstChild) el.near.removeChild(el.near.firstChild);
-      var raw = g.dataset.near ? g.dataset.near.split(";") : [];
-      el.nearH.hidden = raw.length === 0;
-      var x0 = g.dataset.x, y0 = g.dataset.y;
-      raw.forEach(function (entry) {
-        var bits = entry.split("|");
-        if (bits.length < 4) return;
+      var raw = attr(g, "data-near");
+      var entries = raw ? raw.split(";") : [];
+      if (entries.length) el.nearH.removeAttribute("hidden");
+      else el.nearH.setAttribute("hidden", "hidden");
+
+      var x0 = attr(g, "data-x"), y0 = attr(g, "data-y");
+      for (var i = 0; i < entries.length; i++) {
+        var bits = entries[i].split("|");
+        if (bits.length < 4) continue;
         var li = document.createElement("li");
-        var n = document.createElement("span");
-        n.textContent = bits[0];
+        var nm = document.createElement("span");
+        nm.appendChild(document.createTextNode(bits[0]));
         var km = document.createElement("b");
-        km.textContent = bits[1] + " " + {{ t.distances.km | dump | safe }};
-        li.appendChild(n); li.appendChild(km);
+        km.appendChild(document.createTextNode(bits[1] + " " + kmLabel));
+        li.appendChild(nm); li.appendChild(km);
         el.near.appendChild(li);
 
-        var line = document.createElementNS(svgNS, "line");
+        var line = document.createElementNS(SVGNS, "line");
         line.setAttribute("x1", x0); line.setAttribute("y1", y0);
         line.setAttribute("x2", bits[2]); line.setAttribute("y2", bits[3]);
-        line.setAttribute("class", "map-link-line");
         links.appendChild(line);
-      });
+      }
 
-      hint.hidden = true;
-      card.hidden = false;
+      hint.setAttribute("hidden", "hidden");
+      card.removeAttribute("hidden");
     }
 
     function deselect() {
-      ports.forEach(function (p) {
-        p.classList.remove("is-on");
-        var r = p.querySelector(".sel-ring");
-        if (r) r.setAttribute("opacity", "0");
-      });
-      clearLinks();
+      reset();
       current = null;
-      card.hidden = true;
-      hint.hidden = false;
+      card.setAttribute("hidden", "hidden");
+      hint.removeAttribute("hidden");
     }
 
-    ports.forEach(function (g) {
-      g.addEventListener("click", function () { select(g); });
-      g.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(g); }
-        if (e.key === "Escape") deselect();
-      });
-    });
+    for (var i = 0; i < ports.length; i++) {
+      (function (g) {
+        g.addEventListener("click", function () { select(g); });
+        g.addEventListener("mouseover", function () {
+          if (current === g) return;
+          var l = label(g); if (l) l.setAttribute("opacity", "1");
+          var d = dot(g); if (d) d.setAttribute("stroke-width", "2.6");
+        });
+        g.addEventListener("mouseout", function () {
+          if (current === g) return;
+          var l = label(g); if (l) l.setAttribute("opacity", "0");
+          var d = dot(g); if (d) d.setAttribute("stroke-width", "1.4");
+        });
+        g.addEventListener("keydown", function (e) {
+          var k = e.key || e.keyCode;
+          if (k === "Enter" || k === " " || k === 13 || k === 32) { e.preventDefault(); select(g); }
+          else if (k === "Escape" || k === 27) { deselect(); }
+        });
+      })(ports[i]);
+    }
   })();
   </script>
 </section>
