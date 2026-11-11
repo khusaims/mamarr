@@ -191,6 +191,21 @@ module.exports = function (eleventyConfig) {
     return { width: WIDTH, height, points, chains, byId };
   });
 
+  // أقرب الموانئ برًّا إلى ميناء، من جدول المسافات الذي بنيناه.
+  // يُستعمل في لوحة الخريطة التفاعلية.
+  eleventyConfig.addFilter("nearestTo", function (distances, slug, limit) {
+    const pairs = (distances && distances.pairs) || [];
+    const names = {};
+    for (const n of (distances && distances.nodes) || []) names[n.slug] = n;
+    return pairs
+      .filter((p) => p.from === slug || p.to === slug)
+      .map((p) => ({ other: p.from === slug ? p.to : p.from, km: p.km, hours: p.hours }))
+      .sort((a, b) => a.km - b.km)
+      .slice(0, limit || 3)
+      .map((e) => ({ ...e, node: names[e.other] || null }))
+      .filter((e) => e.node);
+  });
+
   eleventyConfig.addFilter("estimate", function (lane, indices) {
     const c = lane && lane.calibration;
     if (!c || typeof c.ratio !== "number") return null;

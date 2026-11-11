@@ -1,9 +1,26 @@
 {%- set t = i18n[lang] -%}
 {%- set map = ports.ports | regionMap(mapframe) -%}
 {%- if map %}
-{#- مواضع البطاقات مضبوطة يدويًا: الموانئ المتجاورة تتزاحم وسمها، فلا يُسمّى إلا
-    ما يتباعد بما يكفي. البقية تُعرف باللمس أو المؤشّر. -#}
-{%- set keyPorts = ["sohar", "sultan-qaboos", "duqm", "salalah", "jebel-ali"] -%}
+{#- ============================================================
+    قاعدة هذه الخريطة: **كل لون مكتوب في الوسم نفسه**، لا في CSS.
+    متصفّح لا يطبّق fill من الأنماط على SVG يُسقط كل عنصر إلى قيمته
+    الافتراضية — والافتراضي أسود — فتصير الخريطة لوحة سوداء. حدث ذلك
+    فعلًا. الأنماط هنا للحركة والتفاعل فقط؛ اللوحة مقروءة بلا CSS إطلاقًا.
+    ============================================================ -#}
+{%- set C = {
+  sea:    "#eaf2f3",
+  land:   "#d9cdb6",
+  coast:  "#9c9e92",
+  grid:   "#c9c0ad",
+  chain:  "#7fb0b5",
+  pulse:  "#f2641b",
+  dot:    "#155d66",
+  home:   "#f2641b",
+  ring:   "#ffffff",
+  ink:    "#0e2f3f",
+  halo:   "#f4f6f5",
+  strait: "#155d66"
+} -%}
 {%- set labels = {
   "port-said":     { dx: 11,  dy: 4,   anchor: "start",  ar: "بورسعيد",   en: "Port Said" },
   "aqaba":         { dx: 11,  dy: 4,   anchor: "start",  ar: "العقبة",     en: "Aqaba" },
@@ -16,6 +33,7 @@
   "duqm":          { dx: -11, dy: 4,   anchor: "end",    ar: "الدقم",      en: "Duqm" },
   "salalah":       { dx: 11,  dy: 4,   anchor: "start",  ar: "صلالة",      en: "Salalah" }
 } -%}
+{%- set keyPorts = ["sohar", "sultan-qaboos", "duqm", "salalah", "jebel-ali"] -%}
 <section class="section section-map">
   <div class="wrap">
     <div class="section-head">
@@ -23,84 +41,215 @@
       <p>{{ t.map.lead }}</p>
     </div>
 
-    <figure class="regionmap" aria-labelledby="map-caption">
-      <svg viewBox="0 0 {{ map.width }} {{ map.height }}" role="img"
-           aria-label="{{ t.map.alt }}" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <radialGradient id="mapglow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="var(--teal)" stop-opacity=".28"/>
-            <stop offset="100%" stop-color="var(--teal)" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
+    <div class="map-layout">
+      <figure class="regionmap" aria-labelledby="map-caption">
+        <svg viewBox="0 0 {{ map.width }} {{ map.height }}" role="img"
+             aria-label="{{ t.map.alt }}" preserveAspectRatio="xMidYMid meet"
+             xmlns="http://www.w3.org/2000/svg">
 
-        {#- طبقة البحر: بلا تباين واضح يقرأ الناظر الخريطة لطخةً بيجاء -#}
-        <rect class="sea-wash" x="0" y="0" width="{{ map.width }}" height="{{ map.height }}" aria-hidden="true"/>
+          <rect x="0" y="0" width="{{ map.width }}" height="{{ map.height }}" fill="{{ C.sea }}"/>
 
-        {#- الساحل الحقيقي من Natural Earth، مُسقَط بالإطار نفسه كالموانئ -#}
-        {%- if coastline.d %}
-        <path class="land" d="{{ coastline.d }}" aria-hidden="true"/>
-        {%- endif %}
+          {%- if coastline.d %}
+          <path d="{{ coastline.d }}" fill="{{ C.land }}" stroke="{{ C.coast }}"
+                stroke-width="0.7" stroke-opacity="0.55"/>
+          {%- endif %}
 
-        {#- شبكة خطوط الطول والعرض: مرجع بصري خافت لا زينة -#}
-        <g class="graticule" aria-hidden="true">
-          {%- for i in range(1, 7) %}
-          <line x1="{{ (map.width / 7 * i) | round(1) }}" y1="0"
-                x2="{{ (map.width / 7 * i) | round(1) }}" y2="{{ map.height }}"/>
-          {%- endfor %}
-          {%- for i in range(1, 5) %}
-          <line x1="0" y1="{{ (map.height / 5 * i) | round(1) }}"
-                x2="{{ map.width }}" y2="{{ (map.height / 5 * i) | round(1) }}"/>
-          {%- endfor %}
-        </g>
-
-        {#- السلاسل الساحلية. كل سلسلة تُرسم مرتين: خطّ ثابت، ونبضة تجري فوقه -#}
-        <g class="chains" aria-hidden="true">
-          {%- for key, pts in map.chains %}{% if pts %}
-          <polyline class="chain chain-{{ key }}" points="{{ pts }}"/>
-          <polyline class="pulse pulse-{{ key }}" points="{{ pts }}"/>
-          {%- endif %}{% endfor %}
-        </g>
-
-        {#- مضيق هرمز: الفجوة المقصودة بين حوضين. منقّط لأنه ليس سلسلة موانئ -#}
-        {%- set ja = map.byId["jebel-ali"] -%}
-        {%- set kf = map.byId["khor-fakkan"] -%}
-        {%- if ja and kf %}
-        <g class="strait" aria-hidden="true">
-          {#- نقطة التحكّم مدفوعة شمالًا وشرقًا ليدور القوس حول رأس مسندم
-              بدل أن يقطعه، كما تفعل السفن فعلًا -#}
-          <path d="M {{ ja.x }} {{ ja.y }} Q {{ (kf.x + 45) }} {{ (kf.y - 98) }} {{ kf.x }} {{ kf.y }}"/>
-          <text x="{{ (kf.x + 20) }}" y="{{ (kf.y - 58) }}">{{ t.map.strait }}</text>
-        </g>
-        {%- endif %}
-
-        {#- الموانئ. الترتيب من الغرب إلى الشرق يجعل الظهور يبدو مسحًا للإقليم -#}
-        <g class="ports">
-          {%- for p in map.points %}
-          {%- set lb = labels[p.slug] %}
-          <g data-slug="{{ p.slug }}" class="port{% if p.home %} is-home{% endif %}{% if lb %} is-named{% endif %}{% if p.slug in keyPorts %} is-key{% endif %}"
-             style="--i: {{ p.order }}" tabindex="0" role="listitem"
-             aria-label="{{ p.name[lang] }} — {{ p.country[lang] }}{% if p.locode %} ({{ p.locode }}){% endif %}">
-            <title>{{ p.name[lang] }} — {{ p.country[lang] }}{% if p.locode %} · {{ p.locode }}{% endif %}</title>
-            {%- if p.home %}
-            <circle class="halo" cx="{{ p.x }}" cy="{{ p.y }}" r="5"/>
-            {%- endif %}
-            <circle class="hit" cx="{{ p.x }}" cy="{{ p.y }}" r="15"/>
-            <circle class="dot" cx="{{ p.x }}" cy="{{ p.y }}" r="{% if p.home %}5{% else %}3.6{% endif %}"/>
-            {%- if lb %}
-            <text class="label" x="{{ p.x + lb.dx }}" y="{{ p.y + lb.dy }}" text-anchor="{{ lb.anchor }}">{{ lb[lang] }}</text>
-            {%- else %}
-            <text class="label label-hover" x="{{ p.x + 10 }}" y="{{ p.y - 10 }}" text-anchor="start">{{ p.name[lang] | shortName(lang) }}</text>
-            {%- endif %}
+          <g stroke="{{ C.grid }}" stroke-width="0.5" opacity="0.45">
+            {%- for i in range(1, 7) %}
+            <line x1="{{ (map.width / 7 * i) | round(1) }}" y1="0"
+                  x2="{{ (map.width / 7 * i) | round(1) }}" y2="{{ map.height }}"/>
+            {%- endfor %}
+            {%- for i in range(1, 5) %}
+            <line x1="0" y1="{{ (map.height / 5 * i) | round(1) }}"
+                  x2="{{ map.width }}" y2="{{ (map.height / 5 * i) | round(1) }}"/>
+            {%- endfor %}
           </g>
-          {%- endfor %}
-        </g>
-      </svg>
 
-      <figcaption class="map-caption" id="map-caption">
-        {{ t.map.caption }}
-        <a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}">{{ t.map.cta }}</a>
-      </figcaption>
-    </figure>
+          {#- السلاسل الساحلية: خطّ ثابت، وفوقه نبضة تجري -#}
+          {%- for key, pts in map.chains %}{% if pts %}
+          <polyline points="{{ pts }}" fill="none" stroke="{{ C.chain }}"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline class="pulse pulse-{{ key }}" points="{{ pts }}" fill="none"
+                    stroke="{{ C.pulse }}" stroke-width="2.6" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-dasharray="26 1400"/>
+          {%- endif %}{% endfor %}
+
+          {#- مضيق هرمز: الفجوة المقصودة، منقّطة لأنها ليست سلسلة موانئ -#}
+          {%- set ja = map.byId["jebel-ali"] -%}
+          {%- set kf = map.byId["khor-fakkan"] -%}
+          {%- if ja and kf %}
+          <path class="strait-arc" fill="none" stroke="{{ C.pulse }}" stroke-width="1.5"
+                stroke-opacity="0.55" stroke-dasharray="4 5"
+                d="M {{ ja.x }} {{ ja.y }} Q {{ (kf.x + 45) }} {{ (kf.y - 98) }} {{ kf.x }} {{ kf.y }}"/>
+          <text class="strait-label" x="{{ (kf.x + 20) }}" y="{{ (kf.y - 58) }}"
+                fill="{{ C.strait }}" font-size="12.5" font-weight="600"
+                stroke="{{ C.halo }}" stroke-width="3.5" stroke-linejoin="round"
+                paint-order="stroke">{{ t.map.strait }}</text>
+          {%- endif %}
+
+          {#- خطوط تُرسم عند اختيار ميناء: أقرب جيرانه برًّا -#}
+          <g id="map-links" fill="none" stroke="{{ C.ink }}" stroke-width="1.4"
+             stroke-opacity="0.5" stroke-dasharray="5 4"></g>
+
+          <g class="ports">
+            {%- for p in map.points %}
+            {%- set lb = labels[p.slug] -%}
+            {%- set near = distances | nearestTo(p.slug, 3) -%}
+            {%- set ft = freetime.entries | freeTimeFor(p.slug) -%}
+            <g class="port{% if p.home %} is-home{% endif %}{% if lb %} is-named{% endif %}{% if p.slug in keyPorts %} is-key{% endif %}"
+               style="--i: {{ p.order }}"
+               data-slug="{{ p.slug }}"
+               data-x="{{ p.x }}" data-y="{{ p.y }}"
+               data-name="{{ p.name[lang] }}"
+               data-country="{{ p.country[lang] }}"
+               data-locode="{{ p.locode or '' }}"
+               data-href="{{ ('/' + lang + '/ports/' + p.slug + '/') | rel(page.url) }}"
+               data-free="{% if ft and ft.carrier %}{{ ft.carrier.days | num(lang) }}{% endif %}"
+               data-near="{% for n in near %}{%- set np = map.byId[n.other] -%}{% if np %}{{ np.name[lang] | shortName(lang) }}|{{ n.km | num(lang) }}|{{ np.x }}|{{ np.y }}{% if not loop.last %};{% endif %}{% endif %}{% endfor %}"
+               tabindex="0" role="button"
+               aria-label="{{ p.name[lang] }} — {{ p.country[lang] }}{% if p.locode %} ({{ p.locode }}){% endif %}">
+              <title>{{ p.name[lang] }} — {{ p.country[lang] }}{% if p.locode %} · {{ p.locode }}{% endif %}</title>
+              {%- if p.home %}
+              <circle class="halo" cx="{{ p.x }}" cy="{{ p.y }}" r="5"
+                      fill="none" stroke="{{ C.home }}" stroke-width="1.4"/>
+              {%- endif %}
+              <circle class="sel-ring" cx="{{ p.x }}" cy="{{ p.y }}" r="11"
+                      fill="none" stroke="{{ C.pulse }}" stroke-width="2" opacity="0"/>
+              <circle class="hit" cx="{{ p.x }}" cy="{{ p.y }}" r="16" fill="transparent"/>
+              <circle class="dot" cx="{{ p.x }}" cy="{{ p.y }}"
+                      r="{% if p.home %}5{% else %}3.6{% endif %}"
+                      fill="{% if p.home %}{{ C.home }}{% else %}{{ C.dot }}{% endif %}"
+                      stroke="{{ C.ring }}" stroke-width="1.4"/>
+              {%- if lb %}
+              <text class="label" x="{{ p.x + lb.dx }}" y="{{ p.y + lb.dy }}"
+                    text-anchor="{{ lb.anchor }}"
+                    fill="{% if p.home %}{{ C.strait }}{% else %}{{ C.ink }}{% endif %}"
+                    font-size="13" font-weight="600"
+                    stroke="{{ C.halo }}" stroke-width="3.5" stroke-linejoin="round"
+                    paint-order="stroke">{{ lb[lang] }}</text>
+              {%- else %}
+              <text class="label label-hover" x="{{ p.x + 10 }}" y="{{ p.y - 10 }}"
+                    text-anchor="start" fill="{{ C.ink }}" font-size="13" font-weight="500"
+                    stroke="{{ C.halo }}" stroke-width="3.5" stroke-linejoin="round"
+                    paint-order="stroke" opacity="0">{{ p.name[lang] | shortName(lang) }}</text>
+              {%- endif %}
+            </g>
+            {%- endfor %}
+          </g>
+        </svg>
+        <figcaption class="map-caption" id="map-caption">{{ t.map.caption }}</figcaption>
+      </figure>
+
+      {#- اللوحة: تُملأ عند اختيار ميناء. بلا جافاسكربت تبقى نصًّا إرشاديًا -#}
+      <aside class="map-panel" id="map-panel" aria-live="polite">
+        <p class="map-hint" id="map-hint">{{ t.map.hint }}</p>
+        <div class="map-card" id="map-card" hidden>
+          <p class="map-card-code" id="mc-code"></p>
+          <h3 id="mc-name"></h3>
+          <p class="map-card-country" id="mc-country"></p>
+          <p class="map-card-free" id="mc-free" hidden></p>
+          <p class="map-card-near-h" id="mc-near-h" hidden>{{ t.map.nearest }}</p>
+          <ul class="map-card-near" id="mc-near"></ul>
+          <a class="map-card-link" id="mc-link" href="#">{{ t.map.open }}</a>
+        </div>
+        <p class="map-allports"><a href="{{ ('/' + lang + '/ports/') | rel(page.url) }}">{{ t.map.cta }}</a></p>
+      </aside>
+    </div>
   </div>
+
+  <script>
+  (function () {
+    var svgNS = "http://www.w3.org/2000/svg";
+    var ports = Array.prototype.slice.call(document.querySelectorAll(".section-map .port"));
+    var links = document.getElementById("map-links");
+    var hint = document.getElementById("map-hint");
+    var card = document.getElementById("map-card");
+    if (!ports.length || !card) return;
+
+    var el = {
+      code: document.getElementById("mc-code"),
+      name: document.getElementById("mc-name"),
+      country: document.getElementById("mc-country"),
+      free: document.getElementById("mc-free"),
+      nearH: document.getElementById("mc-near-h"),
+      near: document.getElementById("mc-near"),
+      link: document.getElementById("mc-link")
+    };
+    var freeLabel = {{ t.map.freeDays | dump | safe }};
+    var current = null;
+
+    function clearLinks() { while (links.firstChild) links.removeChild(links.firstChild); }
+
+    function select(g) {
+      if (current === g) { deselect(); return; }
+      ports.forEach(function (p) {
+        p.classList.remove("is-on");
+        var r = p.querySelector(".sel-ring");
+        if (r) r.setAttribute("opacity", "0");
+      });
+      clearLinks();
+
+      g.classList.add("is-on");
+      var ring = g.querySelector(".sel-ring");
+      if (ring) ring.setAttribute("opacity", "1");
+      current = g;
+
+      el.code.textContent = g.dataset.locode || "";
+      el.name.textContent = g.dataset.name;
+      el.country.textContent = g.dataset.country;
+      el.link.setAttribute("href", g.dataset.href);
+
+      if (g.dataset.free) {
+        el.free.textContent = freeLabel.replace("{n}", g.dataset.free);
+        el.free.hidden = false;
+      } else { el.free.hidden = true; }
+
+      while (el.near.firstChild) el.near.removeChild(el.near.firstChild);
+      var raw = g.dataset.near ? g.dataset.near.split(";") : [];
+      el.nearH.hidden = raw.length === 0;
+      var x0 = g.dataset.x, y0 = g.dataset.y;
+      raw.forEach(function (entry) {
+        var bits = entry.split("|");
+        if (bits.length < 4) return;
+        var li = document.createElement("li");
+        var n = document.createElement("span");
+        n.textContent = bits[0];
+        var km = document.createElement("b");
+        km.textContent = bits[1] + " " + {{ t.distances.km | dump | safe }};
+        li.appendChild(n); li.appendChild(km);
+        el.near.appendChild(li);
+
+        var line = document.createElementNS(svgNS, "line");
+        line.setAttribute("x1", x0); line.setAttribute("y1", y0);
+        line.setAttribute("x2", bits[2]); line.setAttribute("y2", bits[3]);
+        line.setAttribute("class", "map-link-line");
+        links.appendChild(line);
+      });
+
+      hint.hidden = true;
+      card.hidden = false;
+    }
+
+    function deselect() {
+      ports.forEach(function (p) {
+        p.classList.remove("is-on");
+        var r = p.querySelector(".sel-ring");
+        if (r) r.setAttribute("opacity", "0");
+      });
+      clearLinks();
+      current = null;
+      card.hidden = true;
+      hint.hidden = false;
+    }
+
+    ports.forEach(function (g) {
+      g.addEventListener("click", function () { select(g); });
+      g.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(g); }
+        if (e.key === "Escape") deselect();
+      });
+    });
+  })();
+  </script>
 </section>
 {%- endif %}

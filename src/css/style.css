@@ -590,48 +590,35 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
 .dist-table tbody tr[hidden] { display: none; }
 
 /* ============================================================
-   خريطة الإقليم — نقاط محسوبة من إحداثيات حقيقية، لا رسم تقريبي.
-   الحركة كلها زينة: الخريطة مقروءة تمامًا وهي ساكنة.
+   خريطة الإقليم — التلوين كله في الوسم لا هنا. هذه الأنماط للحركة
+   والتفاعل فقط، والخريطة مقروءة تمامًا بدونها.
    ============================================================ */
 .section-map { background: linear-gradient(180deg, var(--sand-2) 0%, var(--paper) 100%); }
-.regionmap { margin: 1.6rem 0 0; }
-.regionmap svg { width: 100%; height: auto; display: block; overflow: visible; }
+.map-layout { display: grid; gap: 1.5rem; margin-top: 1.6rem; }
+@media (min-width: 900px) { .map-layout { grid-template-columns: minmax(0,1fr) 17rem; align-items: start; } }
+.regionmap { margin: 0; min-width: 0; }
+.regionmap svg { width: 100%; height: auto; display: block; direction: ltr; }
+.label, .strait-label { unicode-bidi: isolate; pointer-events: none; }
 
-.graticule line { stroke: var(--ink); stroke-width: .5; opacity: .09; }
-
-/* السلاسل الساحلية */
-.chain { fill: none; stroke: var(--teal); stroke-width: 1.6; stroke-opacity: .32;
-         stroke-linecap: round; stroke-linejoin: round; }
-/* النبضة الجارية: شرطة قصيرة تزحف فوق السلسلة نفسها */
-.pulse { fill: none; stroke: var(--buoy); stroke-width: 2.4; stroke-linecap: round;
-         stroke-linejoin: round; stroke-dasharray: 26 1400; stroke-dashoffset: 0;
-         filter: drop-shadow(0 0 5px var(--buoy-glow)); }
+/* النبضة الجارية على كل سلسلة */
+.pulse { stroke-dashoffset: 0; }
 .pulse-redsea    { animation: chain-run 7s linear infinite; }
 .pulse-gulfnorth { animation: chain-run 6s linear 1.1s infinite; }
 .pulse-gulfsouth { animation: chain-run 5s linear 2.8s infinite; }
 .pulse-oman      { animation: chain-run 8s linear 2.3s infinite; }
 @keyframes chain-run { from { stroke-dashoffset: 1426; } to { stroke-dashoffset: 0; } }
-
-/* المضيق: منقّط لأنه ليس سلسلة موانئ */
-.strait path { fill: none; stroke: var(--buoy); stroke-width: 1.5; stroke-opacity: .5;
-               stroke-dasharray: 4 5; animation: strait-drift 2.2s linear infinite; }
+.strait-arc { animation: strait-drift 2.2s linear infinite; }
 @keyframes strait-drift { to { stroke-dashoffset: -18; } }
-.strait text { font-size: 12.5px; fill: var(--teal-2); font-weight: 600;
-               paint-order: stroke; stroke: var(--paper); stroke-width: 3.5; stroke-linejoin: round; }
 
-/* الموانئ */
-.port { cursor: default; outline: none; }
-.port .hit { fill: transparent; }
-.port .dot { fill: var(--teal-2); stroke: var(--white); stroke-width: 1.4;
-             transform-box: fill-box; transform-origin: center;
+/* ظهور الموانئ من الغرب إلى الشرق */
+.port { cursor: pointer; outline: none; }
+.port .dot { transform-box: fill-box; transform-origin: center;
              animation: port-in .5s cubic-bezier(.2,.9,.3,1.4) both;
-             animation-delay: calc(var(--i) * 55ms); }
-.port.is-home .dot { fill: var(--buoy); }
+             animation-delay: calc(var(--i) * 55ms); transition: stroke-width .15s ease; }
 @keyframes port-in { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: scale(1); } }
 
-/* هالة تتمدّد حول الموانئ العُمانية — موانئ البيت */
-.halo { fill: none; stroke: var(--buoy); stroke-width: 1.4; transform-box: fill-box;
-        transform-origin: center; animation: halo-out 3.4s ease-out infinite;
+.halo { transform-box: fill-box; transform-origin: center;
+        animation: halo-out 3.4s ease-out infinite;
         animation-delay: calc(var(--i) * 55ms + 700ms); }
 @keyframes halo-out {
   0%   { transform: scale(.5); opacity: .75; }
@@ -639,49 +626,44 @@ html[dir="rtl"] .hero-panel-head { letter-spacing: 0; font-size: .92rem; text-tr
   100% { transform: scale(2.8); opacity: 0; }
 }
 
-.label { font-size: 13px; font-weight: 600; fill: var(--ink);
-         paint-order: stroke; stroke: var(--paper); stroke-width: 3.5;
-         stroke-linejoin: round; pointer-events: none; }
-.is-home .label { fill: var(--teal-2); }
-.label-hover { opacity: 0; transition: opacity .18s ease; font-weight: 500; }
-.port:hover .label-hover, .port:focus-visible .label-hover { opacity: 1; }
-.port:hover .dot, .port:focus-visible .dot { stroke: var(--buoy); stroke-width: 2.4; }
-.port:focus-visible .hit { stroke: var(--buoy); stroke-width: 2; stroke-dasharray: 2 3; }
+.sel-ring { transform-box: fill-box; transform-origin: center; transition: opacity .18s ease; }
+.port.is-on .sel-ring { animation: ring-in .35s cubic-bezier(.2,.9,.3,1.4) both; }
+@keyframes ring-in { from { transform: scale(.4); } to { transform: scale(1); } }
+.map-link-line { animation: link-draw .5s ease both; }
+@keyframes link-draw { from { opacity: 0; } to { opacity: 1; } }
 
-.map-caption { margin-top: .9rem; color: var(--muted); font-size: .92rem; line-height: 1.6; }
-.map-caption a { margin-inline-start: .4rem; white-space: nowrap; }
+.label-hover { transition: opacity .18s ease; }
+.port:hover .label-hover, .port:focus-visible .label-hover, .port.is-on .label-hover { opacity: 1; }
+.port:hover .dot, .port:focus-visible .dot, .port.is-on .dot { stroke-width: 2.6; }
 
-/* على الشاشة الصغيرة تنكمش اللوحة إلى أقل من نصف عرضها، فوحدة الخط
-   تصير نصف حجمها على الشاشة. التكبير وحده يُحدث تزاحمًا، فتُختصر
-   البطاقات إلى موانئ البيت وأكبر ميناء مجاور. */
+/* لوحة الميناء المختار */
+.map-panel { align-self: start; }
+.map-hint { color: var(--muted); font-size: .95rem; line-height: 1.6; margin: 0 0 .8rem; }
+.map-card { background: var(--white); border: 1px solid var(--sand);
+            border-inline-start: 4px solid var(--buoy); padding: 1rem 1.1rem; border-radius: 4px; }
+.map-card[hidden] { display: none; }
+.map-card-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                 font-size: .82rem; letter-spacing: .06em; color: var(--muted);
+                 margin: 0 0 .25rem; direction: ltr; unicode-bidi: isolate; }
+.map-card h3 { margin: 0 0 .15rem; font-size: 1.08rem; }
+.map-card-country { margin: 0 0 .7rem; color: var(--muted); font-size: .9rem; }
+.map-card-free { margin: 0 0 .7rem; font-size: .9rem; color: var(--teal-2); font-weight: 500; }
+.map-card-near-h { margin: 0 0 .35rem; font-size: .82rem; color: var(--muted); }
+.map-card-near { list-style: none; margin: 0 0 .9rem; padding: 0; font-size: .9rem; }
+.map-card-near li { display: flex; justify-content: space-between; gap: 1rem;
+                    padding: .3rem 0; border-bottom: 1px solid var(--sand-2); }
+.map-card-near li:last-child { border-bottom: 0; }
+.map-card-near b { font-weight: 600; white-space: nowrap; direction: ltr; unicode-bidi: isolate; }
+.map-card-link { font-size: .92rem; font-weight: 500; }
+.map-allports { margin: .9rem 0 0; font-size: .92rem; }
+.map-caption { margin-top: .9rem; color: var(--muted); font-size: .9rem; line-height: 1.6; }
+
 @media (max-width: 760px) {
   .label { font-size: 26px; stroke-width: 7; }
-  .strait text { font-size: 23px; }
-  .port .dot { r: 6; }
-  .port.is-home .dot { r: 8; }
-  .halo { stroke-width: 2.4; }
+  .strait-label { font-size: 23px; }
   .port.is-named:not(.is-key) .label { display: none; }
-  /* البطاقات التي تتجاوز حافّة اللوحة أو تتزاحم عند هذا الحجم تُقلب يدويًا */
-  .port[data-slug="sultan-qaboos"] .label { text-anchor: end; transform: translateX(-22px); }
-  .port[data-slug="jebel-ali"] .label { transform: translateY(-14px); }
-  /* قلبُ المحاذاة يجعل النصّ يمتدّ يسارًا فوق نقطة بندر عباس تمامًا،
-     فيُرفع عنها */
-  .strait text { text-anchor: end; transform: translate(-16px, -22px); }
-  .chain { stroke-width: 2.6; }
-  .pulse { stroke-width: 3.6; stroke-dasharray: 34 1400; }
 }
 
-/* اليابسة: خلفية الخريطة الحقيقية، خافتة حتى تبقى الموانئ هي البطل */
-.sea-wash { fill: var(--sea); }
-.land { fill: var(--sand); fill-opacity: .92; stroke: var(--coast);
-        stroke-width: .7; stroke-opacity: .55; }
-/* الاتجاه ثابت داخل الخريطة: الجغرافيا لا تنعكس مع لغة الصفحة */
-.regionmap svg { direction: ltr; }
-.label, .strait text { unicode-bidi: isolate; }
-
-/* من يطلب تقليل الحركة لا يُعرض عليه أثرٌ متجمّد: النبضة بلا جريان
-   شَرطة برتقالية بلا معنى، والهالة بلا تمدّد دائرة زائدة. الخريطة
-   تبقى كاملة القراءة بدونهما. */
 @media (prefers-reduced-motion: reduce) {
   .pulse, .halo { display: none; }
 }

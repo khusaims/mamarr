@@ -432,7 +432,11 @@
       "alt": "خريطة الخليج والبحر الأحمر تُظهر عشرين ميناءً في مواقعها الحقيقية، موصولة بسلاسل ساحلية.",
       "strait": "مضيق هرمز",
       "caption": "السلاسل تتبع السواحل، والفجوات فيها مقصودة لا ناقصة: أكبرها مضيق هرمز بين جبل علي وخورفكان، وأخرى عند شبه جزيرة قطر.",
-      "cta": "كل الموانئ ←"
+      "cta": "كل الموانئ ←",
+      "hint": "اضغط أي ميناء على الخريطة لتعرف رمزه وأقرب الموانئ إليه برًّا.",
+      "nearest": "أقرب الموانئ برًّا",
+      "open": "صفحة الميناء ←",
+      "freeDays": "‏{n} أيام مجانية لدى الناقل"
     }
   },
   "en": {
@@ -868,7 +872,11 @@
       "alt": "A map of the Gulf and Red Sea showing twenty ports in their true positions, joined by coastal chains.",
       "strait": "Strait of Hormuz",
       "caption": "The chains follow the coasts, and the gaps in them are deliberate rather than missing: the largest is the Strait of Hormuz between Jebel Ali and Khor Fakkan, another sits at the Qatar peninsula.",
-      "cta": "All ports →"
+      "cta": "All ports →",
+      "hint": "Tap any port on the map to see its code and the nearest ports by road.",
+      "nearest": "Nearest by road",
+      "open": "Open the port page →",
+      "freeDays": "{n} free days with the carrier"
     }
   }
 }
