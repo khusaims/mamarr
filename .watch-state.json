@@ -2,36 +2,36 @@
   "sources": {
     "https://www.maersk.com/local-information/imea/uae/import": {
       "lastError": "fetch failed",
-      "lastTried": "2026-11-16"
+      "lastTried": "2026-11-23"
     },
     "https://me.one-line.com/standard-page/local-rates-tariffs": {
       "hash": "4a3120e6486bf8dc",
       "tokens": [],
-      "lastSeen": "2026-11-16",
+      "lastSeen": "2026-11-23",
       "lastError": null
     },
     "https://www.maersk.com/local-information/imea/oman/import": {
       "lastError": "fetch failed",
-      "lastTried": "2026-11-16"
+      "lastTried": "2026-11-23"
     },
     "https://salalahport.com.om/uploads/03c488988b708a098b0615c45e8a421b.pdf": {
       "hash": "6b4ed5ddea36d309",
       "tokens": [],
-      "lastSeen": "2026-11-16",
+      "lastSeen": "2026-11-23",
       "lastError": null
     },
     "https://www.maersk.com/local-information/imea/saudi-arabia/import": {
       "lastError": "fetch failed",
-      "lastTried": "2026-11-16"
+      "lastTried": "2026-11-23"
     },
     "https://www.maersk.com/news/articles/2026/03/17/hormuz-closure-empty-returns-suspension-update-march": {
       "lastError": "fetch failed",
-      "lastTried": "2026-11-16"
+      "lastTried": "2026-11-23"
     },
     "https://www.maersk.com/news/articles/2026/09/11/middle-east-operational-update-46": {
       "lastError": "fetch failed",
-      "lastTried": "2026-11-16"
+      "lastTried": "2026-11-23"
     }
   },
-  "lastRun": "2026-11-16"
+  "lastRun": "2026-11-23"
 }
