@@ -2,7 +2,7 @@
   "_readme": "أسعار الخطوط لا تُشترى: مصدرها معايرة. لكل خط calibration إما null (لم يُعاير — لا يُعرض رقم) أو {ratio, index, quotes, calibrated, source}. ratio = سعر عرض حقيقي ÷ قيمة المؤشر في أسبوع ذلك العرض. التقدير يُحسب وقت البناء: ratio × آخر قيمة للمؤشر، فيتحرك أسبوعيًا وحده مع تحديث المؤشرات. quotes = عدد العروض التي بُنيت عليها النسبة (متوسطها). calibrated = تاريخ آخر معايرة، ويُعرض بجانب الرقم لأن النسب تنجرف. index = معرّف المؤشر المرجعي من indices (wci افتراضيًا). لا تكتب رقمًا تقديريًا يدويًا هنا أبدًا — إن لم توجد معايرة فالصواب خانة فارغة.",
   "updated": "2026-11-09",
   "unit": "USD / 40' HC, spot, port-to-port",
-  "indices_updated": "2026-11-20",
+  "indices_updated": "2026-11-27",
   "indices_sample": false,
   "indices": [
     {
@@ -23,18 +23,18 @@
         "ar": "أسبوعي — الخميس",
         "en": "Weekly — Thursday"
       },
-      "value": 4176,
-      "change_pct": -3,
-      "published": "2026-11-19",
+      "value": 4032,
+      "change_pct": -3.4,
+      "published": "2026-11-26",
       "series": [
-        4520,
         4495,
         4470,
         4450,
         4451,
         4389,
         4305,
-        4176
+        4176,
+        4032
       ],
       "source_code": "CONTAINER_FREIGHT_COMPOSITE_USD"
     },
@@ -56,18 +56,18 @@
         "ar": "أسبوعي — الجمعة",
         "en": "Weekly — Friday"
       },
-      "value": 3503.78,
-      "change_pct": -1.9,
-      "published": "2026-11-20",
+      "value": 3569.54,
+      "change_pct": 1.9,
+      "published": "2026-11-27",
       "series": [
-        3545,
         3560,
         3580,
         3595,
         3604,
         3633.45,
         3572.33,
-        3503.78
+        3503.78,
+        3569.54
       ],
       "source_code": "SCFI_INDEX"
     },
@@ -89,18 +89,18 @@
         "ar": "يومي — أيام عمل لندن",
         "en": "Daily — London business days"
       },
-      "value": 2901,
-      "change_pct": -3.9,
-      "published": "2026-11-19",
+      "value": 3152,
+      "change_pct": 8.7,
+      "published": "2026-11-26",
       "series": [
-        2640,
         2680,
         2700,
         2730,
         2747,
         2805,
         3020,
-        2901
+        2901,
+        3152
       ],
       "source_code": "BALTIC_DRY_INDEX"
     }
